@@ -158,8 +158,8 @@ class _TrendsPageState extends State<TrendsPage> {
                     child: new Text("Week" , style: TextStyle(fontSize: 15)
                     ),
                     style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(graphButton == 1 ? Colors.white:Color(0xffd76614)),
-                        backgroundColor: MaterialStateProperty.all<Color>(graphButton == 1 ? Color(0xffd76614) : Colors.white,),
+                        foregroundColor: MaterialStateProperty.all<Color>(graphButton == 1 ? Colors.white:Color(0xff50af95)),
+                        backgroundColor: MaterialStateProperty.all<Color>(graphButton == 1 ? Color(0xff50af95) : Colors.white,),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -185,8 +185,8 @@ class _TrendsPageState extends State<TrendsPage> {
                     child: new Text("Month" , style: TextStyle(fontSize: 15)
                     ),
                     style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(graphButton == 2 ? Colors.white:Color(0xffd76614)),
-                        backgroundColor: MaterialStateProperty.all<Color>(graphButton == 2 ? Color(0xffd76614) : Colors.white,),
+                        foregroundColor: MaterialStateProperty.all<Color>(graphButton == 2 ? Colors.white:Color(0xff50af95)),
+                        backgroundColor: MaterialStateProperty.all<Color>(graphButton == 2 ? Color(0xff50af95) : Colors.white,),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -212,8 +212,8 @@ class _TrendsPageState extends State<TrendsPage> {
                     child: new Text("Year" , style: TextStyle(fontSize: 15)
                     ),
                     style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(graphButton == 3 ? Colors.white:Color(0xffd76614)),
-                        backgroundColor: MaterialStateProperty.all<Color>(graphButton == 3 ? Color(0xffd76614) : Colors.white,),
+                        foregroundColor: MaterialStateProperty.all<Color>(graphButton == 3 ? Colors.white:Color(0xff50af95)),
+                        backgroundColor: MaterialStateProperty.all<Color>(graphButton == 3 ? Color(0xff50af95) : Colors.white,),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -265,7 +265,7 @@ class _TrendsPageState extends State<TrendsPage> {
                                         dataSource: currencyData,
                                         xValueMapper: (CartData data, _) => data.date,
                                         yValueMapper: (CartData data, _) => data.rate,
-                                        color: const Color(0xffd76614),
+                                        color: const Color(0xff50af95),
                                         splineType: SplineType.monotonic,
                                         //cardinalSplineTension: 10,
                                         dataLabelSettings: const DataLabelSettings(
