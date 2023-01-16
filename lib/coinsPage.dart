@@ -291,8 +291,8 @@ class _CoinsPageState extends State<CoinsPage>
                       itemBuilder: (BuildContext context, int i) {
                         return Dismissible(
                           child: Card(
-                            elevation: 1,
-                            color: Color(0xffd76614),
+                            elevation: 2,
+                            color: Colors.white,
                             child: Padding(
                               padding: const EdgeInsets.only(left:0, right:0),
                               child: Container(
@@ -326,17 +326,38 @@ class _CoinsPageState extends State<CoinsPage>
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 children: <Widget>[
-                                                  Text('\$${double.parse(bitcoinList[i].rate!.toStringAsFixed(2))}',
-                                                      style: const TextStyle(fontSize: 18,color: Colors.black)),
                                                   Text('${bitcoinList[i].name}',
                                                     style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.black), textAlign: TextAlign.start,
                                                   ),
+
                                                 ],
                                               )
                                           ),
                                         ],
                                       ),
                                     ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        callCurrencyDetails(bitcoinList[i].name);
+                                      },
+                                      child: Container(
+                                        width:MediaQuery.of(context).size.width/4,
+                                        height: 40,
+                                        child: charts.LineChart(
+                                          _createSampleData(bitcoinList[i].historyRate, double.parse(bitcoinList[i].diffRate!)),
+                                          layoutConfig: charts.LayoutConfig(
+                                              leftMarginSpec: charts.MarginSpec.fixedPixel(5),
+                                              topMarginSpec: charts.MarginSpec.fixedPixel(10),
+                                              rightMarginSpec: charts.MarginSpec.fixedPixel(5),
+                                              bottomMarginSpec: charts.MarginSpec.fixedPixel(10)),
+                                          defaultRenderer: charts.LineRendererConfig(includeArea: true, stacked: true,),
+                                          animate: true,
+                                          domainAxis: const charts.NumericAxisSpec(showAxisLine: false, renderSpec: charts.NoneRenderSpec()),
+                                          primaryMeasureAxis: const charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
+                                        ),
+                                      ),
+                                    ),
+
                                     GestureDetector(
                                         onTap: () {
                                           callCurrencyDetails(bitcoinList[i].name);
@@ -345,27 +366,9 @@ class _CoinsPageState extends State<CoinsPage>
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: <Widget>[
-                                            GestureDetector(
-                                              onTap: () {
-                                                callCurrencyDetails(bitcoinList[i].name);
-                                              },
-                                              child: Container(
-                                                width:MediaQuery.of(context).size.width/4,
-                                                height: 40,
-                                                child: charts.LineChart(
-                                                  _createSampleData(bitcoinList[i].historyRate, double.parse(bitcoinList[i].diffRate!)),
-                                                  layoutConfig: charts.LayoutConfig(
-                                                      leftMarginSpec: charts.MarginSpec.fixedPixel(5),
-                                                      topMarginSpec: charts.MarginSpec.fixedPixel(10),
-                                                      rightMarginSpec: charts.MarginSpec.fixedPixel(5),
-                                                      bottomMarginSpec: charts.MarginSpec.fixedPixel(10)),
-                                                  defaultRenderer: charts.LineRendererConfig(includeArea: true, stacked: true,),
-                                                  animate: true,
-                                                  domainAxis: const charts.NumericAxisSpec(showAxisLine: false, renderSpec: charts.NoneRenderSpec()),
-                                                  primaryMeasureAxis: const charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
-                                                ),
-                                              ),
-                                            ),
+                                            Text('\$${double.parse(bitcoinList[i].rate!.toStringAsFixed(2))}',
+                                                style: const TextStyle(fontSize: 18,color: Colors.black)),
+
                                             const SizedBox(
                                               height: 5,
                                             ),
@@ -469,7 +472,9 @@ class _CoinsPageState extends State<CoinsPage>
               child: Scaffold(
                 body: Container(
                   decoration: const BoxDecoration(
-                      color: Color(0xffc1580b),borderRadius: BorderRadius.vertical(top: Radius.circular(40))),
+                      color: Color(0xffc1580b),
+                      // borderRadius: BorderRadius.vertical(top: Radius.circular(40))
+                    ),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
@@ -531,12 +536,6 @@ class _CoinsPageState extends State<CoinsPage>
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Text(AppLocalizations.of(context).translate('enter_coins'),textAlign: TextAlign.left,
-                        style: TextStyle(color: Color(0xffdca076),fontSize: 20),
-                        ),
-                      ),
-                      Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50.0),
                         child: Container(
                           decoration: BoxDecoration(color: Color(0xffc1580b),
@@ -549,6 +548,11 @@ class _CoinsPageState extends State<CoinsPage>
                               style: const TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.white),textAlign: TextAlign.center,
                               keyboardType: TextInputType.number,
                               cursorColor: Colors.white,
+                                decoration: InputDecoration(
+                                  labelText: AppLocalizations.of(context).translate('enter_coins'),
+                                  labelStyle: TextStyle(color: Colors.grey, fontSize: 20),
+                                  fillColor: Colors.white,
+                                ),
                               inputFormatters: <TextInputFormatter>[
                                 FilteringTextInputFormatter.digitsOnly,
                               ],
