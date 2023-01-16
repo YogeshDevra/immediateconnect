@@ -170,87 +170,91 @@ class _CoinsPageState extends State<CoinsPage>
                       itemCount: _searchResult.length,
                       itemBuilder: (BuildContext context, int i) {
                         return Dismissible(
-                            child: Card(
-                              elevation: 1,
-                              color: Color(0xffd76614),
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                                child: Container(
-                                  // color: Color(0xffd76614),
-                                  height: 80,
-                                  padding: const EdgeInsets.all(8),
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      GestureDetector(
+                          child: Card(
+                            elevation: 2,
+                            color: Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left:0, right:0),
+                              child: Container(
+                                height: 80,
+                                padding: const EdgeInsets.all(8),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    GestureDetector(
+                                      onTap: () {
+                                        callCurrencyDetails(_searchResult[i].name);
+                                      },
+                                      child: Row(
+                                        children: <Widget>[
+                                          Stack(
+                                              children: <Widget>[
+                                                Container(
+                                                    height: 70,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.all(2.0),
+                                                      child: FadeInImage(
+                                                        placeholder: const AssetImage('assets/image/cob.png'),
+                                                        image: NetworkImage("$URL/Bitcoin/resources/icons/${_searchResult[i].name!.toLowerCase()}.png"),
+                                                      ),
+                                                    )),
+                                              ]),
+                                          Padding(
+                                              padding: const EdgeInsets.only(left:10),
+                                              child:Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Text('${_searchResult[i].name}',
+                                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.black), textAlign: TextAlign.start,
+                                                  ),
+
+                                                ],
+                                              )
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        callCurrencyDetails(_searchResult[i].name);
+                                      },
+                                      child: Container(
+                                        width:MediaQuery.of(context).size.width/4,
+                                        height: 40,
+                                        child: charts.LineChart(
+                                          _createSampleData(_searchResult[i].historyRate, double.parse(bitcoinList[i].diffRate!)),
+                                          layoutConfig: charts.LayoutConfig(
+                                              leftMarginSpec: charts.MarginSpec.fixedPixel(5),
+                                              topMarginSpec: charts.MarginSpec.fixedPixel(10),
+                                              rightMarginSpec: charts.MarginSpec.fixedPixel(5),
+                                              bottomMarginSpec: charts.MarginSpec.fixedPixel(10)),
+                                          defaultRenderer: charts.LineRendererConfig(includeArea: true, stacked: true,),
+                                          animate: true,
+                                          domainAxis: const charts.NumericAxisSpec(showAxisLine: false, renderSpec: charts.NoneRenderSpec()),
+                                          primaryMeasureAxis: const charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
+                                        ),
+                                      ),
+                                    ),
+
+                                    GestureDetector(
                                         onTap: () {
                                           callCurrencyDetails(_searchResult[i].name);
                                         },
-                                        child: Row(
-                                          children: [
+                                        child:Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Text('\$${double.parse(_searchResult[i].rate!.toStringAsFixed(2))}',
+                                                style: const TextStyle(fontSize: 18,color: Colors.black)),
+
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
                                             Container(
-                                                height: 70,
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(2.0),
-                                                  child: FadeInImage(
-                                                    placeholder: const AssetImage('assets/image/cob.png'),
-                                                    // image: NetworkImage("$URL/Bitcoin/resources/icons/${_searchResult[i].name!.toLowerCase()}.png"),
-                                                    image: NetworkImage("$URL/Bitcoin/resources/icons/${_searchResult[i].name!.toLowerCase()}.png"),
-                                                  ),
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                          onTap: () {
-                                            callCurrencyDetails(_searchResult[i].name);
-                                          },
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Text('\$${double.parse(_searchResult[i].rate!.toStringAsFixed(2))}',
-                                                  style: const TextStyle(fontSize: 18)),
-                                              Text('${_searchResult[i].name}',
-                                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold), textAlign: TextAlign.start,
-                                              ),
-                                            ],
-                                          )
-                                      ),
-                                      GestureDetector(
-                                          onTap: () {
-                                            callCurrencyDetails(_searchResult[i].name);
-                                          },
-                                          child:Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              GestureDetector(
-                                                onTap: () {
-                                                  callCurrencyDetails(_searchResult[i].name);
-                                                },
-                                                child: Container(
-                                                  width:70,
-                                                  height: 40,
-                                                  child: charts.LineChart(
-                                                    _createSampleData(_searchResult[i].historyRate, double.parse(_searchResult[i].diffRate!)),
-                                                    layoutConfig: charts.LayoutConfig(
-                                                        leftMarginSpec: charts.MarginSpec.fixedPixel(5),
-                                                        topMarginSpec: charts.MarginSpec.fixedPixel(10),
-                                                        rightMarginSpec: charts.MarginSpec.fixedPixel(5),
-                                                        bottomMarginSpec: charts.MarginSpec.fixedPixel(10)),
-                                                    defaultRenderer: charts.LineRendererConfig(includeArea: true, stacked: true,),
-                                                    animate: true,
-                                                    domainAxis: const charts.NumericAxisSpec(showAxisLine: false, renderSpec: charts.NoneRenderSpec()),
-                                                    primaryMeasureAxis: const charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
-                                                  ),
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Row(
+                                              color: Colors.white,
+                                              child: Row(
                                                 children: <Widget>[
                                                   Text(double.parse(_searchResult[i].diffRate!) < 0 ? '-' : '+',
                                                       style: TextStyle(fontSize: 12, color: double.parse(_searchResult[i].diffRate!) < 0 ? Colors.red : Colors.green)),
@@ -260,14 +264,15 @@ class _CoinsPageState extends State<CoinsPage>
                                                       style: TextStyle(fontSize: 12, color: double.parse(_searchResult[i].diffRate!) < 0 ? Colors.red : Colors.green)),
                                                 ],
                                               ),
-                                            ],
-                                          )
-                                      ),
-                                    ],
-                                  ),
+                                            ),
+                                          ],
+                                        )
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
+                          ),
                           background : Container(
                             color: Colors.green,
                             child: InkWell(
