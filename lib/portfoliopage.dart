@@ -380,6 +380,12 @@ class _PortfolioPageState extends State<PortfolioPage>
                         }),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(AppLocalizations.of(context).translate('swipe_delete'),
+                    textAlign: TextAlign.left,
+                    style: TextStyle(color: Colors.white,fontSize: 15),),
+                ),
                 Expanded(
                   child: Container(
                   decoration: const BoxDecoration(color: Colors.white,

@@ -12,6 +12,7 @@
   "total_portfolio" : "Total Portfolio",
   "no_coins_added" : "Coins Added",
   "swipe": "Swipe left to add coins!",
+  "swipe_delete": "Swipe left to delete coins!",
   "select_language" : "Select Language",
   "cancel" : "Cancel",
   "add_coins" : "Add Coins",

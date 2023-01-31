@@ -12,6 +12,7 @@
   "total_portfolio" : "Total portfölj",
   "no_coins_added" : "Mynt tillagda",
   "swipe": "Svep åt vänster för att lägga till mynt!",
+  "swipe_delete": "Svep åt vänster för att radera mynt!",
   "select_language" : "Välj språk",
   "cancel" : "Avbryt",
   "add_coins" : "Lägg till mynt",

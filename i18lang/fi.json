@@ -12,6 +12,7 @@
   "total_portfolio" : "Kokonaissalkku",
   "no_coins_added" : "Kolikot lisätty",
   "swipe": "Lisää kolikoita pyyhkäisemällä vasemmalle!",
+  "swipe_delete": "Pyyhkäise vasemmalle poistaaksesi kolikot!",
   "select_language" : "Valitse kieli",
   "cancel" : "Peruuta",
   "add_coins" : "Lisää kolikoita",

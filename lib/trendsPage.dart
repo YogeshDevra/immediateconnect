@@ -84,11 +84,10 @@ class _TrendsPageState extends State<TrendsPage> {
                   child: const Icon(Icons.menu_rounded,color: Color(0xffd76614),)
               ),
             ),
-            title:
-            Text(AppLocalizations.of(context).translate('trends'),
+            title: Text(AppLocalizations.of(context).translate('trends'),
                 style: GoogleFonts.openSans(textStyle: const TextStyle(
                 color: Color(0xffd76614),
-                fontSize: 25,
+                fontSize: 22,
                 fontWeight: FontWeight.bold),)
             )),
       ),
@@ -240,6 +239,7 @@ class _TrendsPageState extends State<TrendsPage> {
             ),
             Expanded(
               child:Container(
+                height: MediaQuery.of(context).size.height/2.5,
                       alignment: Alignment.topCenter,
                       child: Column(
                         children: <Widget>[
@@ -260,8 +260,7 @@ class _TrendsPageState extends State<TrendsPage> {
                                     //  plotAreaBackgroundColor:Colors.blue.shade100 ,
                                     series: <ChartSeries>[
                                       // Renders spline chart
-                                      SplineSeries<CartData,
-                                          double>(
+                                      SplineSeries<CartData, double>(
                                         dataSource: currencyData,
                                         xValueMapper: (CartData data, _) => data.date,
                                         yValueMapper: (CartData data, _) => data.rate,

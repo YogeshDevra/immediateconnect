@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -87,40 +88,37 @@ class _CoinsPageState extends State<CoinsPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size(100, 50),
+        child:
+        AppBar(
+            centerTitle: true,
+            // shadowColor: Colors.white,
+            // elevation: 0.0,
+            backgroundColor: const Color(0xffd76614),
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      _modalBottomMenu();
+                    });
+                  }, // Image tapped
+                  child: const Icon(Icons.menu_rounded,color: Color(0xFFFFFFFF),)
+              ),
+            ),
+            title: Text(AppLocalizations.of(context).translate('coins'),
+                style: GoogleFonts.openSans(textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold),)
+            )),
+      ),
       body: Container(
         decoration: const BoxDecoration(color: Color(0xffd76614)
         ),
         child: Column(
           children: <Widget>[
-            const SizedBox(
-              height: 40,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          _modalBottomMenu();
-                        });
-                      }, // Image tapped
-                      child: const Icon(Icons.menu_rounded,color: Colors.white,)
-                  ),
-                ),
-                const SizedBox(
-                  width: 90,
-                ),
-                Text(AppLocalizations.of(context).translate('coins'),
-                  style: TextStyle(
-                      fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
-                  textAlign: TextAlign.start,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(
@@ -139,10 +137,10 @@ class _CoinsPageState extends State<CoinsPage>
                       ),
                       onChanged: onSearchTextChanged,
                     ),
-                    trailing: new IconButton(icon: new Icon(Icons.cancel_outlined,color: Color(0xffd76614)), onPressed: () {
-                      _controller.clear();
-                      onSearchTextChanged('');
-                    },),
+                    // trailing: new IconButton(icon: new Icon(Icons.cancel_outlined,color: Color(0xffd76614)), onPressed: () {
+                    //   _controller.clear();
+                    //   onSearchTextChanged('');
+                    // },),
                   ),
                 ),
               ),

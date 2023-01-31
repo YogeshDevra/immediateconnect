@@ -10,6 +10,7 @@
   "total_portfolio" : "Portafolio total",
   "no_coins_added": "Monedas añadidas",
   "swipe": "¡Desliza hacia la izquierda para agregar monedas!",
+  "swipe_delete": "¡Desliza hacia la izquierda para eliminar monedas!",
   "select_language" : "Seleccionar idioma",
   "cancel" : "Cancelar",
   "add_coins": "Agregar Monedas",
