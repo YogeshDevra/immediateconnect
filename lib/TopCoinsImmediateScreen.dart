@@ -195,6 +195,7 @@ class _TopCoinsImmediateScreenState extends State<TopCoinsImmediateScreen> {
                       fontWeight: FontWeight.bold, color: Colors.black))
                   ),
                   Expanded(child:
+
                   ListView.separated(
                       separatorBuilder: (_, __) =>  const SizedBox(width: 8),
                       shrinkWrap: true,
@@ -260,7 +261,7 @@ class _TopCoinsImmediateScreenState extends State<TopCoinsImmediateScreen> {
                                     ]
                                 ),
                               ),
-                            ) : Center(child:Text("No Data Found."))
+                            ) : const SizedBox()
                         );
                       }),),
 
@@ -332,7 +333,7 @@ class _TopCoinsImmediateScreenState extends State<TopCoinsImmediateScreen> {
                                     ]
                                 ),
                               ),
-                            ) : Center(child:Text("No Data Found."))
+                            ) : const SizedBox()
                         );
                       }),
                   ),

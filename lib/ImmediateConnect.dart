@@ -384,18 +384,16 @@ class _ImmediateConnect extends State<ImmediateConnect> {
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(left:10.0,right: 10.0, bottom:5.0),
-                            child: Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(ImmAppLocalizations.of(context).translate('immediate_connect17'),
-                                      style:const TextStyle(fontWeight: FontWeight.bold,fontSize:20,
-                                          color:Colors.black,height:1.6)),
-                                  Text(ImmAppLocalizations.of(context).translate('immediate_connect18'),
-                                      style:const TextStyle(fontSize:15,color:Color(0xff757575),height:1.6)),
-                                ],
-                              ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(ImmAppLocalizations.of(context).translate('immediate_connect17'),
+                                    style:const TextStyle(fontWeight: FontWeight.bold,fontSize:20,
+                                        color:Colors.black,height:1.6)),
+                                Text(ImmAppLocalizations.of(context).translate('immediate_connect18'),
+                                    style:const TextStyle(fontSize:15,color:Color(0xff757575),height:1.6)),
+                              ],
                             ),
                           ),
                         ),
@@ -415,18 +413,16 @@ class _ImmediateConnect extends State<ImmediateConnect> {
                         Expanded(
                           child: Padding(
                             padding: const EdgeInsets.only(left:10.0,right: 10.0, bottom:5.0),
-                            child: Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(ImmAppLocalizations.of(context).translate('immediate_connect19'),
-                                      style:const TextStyle(fontWeight: FontWeight.bold,fontSize:20,
-                                          color:Colors.black,height:1.6)),
-                                  Text(ImmAppLocalizations.of(context).translate('immediate_connect20'),
-                                      style:const TextStyle(fontSize:15,color:Color(0xff757575),height:1.6)),
-                                ],
-                              ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(ImmAppLocalizations.of(context).translate('immediate_connect19'),
+                                    style:const TextStyle(fontWeight: FontWeight.bold,fontSize:20,
+                                        color:Colors.black,height:1.6)),
+                                Text(ImmAppLocalizations.of(context).translate('immediate_connect20'),
+                                    style:const TextStyle(fontSize:15,color:Color(0xff757575),height:1.6)),
+                              ],
                             ),
                           ),
                         ),
