@@ -1,0 +1,6 @@
+package com.imct.immediateconnectapp
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}

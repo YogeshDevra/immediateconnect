@@ -1,0 +1,57 @@
+{
+	
+  "top_coin": "Huippukolikot",
+  "coins" : "Kolikot",
+  "portfolio" : "Portfolio",
+  "portfolio_value" : "Koko salkku",
+  "trends" : "Trendit",
+  "top_gain" : "Gainers",
+  "top_lose" : "Löyhempi",
+  "home" : "Koti",
+  "search" : "Hae",
+  "total_portfolio" : "Kokonaissalkku",
+  "no_coins_added" : "Kolikot lisätty",
+  "swipe": "Lisää kolikoita pyyhkäisemällä vasemmalle!",
+  "swipe_delete": "Pyyhkäise vasemmalle poistaaksesi kolikot!",
+  "select_language" : "Valitse kieli",
+  "cancel" : "Peruuta",
+  "add_coins" : "Lisää kolikoita",
+  "enter_coins" : "Anna kolikoiden määrä",
+  "invalid_coins" : "Vähintään 1 kolikko tulisi lisätä",
+  "remove" : "Poista",
+  "remove_coins" : "Poista kolikot",
+  "update_coins" : "Päivitä kolikot",
+  "do_you": "Haluatko poistaa kolikon salkusta. Pysyvästi?",
+
+  "immediate_connect1": "Aloita tuotto BTC:llä käyttämällä välitöntä yhteyttä",
+  "immediate_connect2": "Immediate Connectin avulla kryptovaluuttavallankumouksesta oppiminen on yksinkertaista ja kannattavaa. Ohjelma on mahdollistanut käytännössä kenen tahansa hyötymisen kryptovaluuttavallankumouksesta, kryptovaluuttavallankumouksesta oppiminen on yksinkertaista ja kannattavaa. Ohjelma on tehnyt sen käytännössä kuka tahansa voi hyötyä kryptovallankumouksesta."
+  "immediate_connect3": "100+",
+  "immediate_connect4": "cryptos- reaaliaikaiset hinnat",
+  "immediate_connect5": "10k+",
+  "immediate_connect6": "Aktiiviset käyttäjät",
+  "immediate_connect7": "99%",
+  "immediate_connect8": "tyytyväiset käyttäjät",
+  "immediate_connect9": "Oletko valmis tekemään unelmistasi ylellisen todellisuuden?",
+  "immediate_connect10": "Liity eliittiryhmään jäseniä, jotka ymmärsivät Bitcoinin potentiaalin ja käyttivät hyväkseen mahdollisuutta muuttaa elämänsä vähimmällä aika- ja ponnistelulla."
+  "immediate_connect11": "Johtavat kryptovaluutat",
+  "immediate_connect12": "Suurin osa markkinoiden johtavista kryptovaluutoista on jo listattu",
+  "immediate_connect13": "Kuinka aloitat Immediate Connectin käytön?",
+  "immediate_connect14": "Immediate Connect -sovellus on tehokas, tehokas ja luotettava tapa oppia kryptovaluuttateollisuudesta. Ohjelmistossa on kaikki työkalut, joita tarvitset kykyjesi parantamiseen. Aloitusvaiheet on lueteltu alla:",
+  "immediate_connect15": "Rekisteröidy",
+  "immediate_connect16": "Rekisteröityminen on täysin ilmaista! Täytä vain lyhyt rekisteröintilomake, joka löytyy tältä viralliselta Immediate Connect -sivulta.",
+  "immediate_connect17": "Aloita oppiminen",
+  "immediate_connect18": "Kun olet lähettänyt ja vastaanottanut verkkolomakkeen hyväksynnän, voit heti alkaa käyttää erinomaista kryptovaluuttojen oppimisohjelmaamme maksutta."
+  "immediate_connect19": "Aloita ansaitseminen",
+  "immediate_connect20": "Voit astua todellisille kryptovaluuttamarkkinoille ja alkaa ansaita rahaa nyt, kun olet luonut tilisi ja oppinut olemaan vuorovaikutuksessa kryptovaluuttojen kanssa."
+  "immediate_connect21": "Miksi sinun pitäisi käyttää Immediate Connectia?",
+  "immediate_connect22": "Immediate Connect luotiin auttamaan sijoittajia maksimoimaan voittonsa kryptovaluuttamarkkinoilta. Tässä on joitain Immediate Connectin käytön etuja muihin vaihtoehtoihin verrattuna."
+  "immediate_connect23": "Useita kolikkovaihtoehtoja",
+  "immediate_connect24": "Immediate Connectin jäsenenä voit käyttää useita kryptovaluuttoja sekä kovia valuuttoja, kuten Yhdysvaltain dollareita, euroja ja frankeja.",
+  "immediate_connect25": "Ystävällinen käyttöliittymä",
+  "immediate_connect26": "Immediate Connect -alusta on uskomattoman käyttäjäystävällinen ja suoraviivainen. Jopa aloitteleville käyttäjille ei ole ongelmia sovelluksen käytössä.",
+  "immediate_connect27": "Ehdoitta ilmainen",
+  "immediate_connect28": "Immediate Connectin käyttö ei maksa mitään. Rekisteröityminen on ilmaista, eikä ohjelmiston käytöstä peritä ylimääräisiä maksuja tai nostoprovisioita."
+  "immediate_connect29": "Immediate Connect -sovellus – pääsypisteesi kryptovaluuttoihin",
+  "immediate_connect30": "Enemmän kuin vain yksi kryptovaluuttojen oppimisalusta, Immediate Connect tarjoaa erilaisia ​​palveluita. Laajissaan suurimmalla Immediate Connectilla on korkein onnistumisprosentti ja huomattava tarkkuus."
+
+}

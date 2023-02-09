@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "504624825531",
+    "project_id": "immediate-module",
+    "storage_bucket": "immediate-module.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504624825531:android:02acfbb1e8db70f33b159e",
+        "android_client_info": {
+          "package_name": "com.imct.immediateconnectapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "504624825531-ffvnuofb287nngn9dhjnev399kjjtj5q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.imct.immediateconnectapp",
+            "certificate_hash": "df08d390dbe28f66ba4c5f22a755339762ca1cb2"
+          }
+        },
+        {
+          "client_id": "504624825531-1189b4mgu90fl3me43en450qr6fp0dis.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOMkI1e9riKgPzMgD_gsWsPgGqCb7JWiI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "504624825531-1189b4mgu90fl3me43en450qr6fp0dis.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
