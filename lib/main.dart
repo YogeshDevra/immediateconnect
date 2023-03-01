@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'localization/ImmAppLanguage.dart';
 import 'localization/ImmAppLocalizations.dart';
 import 'PortfolioImmediateScreen.dart';
@@ -67,8 +68,11 @@ class MyApp extends StatelessWidget {
               '/homePage': (BuildContext context) => const PortfolioImmediateScreen(),
               '/trendsPage': (BuildContext context) => const TrendsImmediateScreen(),
             },
-            home: Provider<FirebaseAnalytics>(
-                create: (context) => analytics, child: MyHomePage()),
+            home: ShowCaseWidget(
+              builder: Builder(builder: (context) => MyHomePage()),
+            ),
+          //   Provider<FirebaseAnalytics>(
+          //       create: (context) => analytics, child: MyHomePage()),
           );
         },
       ),

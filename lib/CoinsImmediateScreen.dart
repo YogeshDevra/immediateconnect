@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'DatabaseHelper.dart';
 import 'ImmediateConnect.dart';
 import 'localization/ImmAppLocalizations.dart';
@@ -41,18 +42,24 @@ class _CoinsImmediateScreenState extends State<CoinsImmediateScreen>
   TextEditingController? coinEditTextController;
   final dbHelp = DatabaseHelper.instance;
   List<ImmediatePortfolio> immediatePortfolios = [];
+  final _key1 = GlobalKey();
+  BuildContext? myContext;
 
   @override
   void initState() {
     fetchTomcatUrlValue();
     coinAddedTextController = TextEditingController();
     coinEditTextController = TextEditingController();
+
     dbHelp.queryAllRows().then((notes) {
       for (var note in notes) {
         immediatePortfolios.add(ImmediatePortfolio.fromMap(note));
         totalPortfolioValue = totalPortfolioValue + note["total_value"];
       }
       setState(() {});
+    });
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      ShowCaseWidget.of(myContext!)!.startShowCase([_key1]);
     });
     super.initState();
   }
@@ -81,7 +88,11 @@ class _CoinsImmediateScreenState extends State<CoinsImmediateScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ShowCaseWidget(
+        builder: Builder(
+            builder: (context) {
+              myContext = context;
+              return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size(100, 50),
         child: AppBar(
@@ -144,7 +155,13 @@ class _CoinsImmediateScreenState extends State<CoinsImmediateScreen>
                   child: immediateBitcoins.isEmpty
                       ? const Center(child: CircularProgressIndicator())
                       : searchImmediateBitcoins.isNotEmpty || _searchController.text.isNotEmpty
-                      ?ListView.builder(
+                      ?Showcase(
+                      key: _key1!,
+                      // title: 'Tap to Add Coin',
+                      description:
+                      'Slide left to Add Coins',
+                      textColor: Colors.black,
+                      child: ListView.builder(
                       itemCount: searchImmediateBitcoins.length,
                       itemBuilder: (BuildContext context, int i) {
                         return Dismissible(
@@ -258,8 +275,14 @@ class _CoinsImmediateScreenState extends State<CoinsImmediateScreen>
                           ),
                         );
                       }
-                      )
-                      :ListView.builder(
+                      ))
+                      :Showcase(
+                      key: _key1!,
+                      // title: 'Tap to Add Coin',
+                      description:
+              'Slide left to Add Coins',
+              textColor: Colors.black,
+              child: ListView.builder(
                       itemCount: immediateBitcoins.length,
                       itemBuilder: (BuildContext context, int i) {
                         return Dismissible(
@@ -380,14 +403,14 @@ class _CoinsImmediateScreenState extends State<CoinsImmediateScreen>
                             ),
                           ),
                         );
-                      }),
+                      })),
                 ),
               ),
             ),
           ],
         ),
       ),
-    );
+    );}));
   }
 
   List<charts.Series<LinearSales, int>> _createSampleData(historyRate, diffRate) {

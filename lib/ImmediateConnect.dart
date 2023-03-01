@@ -23,7 +23,6 @@ class ImmediateConnect extends StatefulWidget {
 }
 
 class _ImmediateConnect extends State<ImmediateConnect> {
-  late WebViewController controller;
   bool loading = false;
   SharedPreferences? sharedPrefer;
   num size = 0;
@@ -31,6 +30,7 @@ class _ImmediateConnect extends State<ImmediateConnect> {
   List<ImmediateBitcoin> immediateBitcoins = [];
   bool? isHideForm;
   String? tomcatUrl;
+  late WebViewController controller;
 
   @override
   void initState() {

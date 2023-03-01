@@ -8,6 +8,8 @@ import 'package:immediateconnectapp/coinsImmediateScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'ImmediateConnect.dart';
 import 'localization/ImmAppLocalizations.dart';
 import 'models/ImmediateBitcoin.dart';
@@ -39,6 +41,11 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
   String _lable = "Coins";
   final PageStorageBucket bucket = PageStorageBucket();
   String? langCodeSaved;
+  bool? isHideForm;
+  String? formIFrame;
+  late WebViewController controller;
+  final _key0 = GlobalKey();
+  BuildContext? myContext;
 
   TextEditingController? coinAddedTextController;
   TextEditingController? coinEditTextController;
@@ -70,6 +77,9 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
         totalPortfolioValues = totalPortfolioValues + note["total_value"];
       }
       setState(() {});
+    });
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      ShowCaseWidget.of(myContext!)!.startShowCase([_key0]);
     });
     super.initState();
     getSharedPrefData();
@@ -109,7 +119,9 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
         minimumFetchInterval: Duration.zero,
       ));
       await remoteConfig.fetchAndActivate();
+      formIFrame = remoteConfig.getString('immediate_connect_form_url').trim();
       tomcatUrl = remoteConfig.getString('immediate_connect_tomcat_url').trim();
+      isHideForm = remoteConfig.getBool('hide_immediate_connect');
       print(tomcatUrl);
       setState(() {
 
@@ -117,13 +129,37 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
     } catch (exception) {
       print('Unable to fetch remote config. Cached or default values will be used');
     }
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {},
+          onPageFinished: (String url) {},
+          onWebResourceError: (WebResourceError error) {},
+          onNavigationRequest: (NavigationRequest request) {
+            if (request.url.startsWith(formIFrame!)) {
+              return NavigationDecision.prevent;
+            }
+            return NavigationDecision.navigate;
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(formIFrame!));
     callCoinApi();
   }
 
   @override
   Widget build(BuildContext context) {
     var appLanguage = Provider.of<ImmAppLanguage>(context);
-    return Scaffold(
+    return ShowCaseWidget(
+        builder: Builder(
+            builder: (context) {
+              myContext = context;
+              return Scaffold(
       body: Container(
           width: double.infinity,
           decoration: const BoxDecoration(
@@ -133,6 +169,12 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
             padding: const EdgeInsets.all(2.0),
             child: Column(
               children: [
+                if(isHideForm == true)
+                  Container(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    height: 520,
+                    child : WebViewWidget(controller: controller),
+                  ),
                 const SizedBox(height: 40,),
                 Row(
                   children: [
@@ -363,7 +405,13 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
                       borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft: Radius.circular(25))
                   ),
                   child: immediatePortfolios.isNotEmpty && immediateBitcoins.isNotEmpty
-                      ? ListView.builder(
+                      ? Showcase(
+                      key: _key0!,
+                      // title: 'Tap to Add Coin',
+                      description:
+                      'Slide left to Delete Coins',
+                      textColor: Colors.black,
+                      child: ListView.builder(
                       itemCount: immediatePortfolios.length,
                       itemBuilder: (BuildContext context, int i) {
                         return Dismissible(
@@ -444,7 +492,7 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
                             ),
                           ),
                         );
-                      })
+                      }))
                       :Center(
                     child: ElevatedButton(
                       onPressed:(){
@@ -474,7 +522,7 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
             ),
           )
       ),
-    );
+    );}));
   }
 
   List<charts.Series<LinearSales, int>> _createSampleData(
