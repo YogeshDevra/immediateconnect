@@ -155,13 +155,13 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
   @override
   Widget build(BuildContext context) {
     var appLanguage = Provider.of<ImmAppLanguage>(context);
-    return ShowCaseWidget(
-        builder: Builder(
-            builder: (context) {
-              myContext = context;
-              return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
+    return SingleChildScrollView(
+      child: ShowCaseWidget(
+          builder: Builder(
+              builder: (context) {
+                myContext = context;
+                return Scaffold(
+        body: Container(
             width: double.infinity,
             decoration: const BoxDecoration(
               color: Color(0xffd76614)
@@ -413,7 +413,7 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
                         key: _key0!,
                         // title: 'Tap to Add Coin',
                         description:
-                        'Slide left to Delete Coins',
+                        ImmAppLocalizations.of(context).translate('swipe_delete'),
                         textColor: Colors.black,
                         child: ListView.builder(
                         itemCount: immediatePortfolios.length,
@@ -526,8 +526,8 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
               ),
             )
         ),
-      ),
-    );}));
+      );})),
+    );
   }
 
   List<charts.Series<LinearSales, int>> _createSampleData(

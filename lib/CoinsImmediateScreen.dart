@@ -159,7 +159,7 @@ class _CoinsImmediateScreenState extends State<CoinsImmediateScreen>
                       key: _key1!,
                       // title: 'Tap to Add Coin',
                       description:
-                      'Slide left to Add Coins',
+                      ImmAppLocalizations.of(context)!.translate('swipe')!,
                       textColor: Colors.black,
                       child: ListView.builder(
                       itemCount: searchImmediateBitcoins.length,
@@ -280,7 +280,7 @@ class _CoinsImmediateScreenState extends State<CoinsImmediateScreen>
                       key: _key1!,
                       // title: 'Tap to Add Coin',
                       description:
-              'Slide left to Add Coins',
+                      ImmAppLocalizations.of(context)!.translate('swipe')!,
               textColor: Colors.black,
               child: ListView.builder(
                       itemCount: immediateBitcoins.length,
