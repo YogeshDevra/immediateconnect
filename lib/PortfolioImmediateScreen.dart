@@ -155,378 +155,377 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
   @override
   Widget build(BuildContext context) {
     var appLanguage = Provider.of<ImmAppLanguage>(context);
-    return SingleChildScrollView(
-      child: ShowCaseWidget(
+    return ShowCaseWidget(
           builder: Builder(
               builder: (context) {
                 myContext = context;
                 return Scaffold(
-        body: Container(
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              color: Color(0xffd76614)
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Column(
-                children: [
-                  const SizedBox(height: 40,),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                            onTap: () {
-                              setState(() {_modalBottomMenu();});
-                            }, // Image tapped
-                            child: const Icon(Icons.menu_rounded,color: Colors.white,)
+                  appBar: PreferredSize(
+                    preferredSize: const Size(100, 50),
+                    child: AppBar(
+                        centerTitle: true,
+                        backgroundColor: const Color(0xffd76614),
+                        leading: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                              onTap: () {
+                                setState(() {_modalBottomMenu();});
+                              }, // Image tapped
+                              child: const Icon(Icons.menu_rounded,color: Colors.white,)
+                          ),
                         ),
-                      ),
-                      const Spacer(),
-                      Text(ImmAppLocalizations.of(context).translate('portfolio'),
-                        style: const TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
-                        textAlign: TextAlign.start,
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.translate_rounded,
-                          color: Colors.white,
+                        title: Text(ImmAppLocalizations.of(context).translate('portfolio'),
+                          style: const TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+                          textAlign: TextAlign.start,
                         ),
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Center(child: Text(ImmAppLocalizations.of(context).translate('select_language'))),
-                                  content: Container(
-                                      width: double.maxFinite,
-                                      child: ListView.builder(
-                                          shrinkWrap: true,
-                                          itemCount: languages.length,
-                                          itemBuilder: (BuildContext context, int i) {
-                                            return Column(
-                                              children: <Widget>[
-                                                InkWell(
-                                                    onTap: () async {
-                                                      appLanguage.changeLanguage(Locale(languages[i].langCode!));
-                                                      await getSharedPrefData();
-                                                      Navigator.pop(context);
-                                                    },
-                                                    child: Row(
-                                                      mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                                                      children: <Widget>[
-                                                        Text(languages[i].langName!),
-                                                        langCodeSaved == languages[i].langCode
-                                                        ? const Icon(Icons.radio_button_checked, color: Colors.deepOrange,)
-                                                        : const Icon(Icons.radio_button_unchecked, color: Colors.deepOrange,),
-                                                      ],
-                                                    )),
-                                                const Divider()
-                                              ],
-                                            );
-                                          })),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {Navigator.pop(context);},
-                                      child: Text(ImmAppLocalizations.of(context).translate('cancel')),
-                                    )
-                                  ],
-                                );
-                              });
-                        },
-                      ),
-                    ],
+                      actions: [
+                        IconButton(
+                          icon: const Icon(
+                            Icons.translate_rounded,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Center(child: Text(ImmAppLocalizations.of(context).translate('select_language'))),
+                                    content: Container(
+                                        width: double.maxFinite,
+                                        child: ListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount: languages.length,
+                                            itemBuilder: (BuildContext context, int i) {
+                                              return Column(
+                                                children: <Widget>[
+                                                  InkWell(
+                                                      onTap: () async {
+                                                        appLanguage.changeLanguage(Locale(languages[i].langCode!));
+                                                        await getSharedPrefData();
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: Row(
+                                                        mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                                        children: <Widget>[
+                                                          Text(languages[i].langName!),
+                                                          langCodeSaved == languages[i].langCode
+                                                              ? const Icon(Icons.radio_button_checked, color: Colors.deepOrange,)
+                                                              : const Icon(Icons.radio_button_unchecked, color: Colors.deepOrange,),
+                                                        ],
+                                                      )),
+                                                  const Divider()
+                                                ],
+                                              );
+                                            })),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {Navigator.pop(context);},
+                                        child: Text(ImmAppLocalizations.of(context).translate('cancel')),
+                                      )
+                                    ],
+                                  );
+                                });
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 10,),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.all(12),
+                  body: SingleChildScrollView(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Color(0xffd76614),
+                      ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        // mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            '\$${totalPortfolioValues.toStringAsFixed(2)}',
-                            style: const TextStyle(
-                                fontSize: 35,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                        children: [
+                          const SizedBox(height: 10,),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    '\$${totalPortfolioValues.toStringAsFixed(2)}',
+                                    style: const TextStyle(
+                                        fontSize: 35,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(ImmAppLocalizations.of(context).translate('portfolio_value'),
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.grey,),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                          Text(ImmAppLocalizations.of(context).translate('portfolio_value'),
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: Colors.grey,),
+                          const SizedBox(
+                            height: 5,
                           ),
+                          if(isHideForm == true)
+                            Container(
+                              padding: const EdgeInsets.only(left: 10, right: 10),
+                              height: 520,
+                              child : WebViewWidget(controller: controller),
+                            ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: MediaQuery.of(context).size.height/4,
+                              width: MediaQuery.of(context).size.width/.7,
+                              child: gainerLooserCoins.isEmpty
+                                  ? const Center(child: CircularProgressIndicator())
+                                  : ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: gainerLooserCoins.length,
+                                  itemBuilder: (BuildContext context, int i) {
+                                    return InkWell(
+                                      child: Card(
+                                        elevation: 1,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        child: Container(
+                                          height:160,
+                                          decoration: BoxDecoration(
+                                              color: const Color(0xffc1580b),
+                                              borderRadius: BorderRadius.circular(20)
+                                          ),
+                                          padding: const EdgeInsets.all(10),
+                                          child:Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+                                              Row(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Row(
+                                                      children: [
+                                                        Padding(
+                                                          padding: const EdgeInsets.only(left:5.0),
+                                                          child: FadeInImage(
+                                                            width: 50,
+                                                            height: 50,
+                                                            placeholder: const AssetImage('immediateAsset/connectImage/currencyPlaceholder.png'),
+                                                            image: NetworkImage("$tomcatUrl/Bitcoin/resources/icons/${gainerLooserCoins[i].immBitName!.toLowerCase()}.png"),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                            padding: const EdgeInsets.only(left:10.0),
+                                                            child:Text('${gainerLooserCoins[i].immBitName}',
+                                                              style: const TextStyle(fontSize: 25,fontWeight:FontWeight.bold,color:Color(0xffa0bef8)),
+                                                              textAlign: TextAlign.left,
+                                                            )
+                                                        ),
+                                                        Padding(
+                                                          padding: const EdgeInsets.only(left:65),
+                                                          child: Text('\$ ${double.parse(gainerLooserCoins[i].immBitRate!.toStringAsFixed(2))}',
+                                                            style: const TextStyle(fontSize: 20,color:Colors.white),textAlign: TextAlign.left,
+                                                          ),
+                                                        ),
+                                                      ]
+                                                  ),
+                                                ],
+                                              ),
+
+                                              Row(
+                                                children: [
+                                                  Align(
+                                                    alignment: Alignment.centerLeft,
+                                                    child: Row(
+                                                        crossAxisAlignment:CrossAxisAlignment.end,
+                                                        mainAxisAlignment:MainAxisAlignment.end,
+                                                        children:[
+                                                          double.parse(gainerLooserCoins[i].immBitDiffRate!) < 0
+                                                              ? const Icon(Icons.arrow_downward, color: Colors.red, size: 20,)
+                                                              : const Icon(Icons.arrow_upward, color: Colors.green, size: 20,),
+                                                          const SizedBox(
+                                                            width: 2,
+                                                          ),
+                                                          Text(double.parse(gainerLooserCoins[i].immBitDiffRate!) < 0
+                                                              ? "${double.parse(gainerLooserCoins[i].immBitDiffRate!.replaceAll('-', "")).toStringAsFixed(2)} %"
+                                                              : "${double.parse(gainerLooserCoins[i].immBitDiffRate!).toStringAsFixed(2)} %",
+                                                              style: TextStyle(fontSize: 18,
+                                                                  color: double.parse(gainerLooserCoins[i].immBitDiffRate!) < 0
+                                                                      ? Colors.red
+                                                                      : Colors.green)
+                                                          ),
+                                                        ]
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Column(
+                                                    children: <Widget>[
+                                                      GestureDetector(
+                                                        child: Container(
+                                                          width:MediaQuery.of(context).size.width/2,
+                                                          height: 80,
+                                                          child: charts.LineChart(
+                                                            _createSampleData(gainerLooserCoins[i].immBitHistoryRate, double.parse(gainerLooserCoins[i].immBitDiffRate!)),
+                                                            layoutConfig: charts.LayoutConfig(
+                                                                leftMarginSpec: charts.MarginSpec.fixedPixel(5),
+                                                                topMarginSpec: charts.MarginSpec.fixedPixel(10),
+                                                                rightMarginSpec: charts.MarginSpec.fixedPixel(5),
+                                                                bottomMarginSpec: charts.MarginSpec.fixedPixel(10)),
+                                                            defaultRenderer: charts.LineRendererConfig(includeArea: true, stacked: true,roundEndCaps: true),
+                                                            animate: true,
+                                                            domainAxis: const charts.NumericAxisSpec(showAxisLine: false, renderSpec: charts.NoneRenderSpec()),
+                                                            primaryMeasureAxis: const charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(ImmAppLocalizations.of(context).translate('swipe_delete'),
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(color: Colors.white,fontSize: 15),),
+                          ),
+                          Container(
+                            height: 350,
+                              decoration: const BoxDecoration(color: Colors.white,
+                                  borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft: Radius.circular(25))
+                              ),
+                              child: immediatePortfolios.isNotEmpty && immediateBitcoins.isNotEmpty
+                                  ? Showcase(
+                                  key: _key0!,
+                                  // title: 'Tap to Add Coin',
+                                  description: ImmAppLocalizations.of(context).translate('swipe_delete'),
+                                  textColor: Colors.black,
+                                  child: ListView.builder(
+                                      itemCount: immediatePortfolios.length,
+                                      itemBuilder: (BuildContext context, int i) {
+                                        return Dismissible(
+                                          background : Container(
+                                            color: Colors.red,
+                                            child: InkWell(
+                                                onTap: () {_showDeleteCoinFromPortfolioDialog(immediatePortfolios[i]);}, // Image tapped
+                                                child: const Icon(Icons.delete,color: Colors.white,size:20)
+                                            ),
+                                          ),
+                                          key: UniqueKey(),
+                                          onDismissed: (direction){
+                                            setState(() {_showDeleteCoinFromPortfolioDialog(immediatePortfolios[i]);});
+                                          },
+                                          child: Card(
+                                            color: const Color(0xffd76614),
+                                            elevation: 1,
+                                            child: Container(
+                                              decoration: const BoxDecoration(color: Color(0xffd76614)),
+                                              height: MediaQuery.of(context).size.height/11,
+                                              width: MediaQuery.of(context).size.width/.5,
+                                              child:GestureDetector(
+                                                  onTap: () {showPortfolioEditDialog(immediatePortfolios[i]);},
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                    children: <Widget>[
+                                                      Padding(
+                                                          padding: const EdgeInsets.all(5.0),
+                                                          child: SizedBox(
+                                                            height: 40,
+                                                            width:40,
+                                                            child: FadeInImage(
+                                                              placeholder: const AssetImage('immediateAsset/connectImage/currencyPlaceholder.png'),
+                                                              image: NetworkImage("$tomcatUrl/Bitcoin/resources/icons/${immediatePortfolios[i].name.toLowerCase()}.png"),
+                                                            ),
+                                                          )
+                                                      ),
+                                                      Padding(
+                                                          padding: const EdgeInsets.all(1),
+                                                          child:Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                            children: <Widget>[
+                                                              Text(immediatePortfolios[i].name,
+                                                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white), textAlign: TextAlign.left,
+                                                              ),
+                                                              Text('\$${immediatePortfolios[i].rateDuringAdding.toStringAsFixed(2)}',
+                                                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+                                                            ],
+                                                          )
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 20,
+                                                      ),
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(0),
+                                                        child: Column(
+                                                          children: [
+                                                            Padding(
+                                                              padding: const EdgeInsets.all(5),
+                                                              child: Text(' ${immediatePortfolios[i].numberOfCoins.toStringAsFixed(0)}',
+                                                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
+                                                                textAlign: TextAlign.end,),
+                                                            ),
+                                                            Text('\$${immediatePortfolios[i].totalValue.toStringAsFixed(2)}',
+                                                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
+                                                              textAlign: TextAlign.end,),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      const SizedBox(width:10),
+                                                      const SizedBox(
+                                                        width: 2,
+                                                      )
+                                                    ],
+                                                  )
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }))
+                                  :Center(
+                                child: ElevatedButton(
+                                  onPressed:(){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const CoinsImmediateScreen()),
+                                    );
+                                  },
+                                  style: ButtonStyle(
+                                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white,),
+                                      backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffd76614),),
+                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(35.0),
+                                          )
+                                      )
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Text(ImmAppLocalizations.of(context).translate('add_coins')),
+                                  ),
+                                ),
+                              ),
+                            ),
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  if(isHideForm == true)
-                    Container(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      height: 520,
-                      child : WebViewWidget(controller: controller),
-                    ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height/4,
-                      width: MediaQuery.of(context).size.width/.7,
-                      child: gainerLooserCoins.isEmpty
-                          ? const Center(child: CircularProgressIndicator())
-                          : ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: gainerLooserCoins.length,
-                          itemBuilder: (BuildContext context, int i) {
-                            return InkWell(
-                              child: Card(
-                                elevation: 1,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Container(
-                                  height:160,
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xffc1580b),
-                                      borderRadius: BorderRadius.circular(20)
-                                  ),
-                                  padding: const EdgeInsets.all(10),
-                                  child:Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.only(left:5.0),
-                                                  child: FadeInImage(
-                                                    width: 50,
-                                                    height: 50,
-                                                    placeholder: const AssetImage('immediateAsset/connectImage/currencyPlaceholder.png'),
-                                                    image: NetworkImage("$tomcatUrl/Bitcoin/resources/icons/${gainerLooserCoins[i].immBitName!.toLowerCase()}.png"),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                    padding: const EdgeInsets.only(left:10.0),
-                                                    child:Text('${gainerLooserCoins[i].immBitName}',
-                                                      style: const TextStyle(fontSize: 25,fontWeight:FontWeight.bold,color:Color(0xffa0bef8)),
-                                                      textAlign: TextAlign.left,
-                                                    )
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(left:65),
-                                                  child: Text('\$ ${double.parse(gainerLooserCoins[i].immBitRate!.toStringAsFixed(2))}',
-                                                    style: const TextStyle(fontSize: 20,color:Colors.white),textAlign: TextAlign.left,
-                                                  ),
-                                                ),
-                                              ]
-                                          ),
-                                        ],
-                                      ),
-
-                                      Row(
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Row(
-                                                crossAxisAlignment:CrossAxisAlignment.end,
-                                                mainAxisAlignment:MainAxisAlignment.end,
-                                                children:[
-                                                  double.parse(gainerLooserCoins[i].immBitDiffRate!) < 0
-                                                      ? const Icon(Icons.arrow_downward, color: Colors.red, size: 20,)
-                                                      : const Icon(Icons.arrow_upward, color: Colors.green, size: 20,),
-                                                  const SizedBox(
-                                                    width: 2,
-                                                  ),
-                                                  Text(double.parse(gainerLooserCoins[i].immBitDiffRate!) < 0
-                                                      ? "${double.parse(gainerLooserCoins[i].immBitDiffRate!.replaceAll('-', "")).toStringAsFixed(2)} %"
-                                                      : "${double.parse(gainerLooserCoins[i].immBitDiffRate!).toStringAsFixed(2)} %",
-                                                      style: TextStyle(fontSize: 18,
-                                                          color: double.parse(gainerLooserCoins[i].immBitDiffRate!) < 0
-                                                              ? Colors.red
-                                                              : Colors.green)
-                                                  ),
-                                                ]
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Column(
-                                            children: <Widget>[
-                                              GestureDetector(
-                                                child: Container(
-                                                  width:MediaQuery.of(context).size.width/2,
-                                                  height: 80,
-                                                  child: charts.LineChart(
-                                                    _createSampleData(gainerLooserCoins[i].immBitHistoryRate, double.parse(gainerLooserCoins[i].immBitDiffRate!)),
-                                                    layoutConfig: charts.LayoutConfig(
-                                                        leftMarginSpec: charts.MarginSpec.fixedPixel(5),
-                                                        topMarginSpec: charts.MarginSpec.fixedPixel(10),
-                                                        rightMarginSpec: charts.MarginSpec.fixedPixel(5),
-                                                        bottomMarginSpec: charts.MarginSpec.fixedPixel(10)),
-                                                    defaultRenderer: charts.LineRendererConfig(includeArea: true, stacked: true,roundEndCaps: true),
-                                                    animate: true,
-                                                    domainAxis: const charts.NumericAxisSpec(showAxisLine: false, renderSpec: charts.NoneRenderSpec()),
-                                                    primaryMeasureAxis: const charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          }),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(ImmAppLocalizations.of(context).translate('swipe_delete'),
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(color: Colors.white,fontSize: 15),),
-                  ),
-                  Expanded(
-                    child: Container(
-                    decoration: const BoxDecoration(color: Colors.white,
-                        borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft: Radius.circular(25))
-                    ),
-                    child: immediatePortfolios.isNotEmpty && immediateBitcoins.isNotEmpty
-                        ? Showcase(
-                        key: _key0!,
-                        // title: 'Tap to Add Coin',
-                        description:
-                        ImmAppLocalizations.of(context).translate('swipe_delete'),
-                        textColor: Colors.black,
-                        child: ListView.builder(
-                        itemCount: immediatePortfolios.length,
-                        itemBuilder: (BuildContext context, int i) {
-                          return Dismissible(
-                            background : Container(
-                              color: Colors.red,
-                              child: InkWell(
-                                  onTap: () {_showDeleteCoinFromPortfolioDialog(immediatePortfolios[i]);}, // Image tapped
-                                  child: const Icon(Icons.delete,color: Colors.white,size:20)
-                              ),
-                            ),
-                            key: UniqueKey(),
-                            onDismissed: (direction){
-                              setState(() {_showDeleteCoinFromPortfolioDialog(immediatePortfolios[i]);});
-                            },
-                            child: Card(
-                              color: const Color(0xffd76614),
-                              elevation: 1,
-                              child: Container(
-                                decoration: const BoxDecoration(color: Color(0xffd76614)),
-                                height: MediaQuery.of(context).size.height/11,
-                                width: MediaQuery.of(context).size.width/.5,
-                                child:GestureDetector(
-                                    onTap: () {showPortfolioEditDialog(immediatePortfolios[i]);},
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: SizedBox(
-                                              height: 40,
-                                              width:40,
-                                              child: FadeInImage(
-                                                placeholder: const AssetImage('immediateAsset/connectImage/currencyPlaceholder.png'),
-                                                image: NetworkImage("$tomcatUrl/Bitcoin/resources/icons/${immediatePortfolios[i].name.toLowerCase()}.png"),
-                                              ),
-                                            )
-                                        ),
-                                        Padding(
-                                            padding: const EdgeInsets.all(1),
-                                            child:Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Text(immediatePortfolios[i].name,
-                                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white), textAlign: TextAlign.left,
-                                                ),
-                                                Text('\$${immediatePortfolios[i].rateDuringAdding.toStringAsFixed(2)}',
-                                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
-                                              ],
-                                            )
-                                        ),
-                                        const SizedBox(
-                                          width: 20,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(0),
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(5),
-                                                child: Text(' ${immediatePortfolios[i].numberOfCoins.toStringAsFixed(0)}',
-                                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
-                                                  textAlign: TextAlign.end,),
-                                              ),
-                                              Text('\$${immediatePortfolios[i].totalValue.toStringAsFixed(2)}',
-                                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
-                                                textAlign: TextAlign.end,),
-                                            ],
-                                          ),
-                                        ),
-                                        const SizedBox(width:10),
-                                        const SizedBox(
-                                          width: 2,
-                                        )
-                                      ],
-                                    )
-                                ),
-                              ),
-                            ),
-                          );
-                        }))
-                        :Center(
-                      child: ElevatedButton(
-                        onPressed:(){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const CoinsImmediateScreen()),
-                          );
-                        },
-                        style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white,),
-                            backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffd76614),),
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(35.0),
-                                )
-                            )
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Text(ImmAppLocalizations.of(context).translate('add_coins')),
-                        ),
-                      ),
-                    ),
-                  ),
-                  )
-                ],
-              ),
-            )
-        ),
-      );})),
+                );
+              }
+              )
     );
   }
 
