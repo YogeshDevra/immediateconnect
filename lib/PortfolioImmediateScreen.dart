@@ -81,7 +81,6 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       ShowCaseWidget.of(myContext!)!.startShowCase([_key0]);
     });
-    ShowCaseWidget.of(myContext!).dismiss();
     super.initState();
     getSharedPrefData();
     fetchRemoteValue();
@@ -403,18 +402,18 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
                               textAlign: TextAlign.left,
                               style: const TextStyle(color: Colors.white,fontSize: 15),),
                           ),
-                          Container(
+                          Showcase(
+                          key: _key0!,
+                          // title: 'Tap to Add Coin',
+                          description: ImmAppLocalizations.of(context).translate('swipe_delete'),
+                          textColor: Colors.black,
+                         child: Container(
                             height: 350,
                               decoration: const BoxDecoration(color: Colors.white,
                                   borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft: Radius.circular(25))
                               ),
                               child: immediatePortfolios.isNotEmpty && immediateBitcoins.isNotEmpty
-                                  ? Showcase(
-                                  key: _key0!,
-                                  // title: 'Tap to Add Coin',
-                                  description: ImmAppLocalizations.of(context).translate('swipe_delete'),
-                                  textColor: Colors.black,
-                                  child: ListView.builder(
+                                  ? ListView.builder(
                                       itemCount: immediatePortfolios.length,
                                       itemBuilder: (BuildContext context, int i) {
                                         return Dismissible(
@@ -495,7 +494,7 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
                                             ),
                                           ),
                                         );
-                                      }))
+                                      })
                                   :Center(
                                 child: ElevatedButton(
                                   onPressed:(){
@@ -519,7 +518,7 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
                                   ),
                                 ),
                               ),
-                            ),
+                            ),),
                         ],
                       ),
                     ),
