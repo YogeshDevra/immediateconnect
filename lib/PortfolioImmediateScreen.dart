@@ -81,6 +81,7 @@ class _PortfolioImmediateScreenState extends State<PortfolioImmediateScreen> wit
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       ShowCaseWidget.of(myContext!)!.startShowCase([_key0]);
     });
+    ShowCaseWidget.of(myContext!).dismiss();
     super.initState();
     getSharedPrefData();
     fetchRemoteValue();
