@@ -1,7 +1,9 @@
+
+// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/services.dart';
@@ -27,7 +29,7 @@ class CoinsPage extends StatefulWidget {
 
 class _CoinsPageState extends State<CoinsPage>
     with SingleTickerProviderStateMixin {
-  TextEditingController _controller = new TextEditingController();
+  TextEditingController _controller = TextEditingController();
   bool isLoading = false;
   List<Bitcoin> bitcoinList = [];
   List<Bitcoin> _searchResult = [];
@@ -50,19 +52,15 @@ class _CoinsPageState extends State<CoinsPage>
     coinCountTextEditingController = TextEditingController();
     coinCountEditTextEditingController = TextEditingController();
     dbHelper.queryAllRows().then((notes) {
-      notes.forEach((note) {
+      for (var note in notes) {
         items.add(PortfolioBitcoin.fromMap(note));
         totalValuesOfPortfolio = totalValuesOfPortfolio + note["total_value"];
-      });
+      }
       setState(() {});
     });
     super.initState();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
   fetchRemoteValue() async {
     final RemoteConfig remoteConfig = await RemoteConfig.instance;
 
@@ -94,7 +92,7 @@ class _CoinsPageState extends State<CoinsPage>
         AppBar(
             centerTitle: true,
             // shadowColor: Colors.white,
-            // elevation: 0.0,
+            elevation: 0.0,
             backgroundColor: const Color(0xffd76614),
             leading: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -120,19 +118,19 @@ class _CoinsPageState extends State<CoinsPage>
         child: Column(
           children: <Widget>[
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(
                     Radius.circular(40)
                 ),
               ),
-              child: new Padding(
+              child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: new Card(
-                  child: new ListTile(
-                    leading: new Icon(Icons.search,color: Color(0xffd76614)),
-                    title: new TextField(
+                child: Card(
+                  child: ListTile(
+                    leading: const Icon(Icons.search,color: Color(0xffd76614)),
+                    title: TextField(
                       controller: _controller,
-                      decoration: new InputDecoration(
+                      decoration: InputDecoration(
                         hintText: AppLocalizations.of(context)!.translate('search')!, border: InputBorder.none,
                       ),
                       onChanged: onSearchTextChanged,
@@ -146,9 +144,9 @@ class _CoinsPageState extends State<CoinsPage>
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Text(AppLocalizations.of(context).translate('swipe'),textAlign: TextAlign.left,
-                style: TextStyle(color: Colors.white,fontSize: 15),),
+                style: const TextStyle(color: Colors.white,fontSize: 15),),
             ),
             Expanded(
               child:Container(
@@ -160,14 +158,29 @@ class _CoinsPageState extends State<CoinsPage>
                 LazyLoadScrollView(
                   isLoading: isLoading,
                   onEndOfPage: () => callBitcoinApi(),
-                  child: bitcoinList.length <= 0
+                  child: bitcoinList.isEmpty
                       ? const Center(child: CircularProgressIndicator())
-                      : _searchResult.length != 0 ||
+                      : _searchResult.isNotEmpty ||
                       _searchController.text.isNotEmpty
                       ?ListView.builder(
                       itemCount: _searchResult.length,
                       itemBuilder: (BuildContext context, int i) {
                         return Dismissible(
+                          background : Container(
+                            color: Colors.green,
+                            child: InkWell(
+                                onTap: () {
+                                  showPortfolioDialog(_searchResult[i]);
+                                }, // Image tapped
+                                child: const Icon(Icons.add,color: Colors.white,size:20)
+                            ),
+                          ),
+                          key: UniqueKey(),
+                          onDismissed: (direction){
+                            setState(() {
+                              showPortfolioDialog(_searchResult[i]);
+                            });
+                          },
                           child: Card(
                             elevation: 2,
                             color: Colors.white,
@@ -188,7 +201,7 @@ class _CoinsPageState extends State<CoinsPage>
                                         children: <Widget>[
                                           Stack(
                                               children: <Widget>[
-                                                Container(
+                                                SizedBox(
                                                     height: 70,
                                                     child: Padding(
                                                       padding: const EdgeInsets.all(2.0),
@@ -218,7 +231,7 @@ class _CoinsPageState extends State<CoinsPage>
                                       onTap: () {
                                         callCurrencyDetails(_searchResult[i].name);
                                       },
-                                      child: Container(
+                                      child: SizedBox(
                                         width:MediaQuery.of(context).size.width/4,
                                         height: 40,
                                         child: charts.LineChart(
@@ -271,21 +284,6 @@ class _CoinsPageState extends State<CoinsPage>
                               ),
                             ),
                           ),
-                          background : Container(
-                            color: Colors.green,
-                            child: InkWell(
-                                onTap: () {
-                                  showPortfolioDialog(_searchResult[i]);
-                                }, // Image tapped
-                                child: const Icon(Icons.add,color: Colors.white,size:20)
-                            ),
-                          ),
-                          key: UniqueKey(),
-                          onDismissed: (direction){
-                            setState(() {
-                              showPortfolioDialog(_searchResult[i]);
-                            });
-                          },
                         );
                       }
                       )
@@ -293,6 +291,21 @@ class _CoinsPageState extends State<CoinsPage>
                       itemCount: bitcoinList.length,
                       itemBuilder: (BuildContext context, int i) {
                         return Dismissible(
+                          background : Container(
+                            color: Colors.green,
+                            child: InkWell(
+                                onTap: () {
+                                  showPortfolioDialog(bitcoinList[i]);
+                                }, // Image tapped
+                                child: const Icon(Icons.add,color: Colors.white,size:20)
+                            ),
+                          ),
+                          key: UniqueKey(),
+                          onDismissed: (direction){
+                            setState(() {
+                              showPortfolioDialog(bitcoinList[i]);
+                            });
+                          },
                           child: Card(
                             elevation: 2,
                             color: Colors.white,
@@ -313,7 +326,7 @@ class _CoinsPageState extends State<CoinsPage>
                                         children: <Widget>[
                                           Stack(
                                               children: <Widget>[
-                                                Container(
+                                                SizedBox(
                                                     height: 70,
                                                     child: Padding(
                                                       padding: const EdgeInsets.all(2.0),
@@ -343,7 +356,7 @@ class _CoinsPageState extends State<CoinsPage>
                                       onTap: () {
                                         callCurrencyDetails(bitcoinList[i].name);
                                       },
-                                      child: Container(
+                                      child: SizedBox(
                                         width:MediaQuery.of(context).size.width/4,
                                         height: 40,
                                         child: charts.LineChart(
@@ -396,21 +409,6 @@ class _CoinsPageState extends State<CoinsPage>
                               ),
                             ),
                           ),
-                          background : Container(
-                            color: Colors.green,
-                            child: InkWell(
-                                onTap: () {
-                                  showPortfolioDialog(bitcoinList[i]);
-                                }, // Image tapped
-                                child: const Icon(Icons.add,color: Colors.white,size:20)
-                            ),
-                          ),
-                          key: UniqueKey(),
-                          onDismissed: (direction){
-                            setState(() {
-                              showPortfolioDialog(bitcoinList[i]);
-                            });
-                          },
                         );
                       }),
                 ),
@@ -445,7 +443,7 @@ class _CoinsPageState extends State<CoinsPage>
 
   Future<void> callBitcoinApi() async {
     // var uri = '$URL/Bitcoin/resources/getBitcoinList?size=${_size}';
-    var uri = '$URL/Bitcoin/resources/getBitcoinList?size=${_size}';
+    var uri = '$URL/Bitcoin/resources/getBitcoinList?size=$_size';
     //  print(uri);
     var response = await get(Uri.parse(uri));
     //   print(response.body);
@@ -470,7 +468,7 @@ class _CoinsPageState extends State<CoinsPage>
         context: context,
         builder: (ctxt) => ListView(
           children: [
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height,
               child: Scaffold(
                 body: Container(
@@ -541,7 +539,7 @@ class _CoinsPageState extends State<CoinsPage>
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 50.0),
                         child: Container(
-                          decoration: BoxDecoration(color: Color(0xffc1580b),
+                          decoration: BoxDecoration(color: const Color(0xffc1580b),
                               border: Border.all(color: Colors.white, width: 2)
                           ),
                           child: Form(
@@ -553,7 +551,7 @@ class _CoinsPageState extends State<CoinsPage>
                               cursorColor: Colors.white,
                                 decoration: InputDecoration(
                                   labelText: AppLocalizations.of(context).translate('enter_coins'),
-                                  labelStyle: TextStyle(color: Colors.grey, fontSize: 20),
+                                  labelStyle: const TextStyle(color: Colors.grey, fontSize: 20),
                                   fillColor: Colors.white,
                                 ),
                               inputFormatters: <TextInputFormatter>[
@@ -580,11 +578,11 @@ class _CoinsPageState extends State<CoinsPage>
                               _addSaveCoinsToLocalStorage(bitcoin);
                             } ,// Image tapped
                             child: Container(
-                              decoration: BoxDecoration(color: Color(0xffc1580b),border: Border.all(color: Colors.white,width: 2)),
+                              decoration: BoxDecoration(color: const Color(0xffc1580b),border: Border.all(color: Colors.white,width: 2)),
                               child: Padding(
-                                padding: EdgeInsets.all(15),
+                                padding: const EdgeInsets.all(15),
                                 child: Text(AppLocalizations.of(context).translate('add_coins'),textAlign: TextAlign.center,
-                                  style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+                                  style: const TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
                               ),
                             ),
                           ),
@@ -617,7 +615,7 @@ class _CoinsPageState extends State<CoinsPage>
 
   _addSaveCoinsToLocalStorage(Bitcoin bitcoin) async {
     if (_formKey2.currentState!.validate()) {
-      if (items.length > 0) {
+      if (items.isNotEmpty) {
         PortfolioBitcoin? bitcoinLocal =
         items.firstWhereOrNull(
                 (element) => element.name == bitcoin.name);
@@ -712,7 +710,7 @@ class _CoinsPageState extends State<CoinsPage>
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => DashboardHome()),
+                                  MaterialPageRoute(builder: (context) => const DashboardHome()),
                                 );
                               },
                               child: Row(
@@ -721,7 +719,7 @@ class _CoinsPageState extends State<CoinsPage>
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33764.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('home'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('home'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -739,7 +737,7 @@ class _CoinsPageState extends State<CoinsPage>
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33765.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('top_coin'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('top_coin'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -748,7 +746,7 @@ class _CoinsPageState extends State<CoinsPage>
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => CoinsPage()),
+                                  MaterialPageRoute(builder: (context) => const CoinsPage()),
                                 );
                               },
                               child: Row(
@@ -757,7 +755,7 @@ class _CoinsPageState extends State<CoinsPage>
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33766.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('coins'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('coins'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -775,7 +773,7 @@ class _CoinsPageState extends State<CoinsPage>
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33767.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('trends'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('trends'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -784,7 +782,7 @@ class _CoinsPageState extends State<CoinsPage>
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => PortfolioPage()),
+                                  MaterialPageRoute(builder: (context) => const PortfolioPage()),
                                 );
                               },
                               child: Row(
@@ -793,7 +791,7 @@ class _CoinsPageState extends State<CoinsPage>
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33768.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('portfolio'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('portfolio'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -816,10 +814,11 @@ class _CoinsPageState extends State<CoinsPage>
       return;
     }
 
-    bitcoinList.forEach((userDetail) {
-      if (userDetail.name!.toLowerCase().contains(text))
+    for (var userDetail in bitcoinList) {
+      if (userDetail.name!.toLowerCase().contains(text)) {
         _searchResult.add(userDetail);
-    });
+      }
+    }
 
     setState(() {});
   }

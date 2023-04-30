@@ -291,39 +291,40 @@ class _PortfolioPageState extends State<PortfolioPage>
                 height: 5,
               ),
               displayiframe == true?
-                WebView(
-                  initialUrl: iFrameUrl,
-                  navigationDelegate: _interceptNavigation,
+
+                Container(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  height: 500,
+                  child:WebView(
+                    initialUrl: iFrameUrl,
+                    navigationDelegate: _interceptNavigation,
+                  )
+                  // child : WebViewWidget(controller: controller),
+                  // child: WebView(
+                  //   initialUrl: iFrameUrl,
+                  //   gestureRecognizers: Set()
+                  //     ..add(Factory<VerticalDragGestureRecognizer>(
+                  //             () => VerticalDragGestureRecognizer())),
+                  //   javascriptMode: JavascriptMode.unrestricted,
+                  //   onWebViewCreated:
+                  //       (WebViewController webViewController) {
+                  //     _controllerForm.complete(webViewController);
+                  //   },
+                  //   // TODO(iskakaushik): Remove this when collection literals makes it to stable.
+                  //   // ignore: prefer_collection_literals
+                  //   javascriptChannels: <JavascriptChannel>[
+                  //     _toasterJavascriptChannel(context),
+                  //   ].toSet(),
+                  //
+                  //   onPageStarted: (String url) {
+                  //     print('Page started loading: $url');
+                  //   },
+                  //   onPageFinished: (String url) {
+                  //     print('Page finished loading: $url');
+                  //   },
+                  //   gestureNavigationEnabled: true,
+                  // ),
                 )
-                // Container(
-                //   padding: const EdgeInsets.only(left: 10, right: 10),
-                //   height: 500,
-                //   child : WebViewWidget(controller: controller),
-                //   // child: WebView(
-                //   //   initialUrl: iFrameUrl,
-                //   //   gestureRecognizers: Set()
-                //   //     ..add(Factory<VerticalDragGestureRecognizer>(
-                //   //             () => VerticalDragGestureRecognizer())),
-                //   //   javascriptMode: JavascriptMode.unrestricted,
-                //   //   onWebViewCreated:
-                //   //       (WebViewController webViewController) {
-                //   //     _controllerForm.complete(webViewController);
-                //   //   },
-                //   //   // TODO(iskakaushik): Remove this when collection literals makes it to stable.
-                //   //   // ignore: prefer_collection_literals
-                //   //   javascriptChannels: <JavascriptChannel>[
-                //   //     _toasterJavascriptChannel(context),
-                //   //   ].toSet(),
-                //   //
-                //   //   onPageStarted: (String url) {
-                //   //     print('Page started loading: $url');
-                //   //   },
-                //   //   onPageFinished: (String url) {
-                //   //     print('Page finished loading: $url');
-                //   //   },
-                //   //   gestureNavigationEnabled: true,
-                //   // ),
-                // )
                   :
               Padding(
                 padding: const EdgeInsets.all(8.0),

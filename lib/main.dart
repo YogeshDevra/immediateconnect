@@ -1,6 +1,5 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api
 
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
 import 'package:google_fonts/google_fonts.dart';
@@ -23,9 +22,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final AppLanguage? appLanguage;
-  MyApp({this.appLanguage});
-
-  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  const MyApp({super.key, this.appLanguage});
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +32,7 @@ class MyApp extends StatelessWidget {
         builder: (context, model, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            navigatorObservers: const [
-              // FirebaseAnalyticsObserver(analytics: analytics)
-            ],
-            title: 'Bitcoin',
+            title: 'Immediate Connect',
             theme: ThemeData(
               textTheme: GoogleFonts.openSansTextTheme(),
             ),
@@ -63,12 +57,11 @@ class MyApp extends StatelessWidget {
               Locale('sv', '')
             ],
             routes: <String, WidgetBuilder>{
-              '/myHomePage': (BuildContext context) => MyHomePage(),
-              '/homePage': (BuildContext context) => PortfolioPage(),
+              '/myHomePage': (BuildContext context) => const MyHomePage(),
+              '/homePage': (BuildContext context) => const PortfolioPage(),
               '/driftPage': (BuildContext context) => TrendsPage(),
             },
-            home: Provider<FirebaseAnalytics>(
-                create: (context) => analytics, child: MyHomePage()),
+            home: const MyHomePage(),
           );
         },
       ),
@@ -77,9 +70,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, this.title}) : super(key: key);
-
-  final String? title;
+  const MyHomePage({super.key});
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -88,7 +79,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Stack(
           alignment: Alignment.center,
