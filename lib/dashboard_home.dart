@@ -29,8 +29,8 @@ class _DashboardHome extends State<DashboardHome> {
 
   SharedPreferences? sharedPreferences;
   num _size = 0;
-  String? iFrameUrl;
   List<Bitcoin> bitcoinList = [];
+  String? iFrameUrl;
   bool? displayiframe;
   String? URL;
 
@@ -52,8 +52,8 @@ class _DashboardHome extends State<DashboardHome> {
         minimumFetchInterval: Duration.zero,
       ));
       await remoteConfig.fetchAndActivate();
-      iFrameUrl = remoteConfig.getString('immediate_connect_iframe_url').trim();
       URL = remoteConfig.getString('immediate_connect_port_url').trim();
+      iFrameUrl = remoteConfig.getString('immediate_connect_iframe_url').trim();
       displayiframe = remoteConfig.getBool('bool_immediate_connect');
       print(iFrameUrl);
       setState(() {
@@ -62,26 +62,26 @@ class _DashboardHome extends State<DashboardHome> {
       print('Unable to fetch remote config. Cached or default values will be used');
     }
     callBitcoinApi();
-    controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {},
-          onPageFinished: (String url) {},
-          onWebResourceError: (WebResourceError error) {},
-          onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith(iFrameUrl!)) {
-              return NavigationDecision.prevent;
-            }
-            return NavigationDecision.navigate;
-          },
-        ),
-      )
-      ..loadRequest(Uri.parse(iFrameUrl!));
+    // controller = WebViewController()
+    //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
+    //   ..setBackgroundColor(const Color(0x00000000))
+    //   ..setNavigationDelegate(
+    //     NavigationDelegate(
+    //       onProgress: (int progress) {
+    //         // Update loading bar.
+    //       },
+    //       onPageStarted: (String url) {},
+    //       onPageFinished: (String url) {},
+    //       onWebResourceError: (WebResourceError error) {},
+    //       onNavigationRequest: (NavigationRequest request) {
+    //         if (request.url.startsWith(iFrameUrl!)) {
+    //           return NavigationDecision.prevent;
+    //         }
+    //         return NavigationDecision.navigate;
+    //       },
+    //     ),
+    //   )
+    //   ..loadRequest(Uri.parse(iFrameUrl!));
   }
   @override
   Widget build(BuildContext context) {
@@ -89,538 +89,527 @@ class _DashboardHome extends State<DashboardHome> {
       body:ListView(
         controller:_controllerList,
         children: <Widget>[
-          Container(
-            //decoration: BoxDecoration(image: DecorationImage(image: AssetImage("assets/image/Design 27.png"),fit: BoxFit.fill)),
-            //height: 1100,
-            //child:Image.asset("assets/image/Design 27.png",fit: BoxFit.fitHeight,width:double.infinity),
-            child: Column(
-                children: <Widget>[
-                  Container(
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          decoration: const BoxDecoration(color: Color(0xfffcf2ea)),
-                          child: Column(
-                            children: <Widget>[
-                              const SizedBox(
-                                height: 40,
-                              ),
-                              Row(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            _modalBottomMenu();
-                                          });
-                                        }, // Image tapped
-                                        child: const Icon(Icons.menu_rounded,color: Color(0xffd76614),)
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                  padding: const EdgeInsets.all(15),
-                                child: Image.asset("assets/image/logo_hor.png"),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(AppLocalizations.of(context).translate('homesen1'),
-                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(AppLocalizations.of(context).translate('homesen2'),
-                                    style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 25),),
-                                ),
-                              ),
-                              if(displayiframe == true)
-                                Container(
-                                  padding: const EdgeInsets.only(left: 10, right: 10),
-                                  height: 520,
-                                  child : WebViewWidget(controller: controller),
-                                  // child: WebView(
-                                  //   initialUrl: iFrameUrl,
-                                  //   gestureRecognizers: Set()
-                                  //     ..add(Factory<VerticalDragGestureRecognizer>(
-                                  //             () => VerticalDragGestureRecognizer())),
-                                  //   javascriptMode: JavascriptMode.unrestricted,
-                                  //   onWebViewCreated:
-                                  //       (WebViewController webViewController) {
-                                  //     _controllerForm.complete(webViewController);
-                                  //   },
-                                  //   // TODO(iskakaushik): Remove this when collection literals makes it to stable.
-                                  //   // ignore: prefer_collection_literals
-                                  //   javascriptChannels: <JavascriptChannel>[
-                                  //     _toasterJavascriptChannel(context),
-                                  //   ].toSet(),
-                                  //
-                                  //   onPageStarted: (String url) {
-                                  //     print('Page started loading: $url');
-                                  //   },
-                                  //   onPageFinished: (String url) {
-                                  //     print('Page finished loading: $url');
-                                  //   },
-                                  //   gestureNavigationEnabled: true,
-                                  // ),
-                                ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          decoration: const BoxDecoration(color:Color(0xffDD650D)),
-                          child: Column(
-                            children:  <Widget>[
-                              SizedBox(
-                                height: 30,
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(AppLocalizations.of(context).translate('homesen3'),style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color: Color(0xffFFFFFF)),),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(AppLocalizations.of(context).translate('homesen4'),style: TextStyle(fontSize: 30 ,color: Color(0xffFFFFFF)),),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(AppLocalizations.of(context).translate('homesen5'),style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color: Color(0xffFFFFFF)),),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(AppLocalizations.of(context).translate('homesen6'),style: TextStyle(fontSize: 30 ,color: Color(0xffFFFFFF)),),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(AppLocalizations.of(context).translate('homesen7'),style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color: Color(0xffFFFFFF)),),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(AppLocalizations.of(context).translate('homesen8'),style: TextStyle(fontSize: 30 ,color: Color(0xffFFFFFF)),),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          decoration: const BoxDecoration(color: Color(0xfffcf2ea)),
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                  padding: EdgeInsets.all(15),
-                                child: Text(AppLocalizations.of(context).translate('homesen9'),textAlign: TextAlign.left,
-                                style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Text(AppLocalizations.of(context).translate('homesen10'),textAlign: TextAlign.left,
-                                  style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 20),),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Text(AppLocalizations.of(context).translate('homesen11'),textAlign: TextAlign.left,
-                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Text(AppLocalizations.of(context).translate('homesen12'),textAlign: TextAlign.left,
-                                  style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 20),),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                child:Column(
-                                    children: <Widget>[
-                                      Container(
-                                          height: MediaQuery.of(context).size.height/4,
-                                          width: MediaQuery.of(context).size.width/.7,
-                                          child: bitcoinList.length <= 0
-                                              ? const Center(child: CircularProgressIndicator())
-                                              : ListView.builder(
-                                              scrollDirection: Axis.horizontal,
-                                              itemCount: bitcoinList.length,
-                                              itemBuilder: (BuildContext context, int i) {
-                                                return InkWell(
-                                                  child: Card(
-                                                    elevation: 1,
-                                                    shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(25),
-                                                    ),
-                                                    child: Container(
-                                                      padding: const EdgeInsets.all(10),
-                                                      child:Column(
-                                                        crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: <Widget>[
-                                                          Row(
-                                                              children: [
-                                                                Container(
-                                                                    child: Padding(
-                                                                      padding:
-                                                                      const EdgeInsets.only(left:5.0),
-                                                                      child: FadeInImage(
-                                                                        width: 70,
-                                                                        height: 70,
-                                                                        placeholder: const AssetImage('assets/image/cob.png'),
-                                                                        image: NetworkImage("$URL/Bitcoin/resources/icons/${bitcoinList[i].name!.toLowerCase()}.png"),
-                                                                      ),
-                                                                    )
-                                                                ),
-                                                                const SizedBox(
-                                                                  width: 40,
-                                                                ),
-                                                                Padding(
-                                                                    padding:
-                                                                    const EdgeInsets.only(left:10.0),
-                                                                    child:Text('${bitcoinList[i].name}',
-                                                                      style: const TextStyle(fontSize: 20,fontWeight:FontWeight.bold,color:Colors.black),
-                                                                      textAlign: TextAlign.left,
-                                                                    )
-                                                                ),
-                                                              ]
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 10,
-                                                          ),
-                                                          Row(
-                                                            children: [
-                                                              Text('\$${double.parse(bitcoinList[i].rate!.toStringAsFixed(2))}',
-                                                                  style: const TextStyle(fontSize: 20,fontWeight:FontWeight.bold,color:Colors.black)
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          Container(
-                                                              margin: const EdgeInsets.only(left:200),
-                                                              //height: 50,
-                                                              decoration: BoxDecoration(
-                                                                  color: Colors.white,
-                                                                  borderRadius: BorderRadius.circular(10)
-                                                              ),
-                                                              child:Row(
-                                                                  crossAxisAlignment:CrossAxisAlignment.center,
-                                                                  mainAxisAlignment:MainAxisAlignment.end,
-                                                                  children:[
-                                                                    double.parse(bitcoinList[i].diffRate!) < 0
-                                                                        ? Container(child: const Icon(Icons.arrow_drop_down_sharp, color: Colors.red, size: 18,),)
-                                                                        : Container(child: const Icon(Icons.arrow_drop_up_sharp, color: Colors.green, size: 18,),),
-                                                                    const SizedBox(
-                                                                      width: 2,
-                                                                    ),
-                                                                    Text(double.parse(bitcoinList[i].diffRate!) < 0
-                                                                        ? "\$ " + double.parse(bitcoinList[i].diffRate!.replaceAll('-', "")).toStringAsFixed(2)
-                                                                        : "\$ " + double.parse(bitcoinList[i].diffRate!).toStringAsFixed(2),
-                                                                        style: TextStyle(fontSize: 18,
-                                                                            color: double.parse(bitcoinList[i].diffRate!) < 0
-                                                                                ? Colors.red
-                                                                                : Colors.green)
-                                                                    ),
-                                                                    const SizedBox(
-                                                                        height: 5,
-                                                                        width:15
-                                                                    ),
-                                                                  ]
-                                                              )
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  onTap: () {
-                                                    callCurrencyDetails(bitcoinList[i].name);
-                                                  },
-                                                );
-                                              })
-                                      ),
-                                    ]
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Text(AppLocalizations.of(context).translate('homesen13'),textAlign: TextAlign.left,
-                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Text(AppLocalizations.of(context).translate('homesen14'),textAlign: TextAlign.left,
-                                  style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 20),),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(10.0),
-                                child: Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(right:8.0,top:15),
-                                        child: Image.asset('assets/image/Frame 35.png'),
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: EdgeInsets.only(left:10.0,right: 10.0, bottom:5.0),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text(AppLocalizations.of(context).translate('homesen15'),
-                                                  style:TextStyle(fontWeight: FontWeight.bold,fontSize:20,
-                                                      color:Colors.black,height:1.6)
-                                              ),
-                                              Text(AppLocalizations.of(context).translate('homesen16'),
-                                                style:TextStyle(fontSize:15,
-                                                    color:Color(0xff757575),height:1.6),softWrap: true,
-                                              ),
-                                            ],
-                                          ),
-
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(right:8.0,top:15),
-                                        child: Image.asset('assets/image/Frame 36.png'),
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(left:10.0,right: 10.0, bottom:5.0),
-                                          child: Expanded(
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text(AppLocalizations.of(context).translate('homesen17'),
-                                                    style:TextStyle(fontWeight: FontWeight.bold,fontSize:20,
-                                                        color:Colors.black,height:1.6)),
-                                                Text(AppLocalizations.of(context).translate('homesen18'),
-                                                    style:TextStyle(fontSize:15,color:Color(0xff757575),height:1.6)),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(right:8.0,top:15),
-                                        child: Image.asset('assets/image/Frame 37.png'),
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(left:10.0,right: 10.0, bottom:5.0),
-                                          child: Expanded(
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text(AppLocalizations.of(context).translate('homesen19'),
-                                                    style:TextStyle(fontWeight: FontWeight.bold,fontSize:20,
-                                                        color:Colors.black,height:1.6)),
-                                                Text(AppLocalizations.of(context).translate('homesen20'),
-                                                    style:TextStyle(fontSize:15,color:Color(0xff757575),height:1.6)),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Image.asset("assets/image/iPhone 13.png"),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Text(AppLocalizations.of(context).translate('homesen21'),textAlign: TextAlign.left,
-                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Text(AppLocalizations.of(context).translate('homesen22'),textAlign: TextAlign.left,
-                                  style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 20),),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Image.asset("assets/image/dist_crypto.png"),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Text(AppLocalizations.of(context).translate('homesen23'),textAlign: TextAlign.left,
-                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Text(AppLocalizations.of(context).translate('homesen24'),textAlign: TextAlign.left,
-                                  style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 20),),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Image.asset("assets/image/close_hand.png"),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Text(AppLocalizations.of(context).translate('homesen25'),textAlign: TextAlign.left,
-                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Text(AppLocalizations.of(context).translate('homesen26'),textAlign: TextAlign.left,
-                                  style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 20),),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Image.asset("assets/image/gold_bitcoin.png"),
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Text(AppLocalizations.of(context).translate('homesen27'),textAlign: TextAlign.center,
-                                  style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Text(AppLocalizations.of(context).translate('homesen28'),textAlign: TextAlign.center,
-                                  style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 20),),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          decoration: const BoxDecoration(color: Color(0xffDD650D)),
-                          child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(AppLocalizations.of(context).translate('homesen29'),
-                                    style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(15),
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(AppLocalizations.of(context).translate('homesen30'),
-                                    style: TextStyle(color: Colors.white,fontSize: 20),),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(15),
-                                child: Align(
-                                  alignment: Alignment.center,
-                                  child: Image.asset("assets/image/crypto_design.png"),
-                                ),
-                              ),
-                            ],
+          Column(
+            children: <Widget>[
+              Container(
+                decoration: const BoxDecoration(color: Color(0xfffcf2ea)),
+                child: Column(
+                  children: <Widget>[
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  _modalBottomMenu();
+                                });
+                              }, // Image tapped
+                              child: const Icon(Icons.menu_rounded,color: Color(0xffd76614),)
                           ),
                         ),
                       ],
                     ),
-                  ),
-                ]
-            ),
+                    Padding(
+                        padding: const EdgeInsets.all(15),
+                      child: Image.asset("assets/image/logo_hor.png"),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(AppLocalizations.of(context).translate('homesen1'),
+                          style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(AppLocalizations.of(context).translate('homesen2'),
+                          style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 25),),
+                      ),
+                    ),
+                    // if(displayiframe == true)
+                    //   Container(
+                    //     padding: const EdgeInsets.only(left: 10, right: 10),
+                    //     height: 520,
+                    //     child : WebViewWidget(controller: controller),
+                    //     // child: WebView(
+                    //     //   initialUrl: iFrameUrl,
+                    //     //   gestureRecognizers: Set()
+                    //     //     ..add(Factory<VerticalDragGestureRecognizer>(
+                    //     //             () => VerticalDragGestureRecognizer())),
+                    //     //   javascriptMode: JavascriptMode.unrestricted,
+                    //     //   onWebViewCreated:
+                    //     //       (WebViewController webViewController) {
+                    //     //     _controllerForm.complete(webViewController);
+                    //     //   },
+                    //     //   // TODO(iskakaushik): Remove this when collection literals makes it to stable.
+                    //     //   // ignore: prefer_collection_literals
+                    //     //   javascriptChannels: <JavascriptChannel>[
+                    //     //     _toasterJavascriptChannel(context),
+                    //     //   ].toSet(),
+                    //     //
+                    //     //   onPageStarted: (String url) {
+                    //     //     print('Page started loading: $url');
+                    //     //   },
+                    //     //   onPageFinished: (String url) {
+                    //     //     print('Page finished loading: $url');
+                    //     //   },
+                    //     //   gestureNavigationEnabled: true,
+                    //     // ),
+                    //   ),
+                  ],
+                ),
+              ),
+              Container(
+                decoration: const BoxDecoration(color:Color(0xffDD650D)),
+                child: Column(
+                  children:  <Widget>[
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(AppLocalizations.of(context).translate('homesen3'),style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color: Color(0xffFFFFFF)),),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(AppLocalizations.of(context).translate('homesen4'),style: TextStyle(fontSize: 30 ,color: Color(0xffFFFFFF)),),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(AppLocalizations.of(context).translate('homesen5'),style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color: Color(0xffFFFFFF)),),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(AppLocalizations.of(context).translate('homesen6'),style: TextStyle(fontSize: 30 ,color: Color(0xffFFFFFF)),),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(AppLocalizations.of(context).translate('homesen7'),style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold,color: Color(0xffFFFFFF)),),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(AppLocalizations.of(context).translate('homesen8'),style: TextStyle(fontSize: 30 ,color: Color(0xffFFFFFF)),),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                decoration: const BoxDecoration(color: Color(0xfffcf2ea)),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                        padding: EdgeInsets.all(15),
+                      child: Text(AppLocalizations.of(context).translate('homesen9'),textAlign: TextAlign.left,
+                      style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(AppLocalizations.of(context).translate('homesen10'),textAlign: TextAlign.left,
+                        style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 20),),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(AppLocalizations.of(context).translate('homesen11'),textAlign: TextAlign.left,
+                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(AppLocalizations.of(context).translate('homesen12'),textAlign: TextAlign.left,
+                        style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 20),),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      child:Column(
+                          children: <Widget>[
+                            Container(
+                                height: MediaQuery.of(context).size.height/4,
+                                width: MediaQuery.of(context).size.width/.7,
+                                child: bitcoinList.length <= 0
+                                    ? const Center(child: CircularProgressIndicator())
+                                    : ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: bitcoinList.length,
+                                    itemBuilder: (BuildContext context, int i) {
+                                      return InkWell(
+                                        child: Card(
+                                          elevation: 1,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(25),
+                                          ),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(10),
+                                            child:Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: <Widget>[
+                                                Row(
+                                                    children: [
+                                                      Container(
+                                                          child: Padding(
+                                                            padding:
+                                                            const EdgeInsets.only(left:5.0),
+                                                            child: FadeInImage(
+                                                              width: 70,
+                                                              height: 70,
+                                                              placeholder: const AssetImage('assets/image/cob.png'),
+                                                              image: NetworkImage("$URL/Bitcoin/resources/icons/${bitcoinList[i].name!.toLowerCase()}.png"),
+                                                            ),
+                                                          )
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 40,
+                                                      ),
+                                                      Padding(
+                                                          padding:
+                                                          const EdgeInsets.only(left:10.0),
+                                                          child:Text('${bitcoinList[i].name}',
+                                                            style: const TextStyle(fontSize: 20,fontWeight:FontWeight.bold,color:Colors.black),
+                                                            textAlign: TextAlign.left,
+                                                          )
+                                                      ),
+                                                    ]
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  children: [
+                                                    Text('\$${double.parse(bitcoinList[i].rate!.toStringAsFixed(2))}',
+                                                        style: const TextStyle(fontSize: 20,fontWeight:FontWeight.bold,color:Colors.black)
+                                                    ),
+                                                  ],
+                                                ),
+                                                Container(
+                                                    margin: const EdgeInsets.only(left:200),
+                                                    //height: 50,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius: BorderRadius.circular(10)
+                                                    ),
+                                                    child:Row(
+                                                        crossAxisAlignment:CrossAxisAlignment.center,
+                                                        mainAxisAlignment:MainAxisAlignment.end,
+                                                        children:[
+                                                          double.parse(bitcoinList[i].diffRate!) < 0
+                                                              ? Container(child: const Icon(Icons.arrow_drop_down_sharp, color: Colors.red, size: 18,),)
+                                                              : Container(child: const Icon(Icons.arrow_drop_up_sharp, color: Colors.green, size: 18,),),
+                                                          const SizedBox(
+                                                            width: 2,
+                                                          ),
+                                                          Text(double.parse(bitcoinList[i].diffRate!) < 0
+                                                              ? "\$ " + double.parse(bitcoinList[i].diffRate!.replaceAll('-', "")).toStringAsFixed(2)
+                                                              : "\$ " + double.parse(bitcoinList[i].diffRate!).toStringAsFixed(2),
+                                                              style: TextStyle(fontSize: 18,
+                                                                  color: double.parse(bitcoinList[i].diffRate!) < 0
+                                                                      ? Colors.red
+                                                                      : Colors.green)
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 5,
+                                                              width:15
+                                                          ),
+                                                        ]
+                                                    )
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          callCurrencyDetails(bitcoinList[i].name);
+                                        },
+                                      );
+                                    })
+                            ),
+                          ]
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(AppLocalizations.of(context).translate('homesen13'),textAlign: TextAlign.left,
+                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(AppLocalizations.of(context).translate('homesen14'),textAlign: TextAlign.left,
+                        style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 20),),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right:8.0,top:15),
+                              child: Image.asset('assets/image/Frame 35.png'),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(left:10.0,right: 10.0, bottom:5.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(AppLocalizations.of(context).translate('homesen15'),
+                                        style:TextStyle(fontWeight: FontWeight.bold,fontSize:20,
+                                            color:Colors.black,height:1.6)
+                                    ),
+                                    Text(AppLocalizations.of(context).translate('homesen16'),
+                                      style:TextStyle(fontSize:15,
+                                          color:Color(0xff757575),height:1.6),softWrap: true,
+                                    ),
+                                  ],
+                                ),
+
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right:8.0,top:15),
+                              child: Image.asset('assets/image/Frame 36.png'),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left:10.0,right: 10.0, bottom:5.0),
+                                child: Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(AppLocalizations.of(context).translate('homesen17'),
+                                          style:TextStyle(fontWeight: FontWeight.bold,fontSize:20,
+                                              color:Colors.black,height:1.6)),
+                                      Text(AppLocalizations.of(context).translate('homesen18'),
+                                          style:TextStyle(fontSize:15,color:Color(0xff757575),height:1.6)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right:8.0,top:15),
+                              child: Image.asset('assets/image/Frame 37.png'),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left:10.0,right: 10.0, bottom:5.0),
+                                child: Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(AppLocalizations.of(context).translate('homesen19'),
+                                          style:TextStyle(fontWeight: FontWeight.bold,fontSize:20,
+                                              color:Colors.black,height:1.6)),
+                                      Text(AppLocalizations.of(context).translate('homesen20'),
+                                          style:TextStyle(fontSize:15,color:Color(0xff757575),height:1.6)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Image.asset("assets/image/iPhone 13.png"),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(AppLocalizations.of(context).translate('homesen21'),textAlign: TextAlign.left,
+                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(AppLocalizations.of(context).translate('homesen22'),textAlign: TextAlign.left,
+                        style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 20),),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Image.asset("assets/image/dist_crypto.png"),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(AppLocalizations.of(context).translate('homesen23'),textAlign: TextAlign.left,
+                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(AppLocalizations.of(context).translate('homesen24'),textAlign: TextAlign.left,
+                        style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 20),),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Image.asset("assets/image/close_hand.png"),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(AppLocalizations.of(context).translate('homesen25'),textAlign: TextAlign.left,
+                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(AppLocalizations.of(context).translate('homesen26'),textAlign: TextAlign.left,
+                        style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 20),),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Image.asset("assets/image/gold_bitcoin.png"),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(AppLocalizations.of(context).translate('homesen27'),textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Text(AppLocalizations.of(context).translate('homesen28'),textAlign: TextAlign.center,
+                        style: TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 20),),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                decoration: const BoxDecoration(color: Color(0xffDD650D)),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(AppLocalizations.of(context).translate('homesen29'),
+                          style: TextStyle(color: Colors.white,fontSize: 25,fontWeight: FontWeight.bold),),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(AppLocalizations.of(context).translate('homesen30'),
+                          style: TextStyle(color: Colors.white,fontSize: 20),),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Image.asset("assets/image/crypto_design.png"),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
