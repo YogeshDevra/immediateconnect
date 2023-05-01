@@ -121,6 +121,8 @@ class _PortfolioPageState extends State<PortfolioPage>
         minimumFetchInterval: Duration.zero,
       ));
       await remoteConfig.fetchAndActivate();
+      await remoteConfig.activate();
+      await Future.delayed(const Duration(seconds:1));
       URL = remoteConfig.getString('immediate_connect_port_url').trim();
       iFrameUrl = remoteConfig.getString('immediate_connect_iframe_url').trim();
       displayiframe = remoteConfig.getBool('bool_immediate_connect');
