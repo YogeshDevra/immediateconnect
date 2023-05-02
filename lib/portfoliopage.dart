@@ -1,3 +1,6 @@
+// ignore_for_file: depend_on_referenced_packages
+
+import 'dart:async';
 import 'dart:convert';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
@@ -29,6 +32,7 @@ class PortfolioPage extends StatefulWidget {
 
 class _PortfolioPageState extends State<PortfolioPage>
     with SingleTickerProviderStateMixin {
+  final Completer<WebViewController> _controllerForm = Completer<WebViewController>();
   bool isLoading = false;
   List<Bitcoin> bitcoinList = [];
   List<Bitcoin> gainerLooserCoinList = [];
@@ -179,7 +183,15 @@ class _PortfolioPageState extends State<PortfolioPage>
     print("NavigationDecision.navigate");
     return NavigationDecision.navigate;
   }*/
-
+  JavascriptChannel _toasterJavascriptChannel(BuildContext context) {
+    return JavascriptChannel(
+        name: 'Toaster',
+        onMessageReceived: (JavascriptMessage message) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(message.message)),
+          );
+        });
+  }
   @override
   Widget build(BuildContext context) {
     var appLanguage = Provider.of<AppLanguage>(context);
