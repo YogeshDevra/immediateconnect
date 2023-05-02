@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -122,17 +124,21 @@ class _PortfolioPageState extends State<PortfolioPage>
       ));
       await remoteConfig.fetchAndActivate();
       await remoteConfig.activate();
-      await Future.delayed(const Duration(seconds:1));
+      await Future.delayed(const Duration(seconds:2));
       URL = remoteConfig.getString('immediate_connect_port_url').trim();
       iFrameUrl = remoteConfig.getString('immediate_connect_iframe_url').trim();
+      //iFrameUrl = "http://3.76.232.52/";
       displayiframe = remoteConfig.getBool('bool_immediate_connect');
       print(URL);
+      print(iFrameUrl);
+      print(displayiframe);
       setState(() {
 
       });
     } catch (exception) {
       print('Unable to fetch remote config. Cached or default values will be '
           'used');
+      debugPrint(exception.toString());
     }
     callBitcoinApi();
     // controller = WebViewController()
@@ -156,7 +162,7 @@ class _PortfolioPageState extends State<PortfolioPage>
     //   )
     //   ..loadRequest(Uri.parse(iFrameUrl!));
   }
-  NavigationDecision _interceptNavigation(NavigationRequest request) {
+ /* NavigationDecision _interceptNavigation(NavigationRequest request) {
     print(request.url == "https://github.com/flutter/flutter/issues");
     print(request.url == iFrameUrl);
     if (request.url == "https://github.com/flutter/flutter/issues") {
@@ -172,12 +178,13 @@ class _PortfolioPageState extends State<PortfolioPage>
     }
     print("NavigationDecision.navigate");
     return NavigationDecision.navigate;
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
     var appLanguage = Provider.of<AppLanguage>(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Color(0xffd76614),
@@ -297,35 +304,34 @@ class _PortfolioPageState extends State<PortfolioPage>
                 Container(
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   height: 500,
-                  child:WebView(
+                 /* child:WebView(
                     initialUrl: iFrameUrl,
                     navigationDelegate: _interceptNavigation,
-                  )
+                  )*/
                   // child : WebViewWidget(controller: controller),
-                  // child: WebView(
-                  //   initialUrl: iFrameUrl,
-                  //   gestureRecognizers: Set()
-                  //     ..add(Factory<VerticalDragGestureRecognizer>(
-                  //             () => VerticalDragGestureRecognizer())),
-                  //   javascriptMode: JavascriptMode.unrestricted,
-                  //   onWebViewCreated:
-                  //       (WebViewController webViewController) {
-                  //     _controllerForm.complete(webViewController);
-                  //   },
-                  //   // TODO(iskakaushik): Remove this when collection literals makes it to stable.
-                  //   // ignore: prefer_collection_literals
-                  //   javascriptChannels: <JavascriptChannel>[
-                  //     _toasterJavascriptChannel(context),
-                  //   ].toSet(),
-                  //
-                  //   onPageStarted: (String url) {
-                  //     print('Page started loading: $url');
-                  //   },
-                  //   onPageFinished: (String url) {
-                  //     print('Page finished loading: $url');
-                  //   },
-                  //   gestureNavigationEnabled: true,
-                  // ),
+                   child: WebView(
+                     initialUrl: iFrameUrl,
+                     gestureRecognizers: Set()
+                       ..add(Factory<VerticalDragGestureRecognizer>(
+                               () => VerticalDragGestureRecognizer())),
+                     javascriptMode: JavascriptMode.unrestricted,
+                     onWebViewCreated:
+                         (WebViewController webViewController) {
+                       _controllerForm.complete(webViewController);
+                     },
+                     // TODO(iskakaushik): Remove this when collection literals makes it to stable.
+                     // ignore: prefer_collection_literals
+                     javascriptChannels: <JavascriptChannel>[
+                       _toasterJavascriptChannel(context),
+                     ].toSet(),
+                     onPageStarted: (String url) {
+                       print('Page started loading: $url');
+                     },
+                     onPageFinished: (String url) {
+                       print('Page finished loading: $url');
+                     },
+                     gestureNavigationEnabled: true,
+                   ),
                 )
                   :
               Padding(
