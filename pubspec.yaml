@@ -48,6 +48,7 @@ dependencies:
   shared_preferences: ^2.0.16
   syncfusion_flutter_charts: ^20.4.43
   firebase_core: ^2.4.1
+  new_version_plus: ^0.0.9
 
 dev_dependencies:
   flutter_test:

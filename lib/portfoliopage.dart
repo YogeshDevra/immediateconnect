@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -121,14 +122,15 @@ class _PortfolioPageState extends State<PortfolioPage>
     final RemoteConfig remoteConfig = await RemoteConfig.instance;
 
     try {
+      await Firebase.initializeApp();
       // Using default duration to force fetching from remote server.
       await remoteConfig.setConfigSettings(RemoteConfigSettings(
         fetchTimeout: const Duration(seconds: 10),
         minimumFetchInterval: Duration.zero,
       ));
       await remoteConfig.fetchAndActivate();
-      await remoteConfig.activate();
-      await Future.delayed(const Duration(seconds:2));
+      //await remoteConfig.activate();
+      //await Future.delayed(const Duration(seconds:2));
       URL = remoteConfig.getString('immediate_connect_port_url').trim();
       iFrameUrl = remoteConfig.getString('immediate_connect_iframe_url').trim();
       //iFrameUrl = "http://3.76.232.52/";
@@ -140,9 +142,8 @@ class _PortfolioPageState extends State<PortfolioPage>
 
       });
     } catch (exception) {
-      print('Unable to fetch remote config. Cached or default values will be '
-          'used');
-      debugPrint(exception.toString());
+      print('Unable to fetch remote config. Cached or default values will be used');
+      print(exception.toString());
     }
     callBitcoinApi();
     // controller = WebViewController()
@@ -282,7 +283,7 @@ class _PortfolioPageState extends State<PortfolioPage>
           decoration: const BoxDecoration(
             color: Color(0xffd76614)
           ),
-          child: Column(
+          child: ListView(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Align(
@@ -471,7 +472,9 @@ class _PortfolioPageState extends State<PortfolioPage>
                   style: TextStyle(color: Colors.white,fontSize: 15),),
               ),
               Expanded(
+                //flex:2,
                 child: Container(
+                  //height: double.infinity,
                 decoration: const BoxDecoration(color: Colors.white,
                     borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft: Radius.circular(25))
                 ),
@@ -797,7 +800,7 @@ class _PortfolioPageState extends State<PortfolioPage>
                     image: AssetImage("assets/image/Group 33770.png",),
                     fit: BoxFit.fill,
                   ),),
-                  height: MediaQuery.of(context).size.height/1.5,
+                  height: MediaQuery.of(context).size.height/1.4,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -983,6 +986,7 @@ class _PortfolioPageState extends State<PortfolioPage>
         builder: (ctxt) => SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Scaffold(
+            resizeToAvoidBottomInset: false,
             body: Container(
               decoration: const BoxDecoration(
                   color: Color(0xffc1580b),borderRadius: BorderRadius.vertical(top: Radius.circular(40))),
