@@ -81,12 +81,12 @@ class _TrendsPageState extends State<TrendsPage> {
                       _modalBottomMenu();
                     });
                   }, // Image tapped
-                  child: const Icon(Icons.menu_rounded,color: Color(0xffd76614),)
+                  child: const Icon(Icons.menu_rounded,color: Colors.black,)
               ),
             ),
             title: Text(AppLocalizations.of(context).translate('trends'),
                 style: GoogleFonts.openSans(textStyle: const TextStyle(
-                color: Color(0xffd76614),
+                color: Colors.black,
                 fontSize: 22,
                 fontWeight: FontWeight.bold),)
             )),
@@ -331,14 +331,15 @@ class _TrendsPageState extends State<TrendsPage> {
             Bitcoin.fromJson(json)).toList();
         double count = 0;
         diffRate = double.parse(data['diffRate']);
-        if(diffRate < 0)
-          result = data['diffRate'].replaceAll("-", "");
-        else
-          result = data['diffRate'];
+        if(diffRate < 0) {
+          result = double.parse(data['diffRate'].replaceAll("-", "")).toStringAsFixed(2);
+        } else {
+          result = double.parse(data['diffRate']).toStringAsFixed(2);
+        }
 
         currencyData = [];
-        bitcoinDataList.forEach((element) {
-          currencyData.add(CartData(count, element.rate!));
+        for (var element in bitcoinDataList) {
+          currencyData.add(CartData(count, double.parse(element.rate!.toStringAsFixed(2))));
           name = element.name!;
 //         coin = element.rate;
           String step2 = element.rate!.toStringAsFixed(2);
@@ -347,7 +348,7 @@ class _TrendsPageState extends State<TrendsPage> {
           double step3 = double.parse(step2);
           coin = step3;
           count = count+1;
-        });
+        }
         //  print(currencyData.length);
         isLoading = false;
       });

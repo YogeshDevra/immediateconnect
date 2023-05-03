@@ -382,8 +382,10 @@ class _CoinsPageState extends State<CoinsPage>
                                           crossAxisAlignment: CrossAxisAlignment.center,
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: <Widget>[
-                                            Text('\$${double.parse(bitcoinList[i].rate!.toStringAsFixed(2))}',
-                                                style: const TextStyle(fontSize: 18,color: Colors.black)),
+                                            Flexible(
+                                              child: Text('\$${double.parse(bitcoinList[i].rate!.toStringAsFixed(2))}',
+                                                  style: const TextStyle(fontSize: 15,color: Colors.black),overflow: TextOverflow.ellipsis),
+                                            ),
 
                                             const SizedBox(
                                               height: 5,

@@ -87,6 +87,18 @@ class _DashboardHome extends State<DashboardHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xfffcf2ea),
+        leading:InkWell(
+            onTap: () {
+              setState(() {
+                _modalBottomMenu();
+              });
+            }, // Image tapped
+            child: const Icon(Icons.menu_rounded,color: Color(0xffd76614),)
+        ),
+        title: Image.asset("assets/image/logo_hor.png"),
+      ),
       body:ListView(
         controller:_controllerList,
         children: <Widget>[
@@ -96,28 +108,28 @@ class _DashboardHome extends State<DashboardHome> {
                 decoration: const BoxDecoration(color: Color(0xfffcf2ea)),
                 child: Column(
                   children: <Widget>[
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  _modalBottomMenu();
-                                });
-                              }, // Image tapped
-                              child: const Icon(Icons.menu_rounded,color: Color(0xffd76614),)
-                          ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.all(15),
-                      child: Image.asset("assets/image/logo_hor.png"),
-                    ),
+                    // const SizedBox(
+                    //   height: 40,
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     Padding(
+                    //       padding: const EdgeInsets.all(8.0),
+                    //       child: InkWell(
+                    //           onTap: () {
+                    //             setState(() {
+                    //               _modalBottomMenu();
+                    //             });
+                    //           }, // Image tapped
+                    //           child: const Icon(Icons.menu_rounded,color: Color(0xffd76614),)
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    // Padding(
+                    //     padding: const EdgeInsets.all(15),
+                    //   child: Image.asset("assets/image/logo_hor.png"),
+                    // ),
                     Padding(
                       padding: const EdgeInsets.all(15),
                       child: Align(
@@ -358,26 +370,32 @@ class _DashboardHome extends State<DashboardHome> {
                           ),
                         ]
                     ),
-                    const SizedBox(
+                    if(displayiframe ==true)
+                      const SizedBox(
                       height: 15,
                     ),
-                    Padding(
+                    if(displayiframe ==true)
+                      Padding(
                       padding: const EdgeInsets.all(15),
                       child: Text(AppLocalizations.of(context).translate('homesen13'),textAlign: TextAlign.left,
                         style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 25),),
                     ),
-                    const SizedBox(
+                    if(displayiframe ==true)
+                      const SizedBox(
                       height: 10,
                     ),
-                    Padding(
+                    if(displayiframe ==true)
+                      Padding(
                       padding: const EdgeInsets.all(15),
                       child: Text(AppLocalizations.of(context).translate('homesen14'),textAlign: TextAlign.left,
                         style: const TextStyle(color: Color(0xff757575),fontWeight: FontWeight.bold,fontSize: 20),),
                     ),
-                    const SizedBox(
+                    if(displayiframe ==true)
+                      const SizedBox(
                       height: 10,
                     ),
-                    Padding(
+                    if(displayiframe ==true)
+                      Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -410,7 +428,8 @@ class _DashboardHome extends State<DashboardHome> {
                         ],
                       ),
                     ),
-                    Padding(
+                    if(displayiframe ==true)
+                      Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -441,7 +460,8 @@ class _DashboardHome extends State<DashboardHome> {
                         ],
                       ),
                     ),
-                    Padding(
+                    if(displayiframe ==true)
+                      Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,

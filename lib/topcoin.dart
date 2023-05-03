@@ -1,7 +1,6 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, depend_on_referenced_packages
 
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -63,6 +62,26 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar:AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading:InkWell(
+            onTap: () {
+              setState(() {
+                _modalBottomMenu();
+              });
+            }, // Image tapped
+            child: const Icon(Icons.menu_rounded,
+              color: Colors.black,
+              size: 30,
+            )
+        ),
+        title: Text(AppLocalizations.of(context).translate('top_coin'),
+          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
+          textAlign: TextAlign.start,
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: isLoading?const Center(child:CircularProgressIndicator(color: Color(0xFF4A42F3),),)
             :Container(
@@ -70,40 +89,40 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              _modalBottomMenu();
-                            });
-                          }, // Image tapped
-                          child: const Icon(Icons.menu_rounded,
-                            color: Colors.black,
-                            size: 30,
-                          )
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 90,
-                      ),
-                      Text(AppLocalizations.of(context).translate('top_coin'),
-                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
-                        textAlign: TextAlign.start,
-                      ),
-                    ],
-                  ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     Padding(
+                  //       padding: const EdgeInsets.all(8.0),
+                  //       child: InkWell(
+                  //         onTap: () {
+                  //           setState(() {
+                  //             _modalBottomMenu();
+                  //           });
+                  //         }, // Image tapped
+                  //         child: const Icon(Icons.menu_rounded,
+                  //           color: Colors.black,
+                  //           size: 30,
+                  //         )
+                  //       ),
+                  //     ),
+                  //     const SizedBox(
+                  //       width: 90,
+                  //     ),
+                  //     Text(AppLocalizations.of(context).translate('top_coin'),
+                  //       style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
+                  //       textAlign: TextAlign.start,
+                  //     ),
+                  //   ],
+                  // ),
                   Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: Container(
                       height: MediaQuery.of(context).size.height/4.5,
                       width: MediaQuery.of(context).size.width/.7,
-                      child: _allDataTC.length <= 0
+                      child: _allDataTC.isEmpty
                           ? const Center(child: CircularProgressIndicator())
                           : ListView.builder(
                           scrollDirection: Axis.horizontal,
@@ -204,7 +223,8 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                       scrollDirection: Axis.vertical,
                       itemCount: _gainerlosserHTC.length,
                       itemBuilder: (BuildContext context, int i) {
-                        return InkWell(
+                        return _gainerlosserHTC.length >= 0
+                        ?InkWell(
                             child:
                             double.parse(_gainerlosserHTC[i].diffRate!) >= 0
                                 ?
@@ -285,6 +305,11 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                               ),
                             )
                                 : const SizedBox()
+                        ):Center(
+                        child:Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Text(AppLocalizations.of(context).translate('no_coin_added')),
+                        ),
                         );
                       }),),
 
@@ -298,7 +323,8 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                       scrollDirection: Axis.vertical,
                       itemCount: _gainerlosserHTC.length,
                       itemBuilder: (BuildContext context, int i) {
-                        return InkWell(
+                        return _gainerlosserHTC.length >= 0?
+                        InkWell(
                             child: double.parse(
                                 _gainerlosserHTC[i].diffRate!) < 0
                                 ?
@@ -379,6 +405,11 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                               ),
                             )
                                 : const SizedBox()
+                        ):Center(
+                          child:Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Text(AppLocalizations.of(context).translate('no_coin_added')),
+                          ),
                         );
                       }),),
 
@@ -566,8 +597,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
 
   Future<void> _getForGainerLoserData() async {
 
-    var uri =
-        '$URL/Bitcoin/resources/getBitcoinListLoser?size=0';
+    var uri = '$URL/Bitcoin/resources/getBitcoinListLoser?size=0';
 
     print(uri);
     var response = await get(Uri.parse(uri));
@@ -576,9 +606,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
     print(data['data']);
     if (data['error'] == false) {
       setState(() {
-        _gainerlosserHTC.addAll(data['data']
-            .map<Bitcoin>((json) => Bitcoin.fromJson(json))
-            .toList());
+        _gainerlosserHTC.addAll(data['data'].map<Bitcoin>((json) => Bitcoin.fromJson(json)).toList());
         isLoading = false;
       });
     } else {

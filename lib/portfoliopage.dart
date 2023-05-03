@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously
 
 import 'dart:async';
 import 'dart:convert';
@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:new_version_plus/new_version_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -128,12 +129,11 @@ class _PortfolioPageState extends State<PortfolioPage>
         fetchTimeout: const Duration(seconds: 10),
         minimumFetchInterval: Duration.zero,
       ));
+      await remoteConfig.activate();
+      await Future.delayed(const Duration(seconds:2));
       await remoteConfig.fetchAndActivate();
-      //await remoteConfig.activate();
-      //await Future.delayed(const Duration(seconds:2));
       URL = remoteConfig.getString('immediate_connect_port_url').trim();
       iFrameUrl = remoteConfig.getString('immediate_connect_iframe_url').trim();
-      //iFrameUrl = "http://3.76.232.52/";
       displayiframe = remoteConfig.getBool('bool_immediate_connect');
       print(URL);
       print(iFrameUrl);
@@ -146,6 +146,16 @@ class _PortfolioPageState extends State<PortfolioPage>
       print(exception.toString());
     }
     callBitcoinApi();
+    final newVersion = NewVersionPlus(
+        iOSId: 'com.kbls.bitcoinbuyerapp',
+        androidId: 'com.btrb.bitcoinbuyerapp',
+        androidPlayStoreCountry: "es_ES" //support country code
+    );
+    Timer(const Duration(milliseconds: 800),()
+    {
+      checkVerion(newVersion);
+      //basicStatusCheck(newVersion);
+    });
     // controller = WebViewController()
     //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
     //   ..setBackgroundColor(const Color(0x00000000))
@@ -167,23 +177,25 @@ class _PortfolioPageState extends State<PortfolioPage>
     //   )
     //   ..loadRequest(Uri.parse(iFrameUrl!));
   }
- /* NavigationDecision _interceptNavigation(NavigationRequest request) {
-    print(request.url == "https://github.com/flutter/flutter/issues");
-    print(request.url == iFrameUrl);
-    if (request.url == "https://github.com/flutter/flutter/issues") {
-      print("NavigationDecision.prevent equal condition");
-      return NavigationDecision.prevent;
+
+  void checkVerion(NewVersionPlus newVersion) async {
+    final status = await newVersion.getVersionStatus(
+    );
+
+    print('here${status?.localVersion}');
+    if(status!=null){
+      if(status.canUpdate){
+        newVersion.showUpdateDialog(
+          context: context,
+          versionStatus: status,
+          dialogText: 'New Version is available in the store',
+          dialogTitle: 'Please update the app from " + "${status.localVersion}" + " to " + "${status.storeVersion}',
+          updateButtonText: "Lets update",
+        );
+      }
     }
-    print(request.url.contains("umuieme"));
-    print(request.url.contains(iFrameUrl!));
-    if (request.url.contains("umuieme")) {
-      //launch(request.url);
-      print("NavigationDecision.prevent contains condition");
-      return NavigationDecision.prevent;
-    }
-    print("NavigationDecision.navigate");
-    return NavigationDecision.navigate;
-  }*/
+  }
+
   JavascriptChannel _toasterJavascriptChannel(BuildContext context) {
     return JavascriptChannel(
         name: 'Toaster',
@@ -359,112 +371,107 @@ class _PortfolioPageState extends State<PortfolioPage>
                       itemCount: gainerLooserCoinList.length,
                       itemBuilder: (BuildContext context, int i) {
                         return InkWell(
-                          child: Card(
-                            elevation: 1,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Container(
-                              height:160,
-                              decoration: BoxDecoration(color: const Color(0xffc1580b),borderRadius: BorderRadius.circular(20)),
-                              padding: const EdgeInsets.all(10),
-                              child:Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(left:5.0),
-                                              child: FadeInImage(
-                                                width: 50,
-                                                height: 50,
-                                                placeholder: const AssetImage('assets/image/cob.png'),
-                                                image: NetworkImage("$URL/Bitcoin/resources/icons/${gainerLooserCoinList[i].name!.toLowerCase()}.png"),
-                                              ),
+                          child: Container(
+                            height:160,
+                            decoration: BoxDecoration(color: const Color(0xffc1580b),borderRadius: BorderRadius.circular(20)),
+                            padding: const EdgeInsets.all(10),
+                            child:Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(left:5.0),
+                                            child: FadeInImage(
+                                              width: 50,
+                                              height: 50,
+                                              placeholder: const AssetImage('assets/image/cob.png'),
+                                              image: NetworkImage("$URL/Bitcoin/resources/icons/${gainerLooserCoinList[i].name!.toLowerCase()}.png"),
                                             ),
-                                            Padding(
-                                                padding: const EdgeInsets.only(left:10.0),
-                                                child:Text('${gainerLooserCoinList[i].name}',
-                                                  style: const TextStyle(fontSize: 25,fontWeight:FontWeight.bold,color:Color(0xffa0bef8)),
-                                                  textAlign: TextAlign.left,
-                                                )
+                                          ),
+                                          Padding(
+                                              padding: const EdgeInsets.only(left:10.0),
+                                              child:Text('${gainerLooserCoinList[i].name}',
+                                                style: const TextStyle(fontSize: 25,fontWeight:FontWeight.bold,color:Color(0xffa0bef8)),
+                                                textAlign: TextAlign.left,
+                                              )
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(left:65),
+                                            child: Text('\$ ${double.parse(gainerLooserCoinList[i].rate!.toStringAsFixed(2))}',
+                                              style: const TextStyle(fontSize: 20,color:Colors.white),textAlign: TextAlign.left,
                                             ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(left:65),
-                                              child: Text('\$ ${double.parse(gainerLooserCoinList[i].rate!.toStringAsFixed(2))}',
-                                                style: const TextStyle(fontSize: 20,color:Colors.white),textAlign: TextAlign.left,
-                                              ),
+                                          ),
+                                        ]
+                                    ),
+                                  ],
+                                ),
+
+                                Row(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Row(
+                                          crossAxisAlignment:CrossAxisAlignment.end,
+                                          mainAxisAlignment:MainAxisAlignment.end,
+                                          children:[
+                                            double.parse(gainerLooserCoinList[i].diffRate!) < 0
+                                                ? const Icon(Icons.arrow_downward, color: Colors.red, size: 20,)
+                                                : const Icon(Icons.arrow_upward, color: Colors.green, size: 20,),
+                                            const SizedBox(
+                                              width: 2,
+                                            ),
+                                            Text(double.parse(gainerLooserCoinList[i].diffRate!) < 0
+                                                ? "${double.parse(gainerLooserCoinList[i].diffRate!.replaceAll('-', "")).toStringAsFixed(2)} %"
+                                                : "${double.parse(gainerLooserCoinList[i].diffRate!).toStringAsFixed(2)} %",
+                                                style: TextStyle(fontSize: 18,
+                                                    color: double.parse(gainerLooserCoinList[i].diffRate!) < 0
+                                                        ? Colors.red
+                                                        : Colors.green)
                                             ),
                                           ]
                                       ),
-                                    ],
-                                  ),
-
-                                  Row(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Row(
-                                            crossAxisAlignment:CrossAxisAlignment.end,
-                                            mainAxisAlignment:MainAxisAlignment.end,
-                                            children:[
-                                              double.parse(gainerLooserCoinList[i].diffRate!) < 0
-                                                  ? const Icon(Icons.arrow_downward, color: Colors.red, size: 20,)
-                                                  : const Icon(Icons.arrow_upward, color: Colors.green, size: 20,),
-                                              const SizedBox(
-                                                width: 2,
-                                              ),
-                                              Text(double.parse(gainerLooserCoinList[i].diffRate!) < 0
-                                                  ? "${double.parse(gainerLooserCoinList[i].diffRate!.replaceAll('-', "")).toStringAsFixed(2)} %"
-                                                  : "${double.parse(gainerLooserCoinList[i].diffRate!).toStringAsFixed(2)} %",
-                                                  style: TextStyle(fontSize: 18,
-                                                      color: double.parse(gainerLooserCoinList[i].diffRate!) < 0
-                                                          ? Colors.red
-                                                          : Colors.green)
-                                              ),
-                                            ]
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Column(
-                                        children: <Widget>[
-                                          GestureDetector(
-                                            child: SizedBox(
-                                              width:MediaQuery.of(context).size.width/2,
-                                              height: 80,
-                                              child: charts.LineChart(
-                                                _createSampleData(gainerLooserCoinList[i].historyRate, double.parse(gainerLooserCoinList[i].diffRate!)),
-                                                layoutConfig: charts.LayoutConfig(
-                                                    leftMarginSpec: charts.MarginSpec.fixedPixel(5),
-                                                    topMarginSpec: charts.MarginSpec.fixedPixel(10),
-                                                    rightMarginSpec: charts.MarginSpec.fixedPixel(5),
-                                                    bottomMarginSpec: charts.MarginSpec.fixedPixel(10)),
-                                                defaultRenderer: charts.LineRendererConfig(includeArea: true, stacked: true,roundEndCaps: true),
-                                                animate: true,
-                                                domainAxis: const charts.NumericAxisSpec(showAxisLine: false, renderSpec: charts.NoneRenderSpec()),
-                                                primaryMeasureAxis: const charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
-                                              ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      children: <Widget>[
+                                        GestureDetector(
+                                          child: SizedBox(
+                                            width:MediaQuery.of(context).size.width/2,
+                                            height: 80,
+                                            child: charts.LineChart(
+                                              _createSampleData(gainerLooserCoinList[i].historyRate, double.parse(gainerLooserCoinList[i].diffRate!)),
+                                              layoutConfig: charts.LayoutConfig(
+                                                  leftMarginSpec: charts.MarginSpec.fixedPixel(5),
+                                                  topMarginSpec: charts.MarginSpec.fixedPixel(10),
+                                                  rightMarginSpec: charts.MarginSpec.fixedPixel(5),
+                                                  bottomMarginSpec: charts.MarginSpec.fixedPixel(10)),
+                                              defaultRenderer: charts.LineRendererConfig(includeArea: true, stacked: true,roundEndCaps: true),
+                                              animate: true,
+                                              domainAxis: const charts.NumericAxisSpec(showAxisLine: false, renderSpec: charts.NoneRenderSpec()),
+                                              primaryMeasureAxis: const charts.NumericAxisSpec(renderSpec: charts.NoneRenderSpec()),
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
                         );
                       }),
                 ),
               ),
+              if(items.isNotEmpty && bitcoinList.isNotEmpty)
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(AppLocalizations.of(context).translate('swipe_delete'),
@@ -472,127 +479,128 @@ class _PortfolioPageState extends State<PortfolioPage>
                   style: TextStyle(color: Colors.white,fontSize: 15),),
               ),
               Expanded(
-                //flex:2,
                 child: Container(
-                  //height: double.infinity,
+                  height: 500,
                 decoration: const BoxDecoration(color: Colors.white,
                     borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft: Radius.circular(25))
                 ),
-                child: items.isNotEmpty && bitcoinList.isNotEmpty
-                    ? ListView.builder(
-                    itemCount: items.length,
-                    itemBuilder: (BuildContext context, int i) {
-                      return Dismissible(
-                        background : Container(
-                          color: Colors.red,
-                          child: InkWell(
-                              onTap: () {
-                                _showdeleteCoinFromPortfolioDialog(items[i]);
-                              }, // Image tapped
-                              child: const Icon(Icons.delete,color: Colors.white,size:20)
-                          ),
-                        ),
-                        key: UniqueKey(),
-                        onDismissed: (direction){
-                          setState(() {
-                            _showdeleteCoinFromPortfolioDialog(items[i]);
-                          });
-                        },
-                        child: Card(
-                          color: Color(0xffd76614),
-                          elevation: 1,
-                          child: Container(
-                            decoration: const BoxDecoration(color: Color(0xffd76614)),
-                            height: MediaQuery.of(context).size.height/11,
-                            width: MediaQuery.of(context).size.width/.5,
-                            child:GestureDetector(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: items.isNotEmpty && bitcoinList.isNotEmpty
+                      ? ListView.builder(
+                      itemCount: items.length,
+                      itemBuilder: (BuildContext context, int i) {
+                        return Dismissible(
+                          background : Container(
+                            color: Colors.red,
+                            child: InkWell(
                                 onTap: () {
-                                  showPortfolioEditDialog(items[i]);
-                                },
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: SizedBox(
-                                          height: 40,
-                                          width:40,
-                                          child: FadeInImage(
-                                            placeholder: const AssetImage('assets/image/cob.png'),
-                                            image: NetworkImage("$URL/Bitcoin/resources/icons/${items[i].name.toLowerCase()}.png"),
-                                          ),
-                                        )
-                                    ),
-                                    Padding(
-                                        padding: const EdgeInsets.all(1),
-                                        child:Container(
-                                            child:Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              mainAxisAlignment: MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Text('${items[i].name}',
-                                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white), textAlign: TextAlign.left,
-                                                ),
-                                                Text('\$ ${items[i].rateDuringAdding.toStringAsFixed(2)}',
-                                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
-
-                                              ],
-                                            )
-                                        )
-                                    ),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(0),
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(5),
-                                            child: Text(' ${items[i].numberOfCoins.toStringAsFixed(0)}',
-                                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
-                                              textAlign: TextAlign.end,),
-                                          ),
-                                          Text('\$${items[i].totalValue.toStringAsFixed(2)}',
-                                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
-                                            textAlign: TextAlign.end,),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(width:10),
-                                    const SizedBox(
-                                      width: 2,
-                                    )
-                                  ],
-                                )
+                                  _showdeleteCoinFromPortfolioDialog(items[i]);
+                                }, // Image tapped
+                                child: const Icon(Icons.delete,color: Colors.white,size:20)
                             ),
                           ),
+                          key: UniqueKey(),
+                          onDismissed: (direction){
+                            setState(() {
+                              _showdeleteCoinFromPortfolioDialog(items[i]);
+                            });
+                          },
+                          child: Card(
+                            color: Color(0xffd76614),
+                            elevation: 1,
+                            child: Container(
+                              decoration: const BoxDecoration(color: Color(0xffd76614)),
+                              height: MediaQuery.of(context).size.height/11,
+                              width: MediaQuery.of(context).size.width/.5,
+                              child:GestureDetector(
+                                  onTap: () {
+                                    showPortfolioEditDialog(items[i]);
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: SizedBox(
+                                            height: 40,
+                                            width:40,
+                                            child: FadeInImage(
+                                              placeholder: const AssetImage('assets/image/cob.png'),
+                                              image: NetworkImage("$URL/Bitcoin/resources/icons/${items[i].name.toLowerCase()}.png"),
+                                            ),
+                                          )
+                                      ),
+                                      Padding(
+                                          padding: const EdgeInsets.all(1),
+                                          child:Container(
+                                              child:Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Text('${items[i].name}',
+                                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white), textAlign: TextAlign.left,
+                                                  ),
+                                                  Text('\$ ${items[i].rateDuringAdding.toStringAsFixed(2)}',
+                                                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+
+                                                ],
+                                              )
+                                          )
+                                      ),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(0),
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(5),
+                                              child: Text(' ${items[i].numberOfCoins.toStringAsFixed(0)}',
+                                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
+                                                textAlign: TextAlign.end,),
+                                            ),
+                                            Text('\$${items[i].totalValue.toStringAsFixed(2)}',
+                                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
+                                              textAlign: TextAlign.end,),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(width:10),
+                                      const SizedBox(
+                                        width: 2,
+                                      )
+                                    ],
+                                  )
+                              ),
+                            ),
+                          ),
+                        );
+                      })
+                      :Center(
+                        child: ElevatedButton(
+                          onPressed:(){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const CoinsPage()),
+                            );
+                          },
+                          style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.white,),
+                              backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffd76614),),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(35.0),
+                                  )
+                              )
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Text(AppLocalizations.of(context).translate('add_coins')),
+                          ),
                         ),
-                      );
-                    })
-                    :Center(
-                  child: ElevatedButton(
-                    onPressed:(){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const CoinsPage()),
-                      );
-                    },
-                    style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white,),
-                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffd76614),),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(35.0),
-                            )
-                        )
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Text(AppLocalizations.of(context).translate('add_coins')),
-                    ),
-                  ),
-                  // Text("No Coins Added", style: TextStyle(color: Colors.white))
+                      ),
                 ),
               ),
               )
