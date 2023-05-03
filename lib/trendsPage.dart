@@ -1,5 +1,6 @@
+// ignore_for_file: deprecated_member_use, file_names, depend_on_referenced_packages, library_private_types_in_public_api, non_constant_identifier_names
+
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
@@ -14,13 +15,15 @@ import 'portfoliopage.dart';
 import 'topcoin.dart';
 
 class TrendsPage extends StatefulWidget {
+  const TrendsPage({super.key});
+
   @override
   _TrendsPageState createState() => _TrendsPageState();
 
 }
 
 class _TrendsPageState extends State<TrendsPage> {
-  Future<SharedPreferences> _sprefs = SharedPreferences.getInstance();
+  final Future<SharedPreferences> _sprefs = SharedPreferences.getInstance();
   List<Bitcoin> bitcoinDataList = [];
   double diffRate = 0;
   List<CartData> currencyData = [];
@@ -110,8 +113,8 @@ class _TrendsPageState extends State<TrendsPage> {
                               placeholder: const AssetImage('assets/image/cob.png'),
                               image: NetworkImage("$URL/Bitcoin/resources/icons/${name.toLowerCase()}.png"),
                             ),
-                            SizedBox(width:3,),
-                            Text('${name} ',
+                            const SizedBox(width:3,),
+                            Text('$name ',
                                 style:GoogleFonts.openSans(textStyle: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 18.5,
@@ -124,7 +127,7 @@ class _TrendsPageState extends State<TrendsPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children:[
 
-                              Text('\$ ${coin} ${name} ',
+                              Text('\$ $coin $name ',
                                 style:GoogleFonts.openSans(textStyle: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 18.5,
@@ -136,7 +139,7 @@ class _TrendsPageState extends State<TrendsPage> {
                                 children: <Widget>[
                                   Text(diffRate < 0 ? '-' : "+", style: TextStyle(fontSize: 16, color: diffRate < 0 ? Colors.red : Colors.green)),
                                   Icon(Icons.attach_money, size: 16, color: diffRate < 0 ? Colors.red : Colors.green),
-                                  Text('$result', style: TextStyle(fontSize: 16, color: diffRate < 0 ? Colors.red : Colors.green)),
+                                  Text(result, style: TextStyle(fontSize: 16, color: diffRate < 0 ? Colors.red : Colors.green)),
                                 ],
                               ),
                             ]
@@ -154,11 +157,9 @@ class _TrendsPageState extends State<TrendsPage> {
                 ButtonTheme(
                   minWidth: 50.0, height: 40.0,
                   child: ElevatedButton(
-                    child: new Text("Week" , style: TextStyle(fontSize: 15)
-                    ),
                     style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(graphButton == 1 ? Colors.white:Color(0xff50af95)),
-                        backgroundColor: MaterialStateProperty.all<Color>(graphButton == 1 ? Color(0xff50af95) : Colors.white,),
+                        foregroundColor: MaterialStateProperty.all<Color>(graphButton == 1 ? Colors.white:const Color(0xff50af95)),
+                        backgroundColor: MaterialStateProperty.all<Color>(graphButton == 1 ? const Color(0xff50af95) : Colors.white,),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -176,16 +177,16 @@ class _TrendsPageState extends State<TrendsPage> {
                         callGraphApi();
                       });
                     },
+                    child: const Text("Week" , style: TextStyle(fontSize: 15)
+                    ),
                   ),
                 ),
                 ButtonTheme(
                   minWidth: 50.0, height: 40.0,
                   child: ElevatedButton(
-                    child: new Text("Month" , style: TextStyle(fontSize: 15)
-                    ),
                     style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(graphButton == 2 ? Colors.white:Color(0xff50af95)),
-                        backgroundColor: MaterialStateProperty.all<Color>(graphButton == 2 ? Color(0xff50af95) : Colors.white,),
+                        foregroundColor: MaterialStateProperty.all<Color>(graphButton == 2 ? Colors.white:const Color(0xff50af95)),
+                        backgroundColor: MaterialStateProperty.all<Color>(graphButton == 2 ? const Color(0xff50af95) : Colors.white,),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -203,16 +204,16 @@ class _TrendsPageState extends State<TrendsPage> {
                         callGraphApi();
                       });
                     },
+                    child: const Text("Month" , style: TextStyle(fontSize: 15)
+                    ),
                   ),
                 ),
                 ButtonTheme(
                   minWidth: 50.0, height: 40.0,
                   child: ElevatedButton(
-                    child: new Text("Year" , style: TextStyle(fontSize: 15)
-                    ),
                     style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(graphButton == 3 ? Colors.white:Color(0xff50af95)),
-                        backgroundColor: MaterialStateProperty.all<Color>(graphButton == 3 ? Color(0xff50af95) : Colors.white,),
+                        foregroundColor: MaterialStateProperty.all<Color>(graphButton == 3 ? Colors.white:const Color(0xff50af95)),
+                        backgroundColor: MaterialStateProperty.all<Color>(graphButton == 3 ? const Color(0xff50af95) : Colors.white,),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
@@ -230,6 +231,8 @@ class _TrendsPageState extends State<TrendsPage> {
                         callGraphApi();
                       });
                     },
+                    child: const Text("Year" , style: TextStyle(fontSize: 15)
+                    ),
                   ),
                 ),
               ],
@@ -238,7 +241,7 @@ class _TrendsPageState extends State<TrendsPage> {
               height: 10,
             ),
             Expanded(
-              child:Container(
+              child:SizedBox(
                   width: MediaQuery.of(context).size.width ,
                   height: MediaQuery.of(context).size.height / 1.51,
                   //   height :MediaQuery.of(context).size.height,
@@ -303,7 +306,7 @@ class _TrendsPageState extends State<TrendsPage> {
     final SharedPreferences prefs = await _sprefs;
     var currName = prefs.getString("Name") ?? 'BTC';
     name = currName;
-    var uri = '$URL/Bitcoin/resources/getBitcoinGraph?type=${_type}&name=${name}';
+    var uri = '$URL/Bitcoin/resources/getBitcoinGraph?type=$_type&name=$name';
 
     print(uri);
     var response = await get(Uri.parse(uri));
@@ -378,7 +381,7 @@ class _TrendsPageState extends State<TrendsPage> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => DashboardHome()),
+                                  MaterialPageRoute(builder: (context) => const DashboardHome()),
                                 );
                               },
                               child: Row(
@@ -387,7 +390,7 @@ class _TrendsPageState extends State<TrendsPage> {
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33764.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('home'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('home'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -405,7 +408,7 @@ class _TrendsPageState extends State<TrendsPage> {
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33765.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('top_coin'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('top_coin'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -414,7 +417,7 @@ class _TrendsPageState extends State<TrendsPage> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => CoinsPage()),
+                                  MaterialPageRoute(builder: (context) => const CoinsPage()),
                                 );
                               },
                               child: Row(
@@ -423,7 +426,7 @@ class _TrendsPageState extends State<TrendsPage> {
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33766.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('coins'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('coins'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -432,7 +435,7 @@ class _TrendsPageState extends State<TrendsPage> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => TrendsPage()),
+                                  MaterialPageRoute(builder: (context) => const TrendsPage()),
                                 );
                               },
                               child: Row(
@@ -441,7 +444,7 @@ class _TrendsPageState extends State<TrendsPage> {
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33767.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('trends'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('trends'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -450,7 +453,7 @@ class _TrendsPageState extends State<TrendsPage> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => PortfolioPage()),
+                                  MaterialPageRoute(builder: (context) => const PortfolioPage()),
                                 );
                               },
                               child: Row(
@@ -459,7 +462,7 @@ class _TrendsPageState extends State<TrendsPage> {
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33768.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('portfolio'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('portfolio'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),

@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, use_build_context_synchronously
+// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, use_build_context_synchronously, deprecated_member_use
 
 import 'dart:async';
 import 'dart:convert';
@@ -88,7 +88,7 @@ class _DashboardHome extends State<DashboardHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xfffcf2ea),
+        backgroundColor: const Color(0xfffcf2ea),
         leading:InkWell(
             onTap: () {
               setState(() {
@@ -715,7 +715,7 @@ class _DashboardHome extends State<DashboardHome> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => TopCoinsPage()),
+                                  MaterialPageRoute(builder: (context) => const TopCoinsPage()),
                                 );
                               },
                               child: Row(
@@ -751,7 +751,7 @@ class _DashboardHome extends State<DashboardHome> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => TrendsPage()),
+                                  MaterialPageRoute(builder: (context) => const TrendsPage()),
                                 );
                               },
                               child: Row(

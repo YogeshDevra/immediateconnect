@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, depend_on_referenced_packages
+// ignore_for_file: use_build_context_synchronously, depend_on_referenced_packages, deprecated_member_use, library_private_types_in_public_api, prefer_is_empty
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -6,7 +6,6 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 import 'coinsPage.dart';
 import 'dashboard_home.dart';
 import 'localization/app_localization.dart';
@@ -16,6 +15,8 @@ import 'portfoliopage.dart';
 import 'trendsPage.dart';
 
 class TopCoinsPage extends StatefulWidget {
+  const TopCoinsPage({super.key});
+
   @override
   _TopCoinsPageState createState() => _TopCoinsPageState();
 
@@ -77,7 +78,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
             )
         ),
         title: Text(AppLocalizations.of(context).translate('top_coin'),
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
           textAlign: TextAlign.start,
         ),
         centerTitle: true,
@@ -119,7 +120,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                   // ),
                   Padding(
                     padding: const EdgeInsets.all(5.0),
-                    child: Container(
+                    child: SizedBox(
                       height: MediaQuery.of(context).size.height/4.5,
                       width: MediaQuery.of(context).size.width/.7,
                       child: _allDataTC.isEmpty
@@ -160,17 +161,17 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                                                 textAlign: TextAlign.left,
                                               )
                                           ),
-                                          SizedBox(width: 35,)
+                                          const SizedBox(width: 35,)
                                         ],
                                       ),
-                                      SizedBox(height: 10,),
+                                      const SizedBox(height: 10,),
                                       Padding(
                                         padding: const EdgeInsets.only(left:10),
                                         child: Text('\$${double.parse(_allDataTC[i].rate!.toStringAsFixed(2))}',
                                           style: const TextStyle(fontSize: 20,color:Colors.black,fontWeight: FontWeight.bold),
                                         ),
                                       ),
-                                      SizedBox(height: 10,),
+                                      const SizedBox(height: 10,),
                                       Padding(
                                         padding: const EdgeInsets.only(left:10),
                                         child: Row(
@@ -236,7 +237,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: Container(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 width: MediaQuery.of(context).size.width / 1.8,
                                 child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -336,7 +337,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: Container(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 width: MediaQuery.of(context).size.width / 1.8,
                                 child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -451,7 +452,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => DashboardHome()),
+                                  MaterialPageRoute(builder: (context) => const DashboardHome()),
                                 );
                               },
                               child: Row(
@@ -460,7 +461,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33764.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('home'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('home'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -469,7 +470,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => TopCoinsPage()),
+                                  MaterialPageRoute(builder: (context) => const TopCoinsPage()),
                                 );
                               },
                               child: Row(
@@ -478,7 +479,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33765.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('top_coin'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('top_coin'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -487,7 +488,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => CoinsPage()),
+                                  MaterialPageRoute(builder: (context) => const CoinsPage()),
                                 );
                               },
                               child: Row(
@@ -496,7 +497,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33766.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('coins'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('coins'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -505,7 +506,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => TrendsPage()),
+                                  MaterialPageRoute(builder: (context) => const TrendsPage()),
                                 );
                               },
                               child: Row(
@@ -514,7 +515,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33767.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('trends'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('trends'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -523,7 +524,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => PortfolioPage()),
+                                  MaterialPageRoute(builder: (context) => const PortfolioPage()),
                                 );
                               },
                               child: Row(
@@ -532,7 +533,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33768.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('portfolio'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('portfolio'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -546,32 +547,6 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
               )
       );});
   }
-
-  List<charts.Series<CartData, int>> _createSampleData(
-      historyRate, diffRate) {
-    List<CartData> listData = [];
-    for (int i = 0; i < historyRate.length; i++) {
-      // print("linear sales"+historyRate);
-      double rate = historyRate[i]['rate'];
-      listData.add(CartData(i, rate));
-    }
-
-    return [
-      charts.Series<CartData, int>(
-        id: 'Tablet',
-        // colorFn specifies that the line will be red.
-        colorFn: (_, __) => diffRate < 0
-            ? charts.MaterialPalette.red.shadeDefault
-            : charts.MaterialPalette.green.shadeDefault,
-        // areaColorFn specifies that the area skirt will be light red.
-        // areaColorFn: (_, __) => charts.MaterialPalette.red.shadeDefault.lighter,
-        domainFn: (CartData sales, _) => sales.count,
-        measureFn: (CartData sales, _) => sales.rate,
-        data: listData,
-      ),
-    ];
-  }
-
 
   Future<void> _getDataForBitcoin() async {
     setState(() {
@@ -617,14 +592,14 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
   }
 
   Future<void> savsDataForChart(String? name) async {
-    print('enter'+name!);
+    print('enter${name!}');
     sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
       sharedPreferences!.setString("Name", name);
     });
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => TrendsPage()),
+      MaterialPageRoute(builder: (context) => const TrendsPage()),
     );
   }
 

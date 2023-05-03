@@ -1,5 +1,5 @@
 
-// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, use_build_context_synchronously
+// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, use_build_context_synchronously, deprecated_member_use
 
 import 'dart:convert';
 import 'package:collection/collection.dart';
@@ -131,7 +131,7 @@ class _CoinsPageState extends State<CoinsPage>
                     title: TextField(
                       controller: _controller,
                       decoration: InputDecoration(
-                        hintText: AppLocalizations.of(context)!.translate('search')!, border: InputBorder.none,
+                        hintText: AppLocalizations.of(context).translate('search'), border: InputBorder.none,
                       ),
                       onChanged: onSearchTextChanged,
                     ),
@@ -523,7 +523,7 @@ class _CoinsPageState extends State<CoinsPage>
                                           Icon(Icons.attach_money, size: 20, color: double.parse(bitcoin.diffRate!) < 0 ? Colors.red : Colors.green),
                                           Text(double.parse(bitcoin.diffRate!) < 0
                                               ? "${double.parse(bitcoin.diffRate!.replaceAll('-', "")).toStringAsFixed(2)} %"
-                                              : "${double.parse(bitcoin.diffRate!).toStringAsFixed(2)}",
+                                              : double.parse(bitcoin.diffRate!).toStringAsFixed(2),
                                               style: TextStyle(fontSize: 20,
                                                   color: double.parse(bitcoin.diffRate!) < 0
                                                       ? Colors.red
@@ -730,7 +730,7 @@ class _CoinsPageState extends State<CoinsPage>
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => TopCoinsPage()),
+                                  MaterialPageRoute(builder: (context) => const TopCoinsPage()),
                                 );
                               },
                               child: Row(
@@ -766,7 +766,7 @@ class _CoinsPageState extends State<CoinsPage>
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => TrendsPage()),
+                                  MaterialPageRoute(builder: (context) => const TrendsPage()),
                                 );
                               },
                               child: Row(

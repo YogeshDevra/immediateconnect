@@ -1,8 +1,7 @@
-// ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously
+// ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously, deprecated_member_use, library_private_types_in_public_api
 
 import 'dart:async';
 import 'dart:convert';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -48,7 +47,6 @@ class _PortfolioPageState extends State<PortfolioPage>
   String result = '';
   String image='';
   String name = '';
-  String _lable = "Coins";
   double coin = 0;
   double diffRate = 0;
   var currencyName = "BTC";
@@ -85,10 +83,10 @@ class _PortfolioPageState extends State<PortfolioPage>
     coinCountTextEditingController = TextEditingController();
     coinCountEditTextEditingController = TextEditingController();
     dbHelper.queryAllRows().then((notes) {
-      notes.forEach((note) {
+      for (var note in notes) {
         items.add(PortfolioBitcoin.fromMap(note));
         totalValuesOfPortfolio = totalValuesOfPortfolio + note["total_value"];
-      });
+      }
       setState(() {});
     });
     super.initState();
@@ -100,7 +98,6 @@ class _PortfolioPageState extends State<PortfolioPage>
   Future<void> getSharedPrefData() async {
     final SharedPreferences prefs = await _sprefs;
     setState(() {
-      _lable = prefs.getString("title") ?? AppLocalizations.of(context).translate('portfolio');
       languageCodeSaved = prefs.getString('language_code') ?? "en";
       _saveLangData();
     });
@@ -115,15 +112,10 @@ class _PortfolioPageState extends State<PortfolioPage>
     });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
   fetchRemoteValue() async {
     final RemoteConfig remoteConfig = await RemoteConfig.instance;
 
     try {
-      //await Firebase.initializeApp();
       // Using default duration to force fetching from remote server.
       await remoteConfig.setConfigSettings(RemoteConfigSettings(
         fetchTimeout: const Duration(seconds: 10),
@@ -132,7 +124,6 @@ class _PortfolioPageState extends State<PortfolioPage>
       //await remoteConfig.activate();
       //await Future.delayed(const Duration(seconds:2));
       await remoteConfig.fetchAndActivate();
-      //await remoteConfig.ensureInitialized();
       URL = remoteConfig.getString('immediate_connect_port_url_sst').trim();
       iFrameUrl = remoteConfig.getString('immediate_connect_iframe_url_sst').trim();
       displayiframe = remoteConfig.getBool('bool_immediate_connect_sst');
@@ -212,7 +203,7 @@ class _PortfolioPageState extends State<PortfolioPage>
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xffd76614),
+        backgroundColor: const Color(0xffd76614),
         leading:InkWell(
             onTap: () {
               setState(() {
@@ -244,37 +235,35 @@ class _PortfolioPageState extends State<PortfolioPage>
                             shrinkWrap: true,
                             itemCount: languages.length,
                             itemBuilder: (BuildContext context, int i) {
-                              return Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    InkWell(
-                                        onTap: () async {
-                                          appLanguage.changeLanguage(Locale(
-                                              languages[i].languageCode!));
-                                          await getSharedPrefData();
-                                          Navigator.pop(context);
-                                        },
-                                        child: Row(
-                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            Text(languages[i].languageName!),
-                                            languageCodeSaved ==
-                                                languages[i].languageCode
-                                                ? const Icon(
-                                              Icons
-                                                  .radio_button_checked,
-                                              color: Colors.deepOrange,
-                                            )
-                                                : const Icon(
-                                              Icons
-                                                  .radio_button_unchecked,
-                                              color: Colors.deepOrange,
-                                            ),
-                                          ],
-                                        )),
-                                    const Divider()
-                                  ],
-                                ),
+                              return Column(
+                                children: <Widget>[
+                                  InkWell(
+                                      onTap: () async {
+                                        appLanguage.changeLanguage(Locale(
+                                            languages[i].languageCode!));
+                                        await getSharedPrefData();
+                                        Navigator.pop(context);
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Text(languages[i].languageName!),
+                                          languageCodeSaved ==
+                                              languages[i].languageCode
+                                              ? const Icon(
+                                            Icons
+                                                .radio_button_checked,
+                                            color: Colors.deepOrange,
+                                          )
+                                              : const Icon(
+                                            Icons
+                                                .radio_button_unchecked,
+                                            color: Colors.deepOrange,
+                                          ),
+                                        ],
+                                      )),
+                                  const Divider()
+                                ],
                               );
                             })),
                     actions: <Widget>[
@@ -474,10 +463,10 @@ class _PortfolioPageState extends State<PortfolioPage>
               ),
               if(items.isNotEmpty && bitcoinList.isNotEmpty)
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Text(AppLocalizations.of(context).translate('swipe_delete'),
                   textAlign: TextAlign.left,
-                  style: TextStyle(color: Colors.white,fontSize: 15),),
+                  style: const TextStyle(color: Colors.white,fontSize: 15),),
               ),
               Expanded(
                 child: Container(
@@ -508,7 +497,7 @@ class _PortfolioPageState extends State<PortfolioPage>
                             });
                           },
                           child: Card(
-                            color: Color(0xffd76614),
+                            color: const Color(0xffd76614),
                             elevation: 1,
                             child: Container(
                               decoration: const BoxDecoration(color: Color(0xffd76614)),
@@ -534,19 +523,17 @@ class _PortfolioPageState extends State<PortfolioPage>
                                       ),
                                       Padding(
                                           padding: const EdgeInsets.all(1),
-                                          child:Container(
-                                              child:Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  Text('${items[i].name}',
-                                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white), textAlign: TextAlign.left,
-                                                  ),
-                                                  Text('\$ ${items[i].rateDuringAdding.toStringAsFixed(2)}',
-                                                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+                                          child:Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Text(items[i].name,
+                                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white), textAlign: TextAlign.left,
+                                              ),
+                                              Text('\$ ${items[i].rateDuringAdding.toStringAsFixed(2)}',
+                                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
 
-                                                ],
-                                              )
+                                            ],
                                           )
                                       ),
                                       const SizedBox(
@@ -636,7 +623,7 @@ class _PortfolioPageState extends State<PortfolioPage>
   }
 
   Future<void> callBitcoinApi() async {
-    var uri = '$URL/Bitcoin/resources/getBitcoinList?size=${_size}';
+    var uri = '$URL/Bitcoin/resources/getBitcoinList?size=$_size';
 
     //  print(uri);
     var response = await get(Uri.parse(uri));
@@ -673,110 +660,108 @@ class _PortfolioPageState extends State<PortfolioPage>
               ),
               child: ListView(
                   children: [
-                    Container(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(AppLocalizations.of(context).translate('update_coins'),
-                                style: const TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-                                textAlign: TextAlign.left,
-                              ),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(AppLocalizations.of(context).translate('update_coins'),
+                              style: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                              textAlign: TextAlign.left,
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(30),
-                            child: Container(
-                              decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10)),
-                              child: Row(
-                                  children:<Widget>[
-                                    Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(2.0),
-                                            child: FadeInImage(
-                                              height: 40,
-                                              placeholder: const AssetImage('assets/image/cob.png'),
-                                              image: NetworkImage(
-                                                  "$URL/Bitcoin/resources/icons/${bitcoin.name.toLowerCase()}.png"),
-                                            ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(30),
+                          child: Container(
+                            decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10)),
+                            child: Row(
+                                children:<Widget>[
+                                  Column(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(2.0),
+                                          child: FadeInImage(
+                                            height: 40,
+                                            placeholder: const AssetImage('assets/image/cob.png'),
+                                            image: NetworkImage(
+                                                "$URL/Bitcoin/resources/icons/${bitcoin.name.toLowerCase()}.png"),
                                           ),
-                                        ]
-                                    ),
-                                    const SizedBox(
-                                      width: 50,
-                                    ),
-                                    Text(bitcoin.name,
-                                      style: const TextStyle(fontSize: 25, color: Colors.black),),
-                                  ]
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top:15),
-                            child: Text(AppLocalizations.of(context).translate('enter_coins'),textAlign: TextAlign.left,
-                                style: const TextStyle(fontSize: 15, color: Color(0xffdca076), fontWeight: FontWeight.bold)),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                            child: Container(
-                              decoration: BoxDecoration(color: const Color(0xffc1580b),
-                                  border: Border.all(color: Colors.white, width: 2)
-                              ),
-                              child: Form(
-                                key: _formKey,
-                                child: TextFormField(
-                                  controller: coinCountEditTextEditingController,
-                                  style: const TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.white),textAlign: TextAlign.center,
-                                  cursorColor: Colors.white,
-                                  keyboardType: TextInputType.number,
-                                  inputFormatters: <TextInputFormatter>[
-                                    FilteringTextInputFormatter.digitsOnly,
-                                  ], // O
-                                  //only numbers can be entered
-                                  validator: (val) {
-                                    if (coinCountEditTextEditingController!.value.text == "" ||
-                                        int.parse(coinCountEditTextEditingController!.value.text) <= 0) {
-                                      return AppLocalizations.of(context).translate('invalid_coins');
-                                    } else {
-                                      return null;
-                                    }
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 300,
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: InkWell(
-                                onTap:(){
-                                  _updateSaveCoinsToLocalStorage(bitcoin);
-                                } ,// Image tapped
-                                child: Container(
-                                  decoration: BoxDecoration(color: const Color(0xffc1580b),border: Border.all(color: Colors.white,width: 2)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(15),
-                                    child: Text(AppLocalizations.of(context).translate('update_coins'),textAlign: TextAlign.center,
-                                      style: const TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
+                                        ),
+                                      ]
                                   ),
+                                  const SizedBox(
+                                    width: 50,
+                                  ),
+                                  Text(bitcoin.name,
+                                    style: const TextStyle(fontSize: 25, color: Colors.black),),
+                                ]
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top:15),
+                          child: Text(AppLocalizations.of(context).translate('enter_coins'),textAlign: TextAlign.left,
+                              style: const TextStyle(fontSize: 15, color: Color(0xffdca076), fontWeight: FontWeight.bold)),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                          child: Container(
+                            decoration: BoxDecoration(color: const Color(0xffc1580b),
+                                border: Border.all(color: Colors.white, width: 2)
+                            ),
+                            child: Form(
+                              key: _formKey,
+                              child: TextFormField(
+                                controller: coinCountEditTextEditingController,
+                                style: const TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.white),textAlign: TextAlign.center,
+                                cursorColor: Colors.white,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ], // O
+                                //only numbers can be entered
+                                validator: (val) {
+                                  if (coinCountEditTextEditingController!.value.text == "" ||
+                                      int.parse(coinCountEditTextEditingController!.value.text) <= 0) {
+                                    return AppLocalizations.of(context).translate('invalid_coins');
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 300,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: InkWell(
+                              onTap:(){
+                                _updateSaveCoinsToLocalStorage(bitcoin);
+                              } ,// Image tapped
+                              child: Container(
+                                decoration: BoxDecoration(color: const Color(0xffc1580b),border: Border.all(color: Colors.white,width: 2)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: Text(AppLocalizations.of(context).translate('update_coins'),textAlign: TextAlign.center,
+                                    style: const TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
                                 ),
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),]
               ),
             ),
@@ -824,7 +809,7 @@ class _PortfolioPageState extends State<PortfolioPage>
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => DashboardHome()),
+                                  MaterialPageRoute(builder: (context) => const DashboardHome()),
                                 );
                               },
                               child: Row(
@@ -833,7 +818,7 @@ class _PortfolioPageState extends State<PortfolioPage>
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33764.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('home'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('home'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -842,7 +827,7 @@ class _PortfolioPageState extends State<PortfolioPage>
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => TopCoinsPage()),
+                                  MaterialPageRoute(builder: (context) => const TopCoinsPage()),
                                 );
                               },
                               child: Row(
@@ -851,7 +836,7 @@ class _PortfolioPageState extends State<PortfolioPage>
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33765.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('top_coin'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('top_coin'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -860,7 +845,7 @@ class _PortfolioPageState extends State<PortfolioPage>
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => CoinsPage()),
+                                  MaterialPageRoute(builder: (context) => const CoinsPage()),
                                 );
                               },
                               child: Row(
@@ -869,7 +854,7 @@ class _PortfolioPageState extends State<PortfolioPage>
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33766.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('coins'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('coins'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -878,7 +863,7 @@ class _PortfolioPageState extends State<PortfolioPage>
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => TrendsPage()),
+                                  MaterialPageRoute(builder: (context) => const TrendsPage()),
                                 );
                               },
                               child: Row(
@@ -887,7 +872,7 @@ class _PortfolioPageState extends State<PortfolioPage>
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33767.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('trends'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('trends'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -896,7 +881,7 @@ class _PortfolioPageState extends State<PortfolioPage>
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => PortfolioPage()),
+                                  MaterialPageRoute(builder: (context) => const PortfolioPage()),
                                 );
                               },
                               child: Row(
@@ -905,7 +890,7 @@ class _PortfolioPageState extends State<PortfolioPage>
                                       padding: const EdgeInsets.all(15),
                                       child:
                                       Image.asset("assets/image/Group 33768.png",height: 60,width: 60,)),
-                                  Text(AppLocalizations.of(context).translate('portfolio'),textAlign: TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 25),
+                                  Text(AppLocalizations.of(context).translate('portfolio'),textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
                                   ),
                                 ],
                               ),
@@ -1001,86 +986,84 @@ class _PortfolioPageState extends State<PortfolioPage>
                   color: Color(0xffc1580b),borderRadius: BorderRadius.vertical(top: Radius.circular(40))),
               child: ListView(
                   children: [
-                    Container(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(AppLocalizations.of(context).translate('remove_coins'),
-                              style: const TextStyle(
-                                  fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
-                              textAlign: TextAlign.left,
-                            ),
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(AppLocalizations.of(context).translate('remove_coins'),
+                            style: const TextStyle(
+                                fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
+                            textAlign: TextAlign.left,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Text(AppLocalizations.of(context).translate('do_you'),
-                              style: const TextStyle(color: Colors.white,fontSize: 18),),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(30),
-                            child: Container(
-                              decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10)),
-                              child: Row(
-                                  children:<Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.all(2.0),
-                                              child: FadeInImage(
-                                                height: 70,
-                                                placeholder: const AssetImage('assets/image/cob.png'),
-                                                image: NetworkImage(
-                                                    "$URL/Bitcoin/resources/icons/${item.name.toLowerCase()}.png"),
-                                              ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Text(AppLocalizations.of(context).translate('do_you'),
+                            style: const TextStyle(color: Colors.white,fontSize: 18),),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(30),
+                          child: Container(
+                            decoration: BoxDecoration(color: Colors.white,borderRadius: BorderRadius.circular(10)),
+                            child: Row(
+                                children:<Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: FadeInImage(
+                                              height: 70,
+                                              placeholder: const AssetImage('assets/image/cob.png'),
+                                              image: NetworkImage(
+                                                  "$URL/Bitcoin/resources/icons/${item.name.toLowerCase()}.png"),
                                             ),
-                                            const SizedBox(
-                                              height:10,
-                                            ),
-                                          ]
-                                      ),
+                                          ),
+                                          const SizedBox(
+                                            height:10,
+                                          ),
+                                        ]
                                     ),
-                                    const SizedBox(
-                                      width: 50,
-                                    ),
-                                    Column(
-                                      children: [
-                                        Text(item.name,
-                                          style: const TextStyle(fontSize: 25, color: Colors.black),),
-                                        const SizedBox(
-                                          height:10,
-                                        ),
-                                      ],
-                                    ),
-                                  ]
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 300,
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: InkWell(
-                                onTap:(){
-                                  _deleteCoinsToLocalStorage(item);
-                                } ,// Image tapped
-                                child: Container(
-                                  decoration: BoxDecoration(color: const Color(0xffc1580b),border: Border.all(color: Colors.white,width: 2)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(15),
-                                    child: Text(AppLocalizations.of(context).translate('remove'),textAlign: TextAlign.center,
-                                      style: const TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
                                   ),
+                                  const SizedBox(
+                                    width: 50,
+                                  ),
+                                  Column(
+                                    children: [
+                                      Text(item.name,
+                                        style: const TextStyle(fontSize: 25, color: Colors.black),),
+                                      const SizedBox(
+                                        height:10,
+                                      ),
+                                    ],
+                                  ),
+                                ]
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 300,
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: InkWell(
+                              onTap:(){
+                                _deleteCoinsToLocalStorage(item);
+                              } ,// Image tapped
+                              child: Container(
+                                decoration: BoxDecoration(color: const Color(0xffc1580b),border: Border.all(color: Colors.white,width: 2)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: Text(AppLocalizations.of(context).translate('remove'),textAlign: TextAlign.center,
+                                    style: const TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(height: 50,),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(height: 50,),
+                      ],
                     ),
                   ]
               ),

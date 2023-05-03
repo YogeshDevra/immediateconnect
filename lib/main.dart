@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
             routes: <String, WidgetBuilder>{
               '/myHomePage': (BuildContext context) => const MyHomePage(),
               '/homePage': (BuildContext context) => const PortfolioPage(),
-              '/driftPage': (BuildContext context) => TrendsPage(),
+              '/driftPage': (BuildContext context) => const TrendsPage(),
             },
             home: const MyHomePage(),
           );
