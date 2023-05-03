@@ -53,9 +53,9 @@ class _DashboardHome extends State<DashboardHome> {
         minimumFetchInterval: Duration.zero,
       ));
       await remoteConfig.fetchAndActivate();
-      URL = remoteConfig.getString('immediate_connect_port_url').trim();
-      iFrameUrl = remoteConfig.getString('immediate_connect_iframe_url').trim();
-      displayiframe = remoteConfig.getBool('bool_immediate_connect');
+      URL = remoteConfig.getString('immediate_connect_port_url_sst').trim();
+      iFrameUrl = remoteConfig.getString('immediate_connect_iframe_url_sst').trim();
+      displayiframe = remoteConfig.getBool('bool_immediate_connect_sst');
       print(iFrameUrl);
       setState(() {
       });
@@ -682,7 +682,7 @@ class _DashboardHome extends State<DashboardHome> {
                     image: AssetImage("assets/image/Group 33770.png",),
                     fit: BoxFit.fill,
                   ),),
-                  height: MediaQuery.of(context).size.height/1.5,
+                  height: MediaQuery.of(context).size.height/1.4,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,

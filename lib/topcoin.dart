@@ -45,7 +45,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
         minimumFetchInterval: Duration.zero,
       ));
       await remoteConfig.fetchAndActivate();
-      URL = remoteConfig.getString('immediate_connect_port_url').trim();
+      URL = remoteConfig.getString('immediate_connect_port_url_sst').trim();
 
       print(URL);
       setState(() {
@@ -436,7 +436,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                     image: AssetImage("assets/image/Group 33770.png",),
                     fit: BoxFit.fill,
                   ),),
-                  height: MediaQuery.of(context).size.height/1.5,
+                  height: MediaQuery.of(context).size.height/1.4,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,

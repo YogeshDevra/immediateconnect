@@ -123,23 +123,23 @@ class _PortfolioPageState extends State<PortfolioPage>
     final RemoteConfig remoteConfig = await RemoteConfig.instance;
 
     try {
-      await Firebase.initializeApp();
+      //await Firebase.initializeApp();
       // Using default duration to force fetching from remote server.
       await remoteConfig.setConfigSettings(RemoteConfigSettings(
         fetchTimeout: const Duration(seconds: 10),
         minimumFetchInterval: Duration.zero,
       ));
-      await remoteConfig.activate();
-      await Future.delayed(const Duration(seconds:2));
+      //await remoteConfig.activate();
+      //await Future.delayed(const Duration(seconds:2));
       await remoteConfig.fetchAndActivate();
-      URL = remoteConfig.getString('immediate_connect_port_url').trim();
-      iFrameUrl = remoteConfig.getString('immediate_connect_iframe_url').trim();
-      displayiframe = remoteConfig.getBool('bool_immediate_connect');
+      //await remoteConfig.ensureInitialized();
+      URL = remoteConfig.getString('immediate_connect_port_url_sst').trim();
+      iFrameUrl = remoteConfig.getString('immediate_connect_iframe_url_sst').trim();
+      displayiframe = remoteConfig.getBool('bool_immediate_connect_sst');
       print(URL);
       print(iFrameUrl);
       print(displayiframe);
       setState(() {
-
       });
     } catch (exception) {
       print('Unable to fetch remote config. Cached or default values will be used');
@@ -147,8 +147,8 @@ class _PortfolioPageState extends State<PortfolioPage>
     }
     callBitcoinApi();
     final newVersion = NewVersionPlus(
-        iOSId: 'com.kbls.bitcoinbuyerapp',
-        androidId: 'com.btrb.bitcoinbuyerapp',
+        iOSId: 'com.shs.immediateconnectapp',
+        androidId: 'com.shs.immediateconnectapp',
         androidPlayStoreCountry: "es_ES" //support country code
     );
     Timer(const Duration(milliseconds: 800),()
@@ -324,9 +324,8 @@ class _PortfolioPageState extends State<PortfolioPage>
               const SizedBox(
                 height: 5,
               ),
-              displayiframe == true?
-
-                Container(
+              displayiframe == true
+                  ? Container(
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   height: 500,
                  /* child:WebView(
@@ -358,8 +357,7 @@ class _PortfolioPageState extends State<PortfolioPage>
                      gestureNavigationEnabled: true,
                    ),
                 )
-                  :
-              Padding(
+                  : Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height/4,
@@ -470,6 +468,9 @@ class _PortfolioPageState extends State<PortfolioPage>
                         );
                       }),
                 ),
+              ),
+              const SizedBox(
+                height: 5,
               ),
               if(items.isNotEmpty && bitcoinList.isNotEmpty)
               Padding(

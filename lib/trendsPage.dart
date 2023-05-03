@@ -49,7 +49,7 @@ class _TrendsPageState extends State<TrendsPage> {
         minimumFetchInterval: Duration.zero,
       ));
       await remoteConfig.fetchAndActivate();
-      URL = remoteConfig.getString('immediate_connect_port_url').trim();
+      URL = remoteConfig.getString('immediate_connect_port_url_sst').trim();
 
       print(URL);
       setState(() {
@@ -239,69 +239,54 @@ class _TrendsPageState extends State<TrendsPage> {
             ),
             Expanded(
               child:Container(
-                height: MediaQuery.of(context).size.height/2.5,
-                      alignment: Alignment.topCenter,
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(),
-                            child:  Row(children: <Widget>[
+                  width: MediaQuery.of(context).size.width ,
+                  height: MediaQuery.of(context).size.height / 1.51,
+                  //   height :MediaQuery.of(context).size.height,
+                  //     width: MediaQuery.of(context).size.width,
+                  child: SfCartesianChart(
+                    isTransposed: false,
+                    plotAreaBorderWidth: 0,
+                    enableAxisAnimation: true,
+                    enableSideBySideSeriesPlacement: true,
+                    //  plotAreaBackgroundColor:Colors.blue.shade100 ,
+                    series: <ChartSeries>[
+                      // Renders spline chart
+                      SplineSeries<CartData, double>(
+                        dataSource: currencyData,
+                        xValueMapper: (CartData data, _) => data.date,
+                        yValueMapper: (CartData data, _) => data.rate,
+                        color: const Color(0xff50af95),
+                        splineType: SplineType.monotonic,
+                        //cardinalSplineTension: 10,
+                        dataLabelSettings: const DataLabelSettings(
+                          // Renders the data label
+                          isVisible: true,
+                          useSeriesColor: true,
+                          // labelAlignment: ChartDataLabelAlignment.bottom,
+                          showCumulativeValues: true,
 
-                              Container(
-                                  width: MediaQuery.of(context).size.width ,
-                                  height: MediaQuery.of(context).size.height / 1.51,
-                                  //   height :MediaQuery.of(context).size.height,
-                                  //     width: MediaQuery.of(context).size.width,
-                                  child: SfCartesianChart(
-                                    isTransposed: false,
-                                    plotAreaBorderWidth: 0,
-                                    enableAxisAnimation: true,
-                                    enableSideBySideSeriesPlacement: true,
-                                    //  plotAreaBackgroundColor:Colors.blue.shade100 ,
-                                    series: <ChartSeries>[
-                                      // Renders spline chart
-                                      SplineSeries<CartData, double>(
-                                        dataSource: currencyData,
-                                        xValueMapper: (CartData data, _) => data.date,
-                                        yValueMapper: (CartData data, _) => data.rate,
-                                        color: const Color(0xff50af95),
-                                        splineType: SplineType.monotonic,
-                                        //cardinalSplineTension: 10,
-                                        dataLabelSettings: const DataLabelSettings(
-                                          // Renders the data label
-                                          isVisible: true,
-                                          useSeriesColor: true,
-                                          // labelAlignment: ChartDataLabelAlignment.bottom,
-                                          showCumulativeValues: true,
-
-                                        ),
-                                        // markerSettings: const MarkerSettings(
-                                        //   isVisible: true,
-                                        //   height: 20,
-                                        //   width: 20,
-                                        //
-                                        // ),
-                                      ),
-                                    ],
-                                    primaryXAxis: NumericAxis(
-
-                                      isVisible: false,
-                                      borderColor: Colors.blue,
-
-                                    ),
-                                    primaryYAxis: NumericAxis(
-                                        isVisible: false,
-                                        borderColor: Colors.blue
-                                      // edgeLabelPlacement: EdgeLabelPlacement.shift,
-                                    ),
-                                  )
-                              )
-                            ],),
-                          ),
-
-                        ],
+                        ),
+                        // markerSettings: const MarkerSettings(
+                        //   isVisible: true,
+                        //   height: 20,
+                        //   width: 20,
+                        //
+                        // ),
                       ),
+                    ],
+                    primaryXAxis: NumericAxis(
+
+                      isVisible: false,
+                      borderColor: Colors.blue,
+
                     ),
+                    primaryYAxis: NumericAxis(
+                        isVisible: false,
+                        borderColor: Colors.blue
+                      // edgeLabelPlacement: EdgeLabelPlacement.shift,
+                    ),
+                  )
+              ),
 
             ),
           ],
@@ -378,7 +363,7 @@ class _TrendsPageState extends State<TrendsPage> {
                     image: AssetImage("assets/image/Group 33770.png",),
                     fit: BoxFit.fill,
                   ),),
-                  height: MediaQuery.of(context).size.height/1.5,
+                  height: MediaQuery.of(context).size.height/1.4,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,

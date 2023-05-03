@@ -3,23 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>989107885332-3sbvp3kh11guu2srj9s7vve8educa4e4.apps.googleusercontent.com</string>
+	<string>513558863917-c70h3pscjbketbc1sdome6bf08efah3a.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.989107885332-3sbvp3kh11guu2srj9s7vve8educa4e4</string>
-	<key>ANDROID_CLIENT_ID</key>
-	<string>989107885332-2nqnj3lf75jjtf8jmd2gc4g1p9rho9g2.apps.googleusercontent.com</string>
+	<string>com.googleusercontent.apps.513558863917-c70h3pscjbketbc1sdome6bf08efah3a</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBjL0AkFuMNVSlbHcFNl_-eTt5tbP8UWC4</string>
+	<string>AIzaSyAD_wLxAM7ExzKEjOG8w96AkC46X9a7r70</string>
 	<key>GCM_SENDER_ID</key>
-	<string>989107885332</string>
+	<string>513558863917</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.shs.immediateconnectapp</string>
 	<key>PROJECT_ID</key>
-	<string>softcoder-b9e7f</string>
+	<string>shrisatyatechnologies-b2b0e</string>
 	<key>STORAGE_BUCKET</key>
-	<string>softcoder-b9e7f.appspot.com</string>
+	<string>shrisatyatechnologies-b2b0e.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:989107885332:ios:9485e0c93d4afa7b871e01</string>
+	<string>1:513558863917:ios:f9e04575533a3d7de0d8a4</string>
 </dict>
 </plist>
