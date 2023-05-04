@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,6 +53,9 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
       setState(() {
 
       });
+    } on PlatformException catch (exception){
+      print("Platform Exception");
+      print(exception);
     } catch (exception) {
       print('Unable to fetch remote config. Cached or default values will be '
           'used');

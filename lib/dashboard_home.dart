@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -59,6 +60,9 @@ class _DashboardHome extends State<DashboardHome> {
       print(iFrameUrl);
       setState(() {
       });
+    } on PlatformException catch (exception){
+      print("Platform Exception");
+      print(exception);
     } catch (exception) {
       print('Unable to fetch remote config. Cached or default values will be used');
     }

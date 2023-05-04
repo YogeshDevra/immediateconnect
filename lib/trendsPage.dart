@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:http/http.dart';
@@ -58,6 +59,9 @@ class _TrendsPageState extends State<TrendsPage> {
       setState(() {
 
       });
+    } on PlatformException catch (exception){
+      print("Platform Exception");
+      print(exception);
     } catch (exception) {
       print('Unable to fetch remote config. Cached or default values will be '
           'used');

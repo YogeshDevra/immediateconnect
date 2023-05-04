@@ -89,6 +89,15 @@ class _PortfolioPageState extends State<PortfolioPage>
       }
       setState(() {});
     });
+    final newVersion = NewVersionPlus(
+        iOSId: 'com.shs.immediateconnectapp',
+       //iOSAppStoreCountry: '',
+    );
+    Timer(const Duration(milliseconds: 800),()
+    {
+      checkVerion(newVersion);
+      //basicStatusCheck(newVersion);
+    });
     super.initState();
     getSharedPrefData();
     fetchRemoteValue();
@@ -132,21 +141,15 @@ class _PortfolioPageState extends State<PortfolioPage>
       print(displayiframe);
       setState(() {
       });
-    } catch (exception) {
+    } on PlatformException catch (exception){
+      print("Platform Exception");
+      print(exception);
+    }catch (exception) {
       print('Unable to fetch remote config. Cached or default values will be used');
-      print(exception.toString());
+      print(exception);
     }
     callBitcoinApi();
-    final newVersion = NewVersionPlus(
-        iOSId: 'com.shs.immediateconnectapp',
-        androidId: 'com.shs.immediateconnectapp',
-        androidPlayStoreCountry: "es_ES" //support country code
-    );
-    Timer(const Duration(milliseconds: 800),()
-    {
-      checkVerion(newVersion);
-      //basicStatusCheck(newVersion);
-    });
+
     // controller = WebViewController()
     //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
     //   ..setBackgroundColor(const Color(0x00000000))
@@ -170,20 +173,23 @@ class _PortfolioPageState extends State<PortfolioPage>
   }
 
   void checkVerion(NewVersionPlus newVersion) async {
-    final status = await newVersion.getVersionStatus(
-    );
+    final status = await newVersion.getVersionStatus();
 
     print('here${status?.localVersion}');
+    print(status?.appStoreLink);
+    print(status?.canUpdate);
+    print(status?.localVersion);
     if(status!=null){
-      if(status.canUpdate){
+     // if(status.canUpdate){
         newVersion.showUpdateDialog(
           context: context,
           versionStatus: status,
-          dialogText: 'New Version is available in the store',
-          dialogTitle: 'Please update the app from " + "${status.localVersion}" + " to " + "${status.storeVersion}',
+          dialogTitle: 'UPDATE AVAILABLE',
+          dialogText: 'Please Update Your App.',
           updateButtonText: "Lets update",
+          allowDismissal: false,
         );
-      }
+    //  }
     }
   }
 

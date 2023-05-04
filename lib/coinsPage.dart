@@ -76,6 +76,9 @@ class _CoinsPageState extends State<CoinsPage>
       setState(() {
 
       });
+    }  on PlatformException catch (exception){
+      print("Platform Exception");
+      print(exception);
     } catch (exception) {
       print('Unable to fetch remote config. Cached or default values will be '
           'used');
