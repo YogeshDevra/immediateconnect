@@ -474,129 +474,134 @@ class _PortfolioPageState extends State<PortfolioPage>
                   textAlign: TextAlign.left,
                   style: const TextStyle(color: Colors.white,fontSize: 15),),
               ),
-              Expanded(
-                child: Container(
-                  height: 500,
-                decoration: const BoxDecoration(color: Colors.white,
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft: Radius.circular(25))
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: items.isNotEmpty && bitcoinList.isNotEmpty
-                      ? ListView.builder(
-                      itemCount: items.length,
-                      itemBuilder: (BuildContext context, int i) {
-                        return Dismissible(
-                          background : Container(
-                            color: Colors.red,
-                            child: InkWell(
-                                onTap: () {
+              Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 500,
+                    decoration: const BoxDecoration(color: Colors.white,
+                        borderRadius: BorderRadius.only(topRight: Radius.circular(25),topLeft: Radius.circular(25))
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: items.isNotEmpty && bitcoinList.isNotEmpty
+                          ? ListView.builder(
+                          itemCount: items.length,
+                          itemBuilder: (BuildContext context, int i) {
+                            return Dismissible(
+                              background : Container(
+                                color: Colors.red,
+                                child: InkWell(
+                                    onTap: () {
+                                      _showdeleteCoinFromPortfolioDialog(items[i]);
+                                    }, // Image tapped
+                                    child: const Icon(Icons.delete,color: Colors.white,size:20)
+                                ),
+                              ),
+                              key: UniqueKey(),
+                              onDismissed: (direction){
+                                setState(() {
                                   _showdeleteCoinFromPortfolioDialog(items[i]);
-                                }, // Image tapped
-                                child: const Icon(Icons.delete,color: Colors.white,size:20)
-                            ),
-                          ),
-                          key: UniqueKey(),
-                          onDismissed: (direction){
-                            setState(() {
-                              _showdeleteCoinFromPortfolioDialog(items[i]);
-                            });
-                          },
-                          child: Card(
-                            color: const Color(0xffd76614),
-                            elevation: 1,
-                            child: Container(
-                              decoration: const BoxDecoration(color: Color(0xffd76614)),
-                              height: MediaQuery.of(context).size.height/11,
-                              width: MediaQuery.of(context).size.width/.5,
-                              child:GestureDetector(
-                                  onTap: () {
-                                    showPortfolioEditDialog(items[i]);
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: SizedBox(
-                                            height: 40,
-                                            width:40,
-                                            child: FadeInImage(
-                                              placeholder: const AssetImage('assets/image/cob.png'),
-                                              image: NetworkImage("$URL/Bitcoin/resources/icons/${items[i].name.toLowerCase()}.png"),
-                                            ),
-                                          )
-                                      ),
-                                      Padding(
-                                          padding: const EdgeInsets.all(1),
-                                          child:Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: <Widget>[
-                                              Text(items[i].name,
-                                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white), textAlign: TextAlign.left,
-                                              ),
-                                              Text('\$ ${items[i].rateDuringAdding.toStringAsFixed(2)}',
-                                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+                                });
+                              },
+                              child: Card(
+                                color: const Color(0xffd76614),
+                                elevation: 1,
+                                child: Container(
+                                  decoration: const BoxDecoration(color: Color(0xffd76614)),
+                                  height: MediaQuery.of(context).size.height/11,
+                                  width: MediaQuery.of(context).size.width/.5,
+                                  child:GestureDetector(
+                                      onTap: () {
+                                        showPortfolioEditDialog(items[i]);
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: <Widget>[
+                                          Padding(
+                                              padding: const EdgeInsets.all(5.0),
+                                              child: SizedBox(
+                                                height: 40,
+                                                width:40,
+                                                child: FadeInImage(
+                                                  placeholder: const AssetImage('assets/image/cob.png'),
+                                                  image: NetworkImage("$URL/Bitcoin/resources/icons/${items[i].name.toLowerCase()}.png"),
+                                                ),
+                                              )
+                                          ),
+                                          Padding(
+                                              padding: const EdgeInsets.all(1),
+                                              child:Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Text(items[i].name,
+                                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white), textAlign: TextAlign.left,
+                                                  ),
+                                                  Text('\$ ${items[i].rateDuringAdding.toStringAsFixed(2)}',
+                                                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
 
-                                            ],
-                                          )
-                                      ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(0),
-                                        child: Column(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.all(5),
-                                              child: Text(' ${items[i].numberOfCoins.toStringAsFixed(0)}',
-                                                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
-                                                textAlign: TextAlign.end,),
+                                                ],
+                                              )
+                                          ),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(0),
+                                            child: Column(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.all(5),
+                                                  child: Text(' ${items[i].numberOfCoins.toStringAsFixed(0)}',
+                                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
+                                                    textAlign: TextAlign.end,),
+                                                ),
+                                                Text('\$${items[i].totalValue.toStringAsFixed(2)}',
+                                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
+                                                  textAlign: TextAlign.end,),
+                                              ],
                                             ),
-                                            Text('\$${items[i].totalValue.toStringAsFixed(2)}',
-                                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
-                                              textAlign: TextAlign.end,),
-                                          ],
-                                        ),
-                                      ),
-                                      const SizedBox(width:10),
-                                      const SizedBox(
-                                        width: 2,
+                                          ),
+                                          const SizedBox(width:10),
+                                          const SizedBox(
+                                            width: 2,
+                                          )
+                                        ],
                                       )
-                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          })
+                          :Center(
+                            child: ElevatedButton(
+                              onPressed:(){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const CoinsPage()),
+                                );
+                              },
+                              style: ButtonStyle(
+                                  foregroundColor: MaterialStateProperty.all<Color>(Colors.white,),
+                                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffd76614),),
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(35.0),
+                                      )
                                   )
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Text(AppLocalizations.of(context).translate('add_coins')),
                               ),
                             ),
                           ),
-                        );
-                      })
-                      :Center(
-                        child: ElevatedButton(
-                          onPressed:(){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const CoinsPage()),
-                            );
-                          },
-                          style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(Colors.white,),
-                              backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffd76614),),
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(35.0),
-                                  )
-                              )
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: Text(AppLocalizations.of(context).translate('add_coins')),
-                          ),
-                        ),
-                      ),
-                ),
-              ),
+                    ),
+                  ),
+                  ),
+                ],
               )
             ],
           )

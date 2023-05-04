@@ -152,6 +152,7 @@ class _CoinsPageState extends State<CoinsPage>
                 style: const TextStyle(color: Colors.white,fontSize: 15),),
             ),
             Expanded(
+              flex:5,
               child:Container(
                 decoration: const BoxDecoration(color: Colors.white,
                     borderRadius: BorderRadius.vertical(top: Radius.circular(40),)),

@@ -410,6 +410,7 @@ class _DashboardHome extends State<DashboardHome> {
                             child: Image.asset('assets/image/Frame 35.png'),
                           ),
                           Expanded(
+                            flex:3,
                             child: Padding(
                               padding: const EdgeInsets.only(left:10.0,right: 10.0, bottom:5.0),
                               child: Column(
@@ -444,20 +445,19 @@ class _DashboardHome extends State<DashboardHome> {
                             child: Image.asset('assets/image/Frame 36.png'),
                           ),
                           Expanded(
+                            flex:3,
                             child: Padding(
                               padding: const EdgeInsets.only(left:10.0,right: 10.0, bottom:5.0),
-                              child: Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(AppLocalizations.of(context).translate('homesen17'),
-                                        style:const TextStyle(fontWeight: FontWeight.bold,fontSize:20,
-                                            color:Colors.black,height:1.6)),
-                                    Text(AppLocalizations.of(context).translate('homesen18'),
-                                        style:const TextStyle(fontSize:15,color:Color(0xff757575),height:1.6)),
-                                  ],
-                                ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(AppLocalizations.of(context).translate('homesen17'),
+                                      style:const TextStyle(fontWeight: FontWeight.bold,fontSize:20,
+                                          color:Colors.black,height:1.6)),
+                                  Text(AppLocalizations.of(context).translate('homesen18'),
+                                      style:const TextStyle(fontSize:15,color:Color(0xff757575),height:1.6)),
+                                ],
                               ),
                             ),
                           ),
@@ -476,20 +476,19 @@ class _DashboardHome extends State<DashboardHome> {
                             child: Image.asset('assets/image/Frame 37.png'),
                           ),
                           Expanded(
+                            flex:3,
                             child: Padding(
                               padding: const EdgeInsets.only(left:10.0,right: 10.0, bottom:5.0),
-                              child: Expanded(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(AppLocalizations.of(context).translate('homesen19'),
-                                        style:const TextStyle(fontWeight: FontWeight.bold,fontSize:20,
-                                            color:Colors.black,height:1.6)),
-                                    Text(AppLocalizations.of(context).translate('homesen20'),
-                                        style:const TextStyle(fontSize:15,color:Color(0xff757575),height:1.6)),
-                                  ],
-                                ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(AppLocalizations.of(context).translate('homesen19'),
+                                      style:const TextStyle(fontWeight: FontWeight.bold,fontSize:20,
+                                          color:Colors.black,height:1.6)),
+                                  Text(AppLocalizations.of(context).translate('homesen20'),
+                                      style:const TextStyle(fontSize:15,color:Color(0xff757575),height:1.6)),
+                                ],
                               ),
                             ),
                           ),

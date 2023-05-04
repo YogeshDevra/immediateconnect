@@ -221,8 +221,9 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                       style:GoogleFonts.openSans(textStyle: const TextStyle(fontSize: 16,
                       fontWeight: FontWeight.bold, color: Colors.black))
                   ),
-                  Expanded(child:
-                  ListView.separated(
+                  Expanded(
+                    flex: 3,
+                    child: ListView.separated(
                       separatorBuilder: (_, __) =>  const SizedBox(width: 8),
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
@@ -321,8 +322,9 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                   Text(AppLocalizations.of(context).translate('top_lose'), style:GoogleFonts.openSans(textStyle: const TextStyle(fontSize: 19,
                       fontWeight: FontWeight.bold, color: Colors.black))
                   ),
-                  Expanded(child:
-                    ListView.separated(
+                  Expanded(
+                    flex:3,
+                    child: ListView.separated(
                       separatorBuilder: (_, __) => const SizedBox(height: 5),
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,

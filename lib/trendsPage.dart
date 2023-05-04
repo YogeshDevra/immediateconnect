@@ -245,6 +245,7 @@ class _TrendsPageState extends State<TrendsPage> {
               height: 10,
             ),
             Expanded(
+              flex: 3,
               child:SizedBox(
                   width: MediaQuery.of(context).size.width ,
                   height: MediaQuery.of(context).size.height / 1.51,
