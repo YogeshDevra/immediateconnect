@@ -556,8 +556,8 @@ class _CoinsPageState extends State<CoinsPage>
                               keyboardType: TextInputType.number,
                               cursorColor: Colors.white,
                                 decoration: InputDecoration(
-                                  labelText: AppLocalizations.of(context).translate('enter_coins'),
-                                  labelStyle: const TextStyle(color: Colors.grey, fontSize: 20),
+                                  hintText: AppLocalizations.of(context).translate('enter_coins'),
+                                  hintStyle: const TextStyle(color: Colors.grey, fontSize: 20,),
                                   fillColor: Colors.white,
                                 ),
                               inputFormatters: <TextInputFormatter>[

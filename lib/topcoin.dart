@@ -379,10 +379,10 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w600)
                                             ),),
-                                          Text('+ ${_gainerlosserHTC[i].perRate!}',
+                                          Text('${_gainerlosserHTC[i].perRate!}',
                                               style: GoogleFonts.openSans(
                                                 textStyle:const TextStyle(
-                                                    color: Colors.green, fontSize: 13,
+                                                    color: Colors.red, fontSize: 13,
                                                     fontWeight: FontWeight.w600),
                                               ),textAlign: TextAlign.right),
                                           // Row(

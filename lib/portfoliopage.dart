@@ -549,11 +549,13 @@ class _PortfolioPageState extends State<PortfolioPage>
                                             width: 20,
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.all(0),
+                                            padding: const EdgeInsets.all(1),
                                             child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets.all(5),
+                                                  padding: const EdgeInsets.all(2),
                                                   child: Text(' ${items[i].numberOfCoins.toStringAsFixed(0)}',
                                                     style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white),
                                                     textAlign: TextAlign.end,),
