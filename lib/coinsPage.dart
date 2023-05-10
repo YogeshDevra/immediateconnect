@@ -553,7 +553,7 @@ class _CoinsPageState extends State<CoinsPage>
                             child: TextFormField(
                               controller: coinCountTextEditingController,
                               style: const TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.white),textAlign: TextAlign.center,
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.numberWithOptions(signed: true, decimal: false),
                               cursorColor: Colors.white,
                                 decoration: InputDecoration(
                                   hintText: AppLocalizations.of(context).translate('enter_coins'),

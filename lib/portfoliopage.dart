@@ -174,7 +174,7 @@ class _PortfolioPageState extends State<PortfolioPage>
 
   void checkVerion(NewVersionPlus newVersion) async {
     final status = await newVersion.getVersionStatus();
-
+print(status?.storeVersion);
     print('here${status?.localVersion}');
     print(status?.appStoreLink);
     print(status?.canUpdate);
@@ -741,7 +741,7 @@ class _PortfolioPageState extends State<PortfolioPage>
                                 controller: coinCountEditTextEditingController,
                                 style: const TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.white),textAlign: TextAlign.center,
                                 cursorColor: Colors.white,
-                                keyboardType: TextInputType.number,
+                                keyboardType: const TextInputType.numberWithOptions(signed: true, decimal: false),
                                 inputFormatters: <TextInputFormatter>[
                                   FilteringTextInputFormatter.digitsOnly,
                                 ], // O
