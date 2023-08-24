@@ -1,0 +1,100 @@
+{
+  "project_info": {
+    "project_number": "596049938865",
+    "project_id": "superlativeapp-6e159",
+    "storage_bucket": "superlativeapp-6e159.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596049938865:android:331d3efb907f99b8a19590",
+        "android_client_info": {
+          "package_name": "com.spl.sportssuperlativeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "596049938865-98eg7msecov3vrmsc52ln45tjnblmojk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.spl.sportssuperlativeapp",
+            "certificate_hash": "31f6a546ebdbf5dc9056b6e340ff0b2a827d7285"
+          }
+        },
+        {
+          "client_id": "596049938865-rvri1rdpmjatcacm1hapgkkkoef4kacp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY8qvheV60wGQZolS5eINJ4zFtfs8HhUQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "596049938865-rvri1rdpmjatcacm1hapgkkkoef4kacp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "596049938865-6kj4cdlk69qnn3k1kion8ojfh3sbbim6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.spl.sportssuperlativeapp",
+                "app_store_id": "6446760691"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596049938865:android:209d58e8f9d69967a19590",
+        "android_client_info": {
+          "package_name": "com.sspl.immediateconnectapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "596049938865-lji13odvdd04l5inikql8nubo9705ftc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sspl.immediateconnectapp",
+            "certificate_hash": "7269cf7ba35dc9b8090a36d7d0207f8c3a05128f"
+          }
+        },
+        {
+          "client_id": "596049938865-rvri1rdpmjatcacm1hapgkkkoef4kacp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY8qvheV60wGQZolS5eINJ4zFtfs8HhUQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "596049938865-rvri1rdpmjatcacm1hapgkkkoef4kacp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "596049938865-6kj4cdlk69qnn3k1kion8ojfh3sbbim6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.spl.sportssuperlativeapp",
+                "app_store_id": "6446760691"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
