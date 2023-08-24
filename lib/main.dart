@@ -1,8 +1,11 @@
 // ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api
 
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
 import 'package:google_fonts/google_fonts.dart';
+import 'package:immediateconnectapp/IframeHomePage.dart';
 import 'package:provider/provider.dart';
 import 'localization/AppLanguage.dart';
 import 'localization/app_localization.dart';
@@ -22,7 +25,9 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final AppLanguage? appLanguage;
-  const MyApp({super.key, this.appLanguage});
+  MyApp({super.key, this.appLanguage});
+
+  final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +64,11 @@ class MyApp extends StatelessWidget {
             routes: <String, WidgetBuilder>{
               '/myHomePage': (BuildContext context) => const MyHomePage(),
               '/homePage': (BuildContext context) => const PortfolioPage(),
+              '/iframePage': (BuildContext context) => const IframeHomePage(),
               '/driftPage': (BuildContext context) => const TrendsPage(),
             },
-            home: const MyHomePage(),
+            home: Provider<FirebaseAnalytics>(
+                create: (context) => analytics, child: MyHomePage()),
           );
         },
       ),
@@ -77,6 +84,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool? displayiframe;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -99,13 +107,34 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    homePage();
+    firebaseValueFetch();
+
     super.initState();
   }
-
+  firebaseValueFetch() async{
+    final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+    try{
+      // Using default duration to force fetching from remote server.
+      await remoteConfig.setConfigSettings(RemoteConfigSettings(
+        fetchTimeout: const Duration(seconds: 10),
+        minimumFetchInterval: Duration.zero,
+      ));
+      await remoteConfig.fetchAndActivate();
+      displayiframe = remoteConfig.getBool('bool_immediate_connect_sst');
+      print(displayiframe);
+    }catch (exception) {
+      print('Unable to fetch remote config. Cached or default values will be used');
+    }
+    displayiframe == true ? IframePage() : homePage();
+  }
   Future<void> homePage() async {
     Future.delayed(const Duration(milliseconds: 1000)).then((_) {
       Navigator.of(context).pushReplacementNamed('/homePage');
+    });
+  }
+  Future<void> IframePage() async {
+    Future.delayed(const Duration(milliseconds: 1000)).then((_) {
+      Navigator.of(context).pushReplacementNamed('/iframePage');
     });
   }
 }

@@ -6,8 +6,10 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
+import 'package:immediateconnectapp/IframeHomePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'ImmediateConnectAnalytics.dart';
 import 'coinsPage.dart';
 import 'localization/app_localization.dart';
 import 'models/Bitcoin.dart';
@@ -39,6 +41,7 @@ class _DashboardHome extends State<DashboardHome> {
 
   @override
   void initState() {
+    ImmediateConnectAnalytics.setCurrentScreen(ImmediateConnectAnalytics.HOME_SCREEN, "Home Page");
     _controllerList = ScrollController();
     super.initState();
     fetchRemoteValue();
@@ -67,26 +70,6 @@ class _DashboardHome extends State<DashboardHome> {
       print('Unable to fetch remote config. Cached or default values will be used');
     }
     callBitcoinApi();
-    // controller = WebViewController()
-    //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
-    //   ..setBackgroundColor(const Color(0x00000000))
-    //   ..setNavigationDelegate(
-    //     NavigationDelegate(
-    //       onProgress: (int progress) {
-    //         // Update loading bar.
-    //       },
-    //       onPageStarted: (String url) {},
-    //       onPageFinished: (String url) {},
-    //       onWebResourceError: (WebResourceError error) {},
-    //       onNavigationRequest: (NavigationRequest request) {
-    //         if (request.url.startsWith(iFrameUrl!)) {
-    //           return NavigationDecision.prevent;
-    //         }
-    //         return NavigationDecision.navigate;
-    //       },
-    //     ),
-    //   )
-    //   ..loadRequest(Uri.parse(iFrameUrl!));
   }
   @override
   Widget build(BuildContext context) {
@@ -696,6 +679,23 @@ class _DashboardHome extends State<DashboardHome> {
                       Center(
                         child: Column(
                           children: <Widget>[
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => IframeHomePage()),
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: Image.asset("assets/image/iframeicon.png",height: 60,width: 60,)),
+                                  Text("Immediate Connect",textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
+                                  ),
+                                ],
+                              ),
+                            ),
                             InkWell(
                               onTap: () {
                                 Navigator.push(

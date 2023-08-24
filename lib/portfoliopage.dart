@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'IframeHomePage.dart';
+import 'ImmediateConnectAnalytics.dart';
 import 'coinsPage.dart';
 import 'dashboard_home.dart';
 import 'localization/app_localization.dart';
@@ -33,7 +35,6 @@ class PortfolioPage extends StatefulWidget {
 
 class _PortfolioPageState extends State<PortfolioPage>
     with SingleTickerProviderStateMixin {
-  final Completer<WebViewController> _controllerForm = Completer<WebViewController>();
   bool isLoading = false;
   List<Bitcoin> bitcoinList = [];
   List<Bitcoin> gainerLooserCoinList = [];
@@ -55,7 +56,6 @@ class _PortfolioPageState extends State<PortfolioPage>
 
   final PageStorageBucket bucket = PageStorageBucket();
   String? languageCodeSaved;
-  // late WebViewController controller;
   String? iFrameUrl;
   bool? displayiframe;
   TextEditingController? coinCountTextEditingController;
@@ -80,6 +80,7 @@ class _PortfolioPageState extends State<PortfolioPage>
 
   @override
   void initState() {
+    ImmediateConnectAnalytics.setCurrentScreen(ImmediateConnectAnalytics.Portfolio_SCREEN, "Portfolio Page");
     coinCountTextEditingController = TextEditingController();
     coinCountEditTextEditingController = TextEditingController();
     dbHelper.queryAllRows().then((notes) {
@@ -101,7 +102,6 @@ class _PortfolioPageState extends State<PortfolioPage>
     super.initState();
     getSharedPrefData();
     fetchRemoteValue();
-
   }
 
   Future<void> getSharedPrefData() async {
@@ -193,15 +193,16 @@ print(status?.storeVersion);
     }
   }
 
-  JavascriptChannel _toasterJavascriptChannel(BuildContext context) {
-    return JavascriptChannel(
-        name: 'Toaster',
-        onMessageReceived: (JavascriptMessage message) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(message.message)),
-          );
-        });
-  }
+  // JavascriptChannel _toasterJavascriptChannel(BuildContext context) {
+  //   return JavascriptChannel(
+  //       name: 'Toaster',
+  //       onMessageReceived: (JavascriptMessage message) {
+  //         ScaffoldMessenger.of(context).showSnackBar(
+  //           SnackBar(content: Text(message.message)),
+  //         );
+  //       });
+  // }
+
   @override
   Widget build(BuildContext context) {
     var appLanguage = Provider.of<AppLanguage>(context);
@@ -319,40 +320,41 @@ print(status?.storeVersion);
               const SizedBox(
                 height: 5,
               ),
-              displayiframe == true
-                  ? Container(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  height: 500,
-                 /* child:WebView(
-                    initialUrl: iFrameUrl,
-                    navigationDelegate: _interceptNavigation,
-                  )*/
-                  // child : WebViewWidget(controller: controller),
-                   child: WebView(
-                     initialUrl: iFrameUrl,
-                     gestureRecognizers: Set()
-                       ..add(Factory<VerticalDragGestureRecognizer>(
-                               () => VerticalDragGestureRecognizer())),
-                     javascriptMode: JavascriptMode.unrestricted,
-                     onWebViewCreated:
-                         (WebViewController webViewController) {
-                       _controllerForm.complete(webViewController);
-                     },
-                     // TODO(iskakaushik): Remove this when collection literals makes it to stable.
-                     // ignore: prefer_collection_literals
-                     javascriptChannels: <JavascriptChannel>[
-                       _toasterJavascriptChannel(context),
-                     ].toSet(),
-                     onPageStarted: (String url) {
-                       print('Page started loading: $url');
-                     },
-                     onPageFinished: (String url) {
-                       print('Page finished loading: $url');
-                     },
-                     gestureNavigationEnabled: true,
-                   ),
-                )
-                  : Padding(
+              // displayiframe == true
+              //     ? Container(
+              //     padding: const EdgeInsets.only(left: 10, right: 10),
+              //     height: 500,
+              //    /* child:WebView(
+              //       initialUrl: iFrameUrl,
+              //       navigationDelegate: _interceptNavigation,
+              //     )*/
+              //     // child : WebViewWidget(controller: controller),
+              //      child: WebView(
+              //        initialUrl: iFrameUrl,
+              //        gestureRecognizers: Set()
+              //          ..add(Factory<VerticalDragGestureRecognizer>(
+              //                  () => VerticalDragGestureRecognizer())),
+              //        javascriptMode: JavascriptMode.unrestricted,
+              //        onWebViewCreated:
+              //            (WebViewController webViewController) {
+              //          _controllerForm.complete(webViewController);
+              //        },
+              //        // TODO(iskakaushik): Remove this when collection literals makes it to stable.
+              //        // ignore: prefer_collection_literals
+              //        javascriptChannels: <JavascriptChannel>[
+              //          _toasterJavascriptChannel(context),
+              //        ].toSet(),
+              //        onPageStarted: (String url) {
+              //          print('Page started loading: $url');
+              //        },
+              //        onPageFinished: (String url) {
+              //          print('Page finished loading: $url');
+              //        },
+              //        gestureNavigationEnabled: true,
+              //      ),
+              //   )
+              //     :
+              Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height/4,
@@ -821,6 +823,23 @@ print(status?.storeVersion);
                       Center(
                         child: Column(
                           children: <Widget>[
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => IframeHomePage()),
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: Image.asset("assets/image/iframeicon.png",height: 60,width: 60,)),
+                                  Text("Immediate Connect",textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
+                                  ),
+                                ],
+                              ),
+                            ),
                             InkWell(
                               onTap: () {
                                 Navigator.push(

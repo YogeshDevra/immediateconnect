@@ -8,6 +8,8 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'IframeHomePage.dart';
+import 'ImmediateConnectAnalytics.dart';
 import 'coinsPage.dart';
 import 'dashboard_home.dart';
 import 'localization/app_localization.dart';
@@ -38,6 +40,7 @@ class _TrendsPageState extends State<TrendsPage> {
 
   @override
   void initState() {
+    ImmediateConnectAnalytics.setCurrentScreen(ImmediateConnectAnalytics.TRENDS_SCREEN, "Trends Page");
     fetchRemoteValue();
     super.initState();
     callGraphApi();
@@ -382,6 +385,23 @@ class _TrendsPageState extends State<TrendsPage> {
                       Center(
                         child: Column(
                           children: <Widget>[
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => IframeHomePage()),
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: Image.asset("assets/image/iframeicon.png",height: 60,width: 60,)),
+                                  Text("Immediate Connect",textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
+                                  ),
+                                ],
+                              ),
+                            ),
                             InkWell(
                               onTap: () {
                                 Navigator.push(

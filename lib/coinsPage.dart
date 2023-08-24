@@ -11,6 +11,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'IframeHomePage.dart';
+import 'ImmediateConnectAnalytics.dart';
 import 'dashboard_helper.dart';
 import 'dashboard_home.dart';
 import 'localization/app_localization.dart';
@@ -48,6 +50,7 @@ class _CoinsPageState extends State<CoinsPage>
 
   @override
   void initState() {
+    ImmediateConnectAnalytics.setCurrentScreen(ImmediateConnectAnalytics.COINS_SCREEN, "Coins Page");
     fetchRemoteValue();
     coinCountTextEditingController = TextEditingController();
     coinCountEditTextEditingController = TextEditingController();
@@ -712,6 +715,23 @@ class _CoinsPageState extends State<CoinsPage>
                       Center(
                         child: Column(
                           children: <Widget>[
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => IframeHomePage()),
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  Padding(
+                                      padding: const EdgeInsets.all(15),
+                                      child: Image.asset("assets/image/iframeicon.png",height: 60,width: 60,)),
+                                  Text("Immediate Connect",textAlign: TextAlign.center,style: const TextStyle(color: Colors.white,fontSize: 25),
+                                  ),
+                                ],
+                              ),
+                            ),
                             InkWell(
                               onTap: () {
                                 Navigator.push(
