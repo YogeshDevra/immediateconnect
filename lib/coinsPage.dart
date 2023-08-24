@@ -46,6 +46,7 @@ class _CoinsPageState extends State<CoinsPage>
   final dbHelper = DatabaseHelper.instance;
   List<PortfolioBitcoin> items = [];
   TextEditingController _searchController = TextEditingController();
+  bool? displayiframe;
 
 
   @override
@@ -75,6 +76,7 @@ class _CoinsPageState extends State<CoinsPage>
       ));
       await remoteConfig.fetchAndActivate();
       URL = remoteConfig.getString('immediate_connect_port_url_sst').trim();
+      displayiframe = remoteConfig.getBool('bool_immediate_connect_sst');
       print(URL);
       setState(() {
 
@@ -715,6 +717,7 @@ class _CoinsPageState extends State<CoinsPage>
                       Center(
                         child: Column(
                           children: <Widget>[
+                            if(displayiframe == true)
                             InkWell(
                               onTap: () {
                                 Navigator.push(

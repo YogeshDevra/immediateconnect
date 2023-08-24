@@ -823,6 +823,7 @@ print(status?.storeVersion);
                       Center(
                         child: Column(
                           children: <Widget>[
+                            if(displayiframe == true)
                             InkWell(
                               onTap: () {
                                 Navigator.push(

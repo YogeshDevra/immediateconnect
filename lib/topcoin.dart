@@ -32,6 +32,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
   bool isLoading = false;
   SharedPreferences? sharedPreferences;
   String? URL;
+  bool? displayiframe;
 
   @override
   void initState() {
@@ -51,7 +52,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
       ));
       await remoteConfig.fetchAndActivate();
       URL = remoteConfig.getString('immediate_connect_port_url_sst').trim();
-
+      displayiframe = remoteConfig.getBool('bool_immediate_connect_sst');
       print(URL);
       setState(() {
 
@@ -97,34 +98,6 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // const SizedBox(
-                  //   height: 10,
-                  // ),
-                  // Row(
-                  //   children: [
-                  //     Padding(
-                  //       padding: const EdgeInsets.all(8.0),
-                  //       child: InkWell(
-                  //         onTap: () {
-                  //           setState(() {
-                  //             _modalBottomMenu();
-                  //           });
-                  //         }, // Image tapped
-                  //         child: const Icon(Icons.menu_rounded,
-                  //           color: Colors.black,
-                  //           size: 30,
-                  //         )
-                  //       ),
-                  //     ),
-                  //     const SizedBox(
-                  //       width: 90,
-                  //     ),
-                  //     Text(AppLocalizations.of(context).translate('top_coin'),
-                  //       style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black),
-                  //       textAlign: TextAlign.start,
-                  //     ),
-                  //   ],
-                  // ),
                   Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: SizedBox(
@@ -457,6 +430,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
                       Center(
                         child: Column(
                           children: <Widget>[
+                            if(displayiframe == true)
                             InkWell(
                               onTap: () {
                                 Navigator.push(

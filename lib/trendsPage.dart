@@ -37,6 +37,7 @@ class _TrendsPageState extends State<TrendsPage> {
   String _type = 'Week';
   String? URL;
   bool isLoading = false;
+  bool? displayiframe;
 
   @override
   void initState() {
@@ -57,7 +58,7 @@ class _TrendsPageState extends State<TrendsPage> {
       ));
       await remoteConfig.fetchAndActivate();
       URL = remoteConfig.getString('immediate_connect_port_url_sst').trim();
-
+      displayiframe = remoteConfig.getBool('bool_immediate_connect_sst');
       print(URL);
       setState(() {
 
@@ -385,6 +386,7 @@ class _TrendsPageState extends State<TrendsPage> {
                       Center(
                         child: Column(
                           children: <Widget>[
+                            if(displayiframe == true)
                             InkWell(
                               onTap: () {
                                 Navigator.push(

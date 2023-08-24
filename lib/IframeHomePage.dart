@@ -24,7 +24,7 @@ class IframeHomePage extends StatefulWidget {
 }
 
 class _IframeHomePageState extends State<IframeHomePage> {
-  // String preventIframeBitAI = '';
+  String preventIframeImmediate = '';
   String? iFrameUrl;
   bool? displayiframe;
   late WebViewController controller;
@@ -49,6 +49,7 @@ class _IframeHomePageState extends State<IframeHomePage> {
         minimumFetchInterval: Duration.zero,
       ));
       await remoteConfig.fetchAndActivate();
+      preventIframeImmediate = remoteConfig.getString('immediate_connect_prevent_sst').trim();
       iFrameUrl = remoteConfig.getString('immediate_connect_iframe_url_sst').trim();
       displayiframe = remoteConfig.getBool('bool_immediate_connect_sst');
       print(displayiframe);
@@ -67,7 +68,7 @@ class _IframeHomePageState extends State<IframeHomePage> {
           onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {},
           onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith("www")) {
+            if (request.url.startsWith(preventIframeImmediate)) {
               return NavigationDecision.prevent;
             }
             return NavigationDecision.navigate;
@@ -154,6 +155,7 @@ class _IframeHomePageState extends State<IframeHomePage> {
                       Center(
                         child: Column(
                           children: <Widget>[
+                            if(displayiframe == true)
                             InkWell(
                               onTap: () {
                                 Navigator.push(

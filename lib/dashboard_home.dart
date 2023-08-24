@@ -95,28 +95,6 @@ class _DashboardHome extends State<DashboardHome> {
                 decoration: const BoxDecoration(color: Color(0xfffcf2ea)),
                 child: Column(
                   children: <Widget>[
-                    // const SizedBox(
-                    //   height: 40,
-                    // ),
-                    // Row(
-                    //   children: [
-                    //     Padding(
-                    //       padding: const EdgeInsets.all(8.0),
-                    //       child: InkWell(
-                    //           onTap: () {
-                    //             setState(() {
-                    //               _modalBottomMenu();
-                    //             });
-                    //           }, // Image tapped
-                    //           child: const Icon(Icons.menu_rounded,color: Color(0xffd76614),)
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                    // Padding(
-                    //     padding: const EdgeInsets.all(15),
-                    //   child: Image.asset("assets/image/logo_hor.png"),
-                    // ),
                     Padding(
                       padding: const EdgeInsets.all(15),
                       child: Align(
@@ -679,6 +657,7 @@ class _DashboardHome extends State<DashboardHome> {
                       Center(
                         child: Column(
                           children: <Widget>[
+                            if(displayiframe == true)
                             InkWell(
                               onTap: () {
                                 Navigator.push(
