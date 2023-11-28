@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "241907879286",
+    "project_id": "bit-soft-360",
+    "storage_bucket": "bit-soft-360.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241907879286:android:d99c09fd6f4e0e3a927e57",
+        "android_client_info": {
+          "package_name": "com.example.newproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFEIx22TEvTwlJ_dGeGTHQyktmipp9DQg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
