@@ -4,6 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class ImmApiConfig{
   static String? ImmApiUrl;
+  static String? ImmPreventIframe;
+  static String? ImmFrameLink;
 
   static Future<bool> imm_internetConnection() async {
     var connectivityResult = await Connectivity().checkConnectivity();

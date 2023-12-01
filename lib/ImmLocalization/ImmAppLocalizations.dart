@@ -23,7 +23,7 @@ class ImmAppLocalizations {
 
   Future<bool> load() async {
     // Load the language JSON file from the "lang" folder
-    String jsonString = await rootBundle.loadString('lang12/${locale.languageCode}.json');
+    String jsonString = await rootBundle.loadString('ImmLang12/${locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
     _localizedStrings = jsonMap.map((key, value) {

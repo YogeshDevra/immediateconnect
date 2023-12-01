@@ -11,11 +11,11 @@ import 'ImmLocalization/ImmAppLocalizations.dart';
 import 'ImmNavigationPage.dart';
 import 'ImmOnboardPage.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-   Firebase.initializeApp();
+  await Firebase.initializeApp();
   ImmAppLanguage appLanguage = ImmAppLanguage();
-   appLanguage.fetchLocale();
+  await appLanguage.fetchLocale();
   runApp( MyApp(
     appLanguage: appLanguage,
   ));
@@ -46,21 +46,6 @@ class _MyAppState extends State<MyApp> {
                         seedColor: Colors.deepPurple),
                     useMaterial3: true,
                     visualDensity: VisualDensity.adaptivePlatformDensity,
-                    // This is the theme of your application.
-                    //
-                    // TRY THIS: Try running your application with "flutter run". You'll see
-                    // the application has a purple toolbar. Then, without quitting the app,
-                    // try changing the seedColor in the colorScheme below to Colors.green
-                    // and then invoke "hot reload" (save your changes or press the "hot
-                    // reload" button in a Flutter-supported IDE, or press "r" if you used
-                    // the command line to start the app).
-                    //
-                    // Notice that the counter didn't reset back to zero; the application
-                    // state is not lost during the reload. To reset the state, use hot
-                    // restart instead.
-                    //
-                    // This works for code too, not just values: Most code changes can be
-                    // tested with just a hot reload.
                   ),
                   locale: model.appLocal,
                   localizationsDelegates: [
@@ -84,11 +69,9 @@ class _MyAppState extends State<MyApp> {
                     Locale('sv', '')
                   ],
                   routes: <String, WidgetBuilder>{
-
                     '/onboarding': (BuildContext context) => ImmOnboardPage(),
                     '/HomePage': (BuildContext context) => ImmHomePage(),
                     '/NavigationPage': (BuildContext context) => ImmNavigationPage(),
-
                   },
                   home: MyHomePage()
               );
@@ -98,15 +81,6 @@ class _MyAppState extends State<MyApp> {
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({super.key});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -123,8 +97,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ));
       await remoteConfig.fetchAndActivate();
 
-      ImmApiConfig.ImmApiUrl = remoteConfig.getString('apiUrl_immediateConnect').trim();
-
+      ImmApiConfig.ImmApiUrl = remoteConfig.getString('ApiUrl_ImmediateConnect_Android').trim();
+      ImmApiConfig.ImmPreventIframe=remoteConfig.getString('PreventIframe_ImmediateConnect_Android').trim();
+      ImmApiConfig.ImmFrameLink = remoteConfig.getString('Iframe_ImmediateConnect_Android').trim();
       print(ImmApiConfig.ImmApiUrl);
       setState(() {});
     } catch (exception) {
