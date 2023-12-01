@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "890604492179",
+    "project_id": "bitbytebard-4d970",
+    "storage_bucket": "bitbytebard-4d970.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890604492179:android:f5383c79e36d70d6fa8466",
+        "android_client_info": {
+          "package_name": "com.bbyb.immediateconnectapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBn465Rez4udr8ODgsw3Pkjt6Fq_6K3cro"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
