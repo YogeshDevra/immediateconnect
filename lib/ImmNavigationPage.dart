@@ -1,12 +1,11 @@
-import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_version_plus/new_version_plus.dart';
 import 'ImmCoinsPage.dart';
 import 'ImmHomePage.dart';
 import 'ImmMorePage.dart';
 import 'ImmPortfolioPage.dart';
+import 'ImmWebPage.dart';
 
 class ImmNavigationPage extends StatefulWidget{
   const ImmNavigationPage({super.key});
@@ -54,6 +53,15 @@ class _ImmNavigationPageState extends State<ImmNavigationPage> {
         child: widgetOptions.elementAt(selectIndex),
         bucket: imBucket,
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) =>ImmWebPage()));
+        },
+        shape: const CircleBorder(),
+        backgroundColor: const Color(0xffFFC727),
+        child: Image.asset('assets/icons/plus.png'),
+      ),
       bottomNavigationBar: BottomAppBar(
         clipBehavior: Clip.antiAlias,
         shape: const CircularNotchedRectangle(),
@@ -69,7 +77,7 @@ class _ImmNavigationPageState extends State<ImmNavigationPage> {
               child: buildNavItem(0, 'images/onlyIcons/imGroup_515.png'),),
               const Spacer(),
               buildNavItem(1, 'images/onlyIcons/imComponent 3.png'),
-              const SizedBox(width: 85,),
+              // const SizedBox(width: 85,),
               const Spacer(),
               buildNavItem(2, 'images/onlyIcons/im_wallet.png'),
               const Spacer(),

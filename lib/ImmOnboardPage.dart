@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'ImmLocalization/ImmAppLocalizations.dart';
-//import 'localization/app_localizations.dart';
 
 class ImmOnboardPage extends StatefulWidget {
   const ImmOnboardPage ({super.key});
@@ -46,9 +43,7 @@ class _ImmOnboardPageState extends State<ImmOnboardPage> {
             ),
           ],
         ),
-
       ),
-
     );
   }
 }
