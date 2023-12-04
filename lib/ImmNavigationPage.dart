@@ -1,6 +1,9 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:new_version_plus/new_version_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'ImmCoinsPage.dart';
 import 'ImmHomePage.dart';
 import 'ImmMorePage.dart';
@@ -17,19 +20,28 @@ class ImmNavigationPage extends StatefulWidget{
 class _ImmNavigationPageState extends State<ImmNavigationPage> {
   int selectIndex = 0;
   final PageStorageBucket imBucket = PageStorageBucket();
+  final Future<SharedPreferences> sprefs = SharedPreferences.getInstance();
+  String? lanCodeSaved;
 
   @override
   void initState() {
     super.initState();
-    // final newVersion = NewVersionPlus(
-    //     iOSId: 'com.example.newproject',
-    //     iOSAppStoreCountry: 'GB'
-    // );
-    // Timer(const Duration(milliseconds: 800),() {
-    //   versionUpdate(newVersion);
-    // });
+    final newVersion = NewVersionPlus(
+        androidId: 'com.bbyb.immediateconnectapp',
+        iOSId: 'com.bbyb.immediateconnectapp',
+        iOSAppStoreCountry: 'GB'
+    );
+    Timer(const Duration(milliseconds: 800),() {
+      versionUpdate(newVersion);
+    });
+    immGetSharedPrefData();
   }
-
+  Future<void> immGetSharedPrefData() async {
+    final SharedPreferences prefs = await sprefs;
+    setState(() {
+      lanCodeSaved = prefs.getString('language_code') ?? "en";
+    });
+  }
   void versionUpdate(NewVersionPlus newVersion) async {
     final status = await newVersion.getVersionStatus();
     if(status!=null){
@@ -60,7 +72,7 @@ class _ImmNavigationPageState extends State<ImmNavigationPage> {
         },
         shape: const CircleBorder(),
         backgroundColor: const Color(0xffFFC727),
-        child: Image.asset('assets/icons/plus.png'),
+        child: Image.asset('assets/icons/plus.png',color: Colors.black),
       ),
       bottomNavigationBar: BottomAppBar(
         clipBehavior: Clip.antiAlias,

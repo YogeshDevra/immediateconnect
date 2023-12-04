@@ -195,8 +195,8 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                       .map<ImmCrypto>((json) => ImmCrypto.fromJson(json))
                       .toList();
                   double count = 0;
-                  differenceRate = data['differenceRate'];
-                  nameOfDiffRate = double.parse(data['differenceRate']);
+                  differenceRate = data['diffRate'];
+                  nameOfDiffRate = double.parse(data['diffRate']);
                   dataCurrency = [];
                   for (var element in portGraphList) {
                     dataCurrency.add(immLinearSale(element.date!, double.parse(element.rate!.toStringAsFixed(2))));
