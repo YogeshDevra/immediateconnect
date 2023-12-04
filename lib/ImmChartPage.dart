@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
@@ -9,7 +8,6 @@ import 'package:immediateconnectapp/ImmApiConfig.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'ImmConnectModels/ImmCrypto.dart';
 import 'ImmLocalization/ImmAppLocalizations.dart';
 

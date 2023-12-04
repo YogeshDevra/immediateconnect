@@ -824,12 +824,12 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                                     primaryXAxis: CategoryAxis(
                                         axisLine: AxisLine(color: Colors.white, width: 0),
                                         isVisible: true,
-                                        labelRotation: 45,
+                                        labelRotation: 90,
                                         interactiveTooltip: const InteractiveTooltip(
                                             enable: true
                                         ),
                                         labelStyle: const TextStyle(
-                                        color: Color(0xff88898A),
+                                        color: Color(0xffffffff),
                                   fontSize: 14,
                                   fontStyle: FontStyle.italic,
                                   fontWeight: FontWeight.w600,
@@ -842,8 +842,8 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                                         xValueMapper:  (immLinearSale data, _) => data.date,
                                         yValueMapper:  (immLinearSale data, _) => data.rate,
                                         color: Color(0xff81B2CA),
-                                        dataLabelSettings: const DataLabelSettings(isVisible: true, borderColor: Color(0xff81B2CA)),
-                                        markerSettings: const MarkerSettings(isVisible: true),
+                                        dataLabelSettings: const DataLabelSettings(isVisible: false, borderColor: Color(0xff81B2CA)),
+                                        markerSettings: const MarkerSettings(isVisible: false),
                                       )
 
                                     ],
@@ -851,7 +851,7 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                                       isVisible: true,
                                       borderColor: Colors.white,
                                       labelStyle: const TextStyle(
-                                        color: Color(0xff88898A),
+                                        color: Color(0xffffffff),
                                         fontSize: 14,
                                         fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.w600,

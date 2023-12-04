@@ -5,7 +5,6 @@ import 'package:http/http.dart';
 import 'package:immediateconnectapp/ImmApiConfig.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'ImmConnectModels/ImmCrypto.dart';
@@ -119,11 +118,7 @@ class _ImmHomePageState extends State<ImmHomePage>{
                           child:Container(
                             height: 185,width: 327,
                             decoration:BoxDecoration(
-                    image:DecorationImage(
-                    image: AssetImage('images/imGroup(1).png'),
-
-                    )
-                            ),
+                            image:DecorationImage(image: AssetImage('images/imGroup(1).png'))),
                           child:Column (
                                 children: [
                                   Row(
@@ -182,20 +177,14 @@ class _ImmHomePageState extends State<ImmHomePage>{
                                 child: Column(
                                     children: [
                                             Container(
-                                                child:Stack(
-                                                  children: [
-                    Padding(padding:  EdgeInsets.only(right: 60,top: 20),
-                    child: Image.asset('images/imEllipse.png'),),
-                                                     Column(
-                                                      children: [
-                                                        Padding(padding: EdgeInsets.only(left:2,top: 37),
-                                           child: Text("${(ImmcryptoList[i].volume!*100/totalVol).toStringAsFixed(1)} %",style:GoogleFonts.inter(textStyle:TextStyle(
-                                               fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
-                                           ),)
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
+                                                decoration: const BoxDecoration(
+                                                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                                                  color: Color(0xff42887C),
+                                                ),
+                                                child:Padding(padding: EdgeInsets.only(left:2,top: 37),
+                                                                                        child: Text("${(ImmcryptoList[i].volume!*100/totalVol).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:TextStyle(
+                                                                                            fontSize: 15,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
+                                                                                        ),)
                                                 )
                                             ),
 
@@ -244,7 +233,7 @@ class _ImmHomePageState extends State<ImmHomePage>{
                                               children: [
                                                 Padding(padding: EdgeInsets.only(left:5,top: 37),
                                                     child: Text("${(ImmcryptoList[i].cap!*100/totalMarCap).toStringAsFixed(1)} %",style:GoogleFonts.inter(textStyle:TextStyle(
-                                                        fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
+                                                        fontSize: 15,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
                                                     ),)
                                                 ),
                                               ],
