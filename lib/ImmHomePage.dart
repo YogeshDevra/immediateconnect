@@ -181,11 +181,9 @@ class _ImmHomePageState extends State<ImmHomePage>{
                                                   borderRadius: BorderRadius.all(Radius.circular(50)),
                                                   color: Color(0xff42887C),
                                                 ),
-                                                child:Padding(padding: EdgeInsets.only(left:2,top: 37),
-                                                                                        child: Text("${(ImmcryptoList[i].volume!*100/totalVol).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:TextStyle(
-                                                                                            fontSize: 15,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
-                                                                                        ),)
-                                                )
+                                                child:Text("${(ImmcryptoList[i].volume!*100/totalVol).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:TextStyle(
+                                                    fontSize: 15,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
+                                                ),)
                                             ),
 
 
