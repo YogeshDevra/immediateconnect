@@ -179,11 +179,11 @@ class _ImmCoinsPageState extends State<ImmCoinsPage>{
                                     child: Row(
                                       children: [
                                         Text("\$${calculatedValue.toStringAsFixed(2)}", style: GoogleFonts.inter(textStyle: TextStyle(
-                                          fontSize: 26, fontWeight: FontWeight.w600,)
+                                          fontSize: 22, fontWeight: FontWeight.w600,)
                                         )),
                                         Text("${selectCrypto==null?'':selectCrypto!.symbol!}", style: GoogleFonts.inter(
                                           textStyle: TextStyle(
-                                              fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xff030303)
+                                              fontWeight: FontWeight.w400, fontSize: 22, color: Color(0xff030303)
                                           ),)),
                                       ],
                                     ),
@@ -239,10 +239,10 @@ class _ImmCoinsPageState extends State<ImmCoinsPage>{
                                                 color: Color(0xffEBEDED),
                                               ),
                                             ),
-                                            Padding(padding: EdgeInsets.only(left: 100,top: 7),
+                                            Padding(padding: EdgeInsets.only(left: 102,top: 10),
                                               child: Container(
-                                                height: 33,
-                                                width: 33,
+                                                height: 25,
+                                                width: 25,
                                                 decoration: BoxDecoration(
                                                     borderRadius: BorderRadius.circular(25),
                                                     color: Color(0xffFFC727)
@@ -380,7 +380,7 @@ class _ImmCoinsPageState extends State<ImmCoinsPage>{
                                           child: Stack(
                                             children: [
                                               Container(
-                                                height: 41,width: 287,
+                                                height: 41,width: 320,
                                                 decoration: const BoxDecoration(
                                                     borderRadius: BorderRadius.all(Radius.circular(12)),
                                                     color: Color(0xff27343B)
@@ -391,7 +391,7 @@ class _ImmCoinsPageState extends State<ImmCoinsPage>{
                                                   SizedBox(width: 25,),
                                                   Padding(padding: EdgeInsets.only(right: 10,top: 8),
                                                     child: Container(
-                                                        height: 25,width: 240,
+                                                        height: 25,width: 280,
                                                         decoration: BoxDecoration(
                                                           borderRadius: BorderRadius.circular(15),
                                                           // color: Color(0xffFFC727)
