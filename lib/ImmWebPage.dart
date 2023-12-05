@@ -63,7 +63,7 @@ class _ImmWebPageState extends State<ImmWebPage> {
               onTap:(){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => ImmNavigationPage()));
               },
-              child: Icon(Icons.dashboard,size: 40,),
+              child: Icon(Icons.dashboard,),
             ),
             title: Text(ImmAppLocalizations.of(context)!.translate("bitai-6")!,
                 style:TextStyle(fontSize: 25,fontWeight: FontWeight.w400)),

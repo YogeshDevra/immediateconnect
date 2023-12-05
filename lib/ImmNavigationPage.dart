@@ -72,13 +72,12 @@ class _ImmNavigationPageState extends State<ImmNavigationPage> {
         },
         shape: const CircleBorder(),
         backgroundColor: const Color(0xffFFC727),
-        child: Image.asset('assets/icons/plus.png',color: Colors.black),
+        child: Image.asset('images/onlyicons/immPlus.png',color: Colors.black),
       ),
       bottomNavigationBar: BottomAppBar(
         clipBehavior: Clip.antiAlias,
         shape: const CircularNotchedRectangle(),
         notchMargin: 15,
-
         padding: const EdgeInsets.all(10),
         child: Container(
           height: 84,
@@ -89,8 +88,8 @@ class _ImmNavigationPageState extends State<ImmNavigationPage> {
               child: buildNavItem(0, 'images/onlyIcons/imGroup_515.png'),),
               const Spacer(),
               buildNavItem(1, 'images/onlyIcons/imComponent 3.png'),
-              // const SizedBox(width: 85,),
-              const Spacer(),
+              const SizedBox(width: 85,),
+              // const Spacer(),
               buildNavItem(2, 'images/onlyIcons/im_wallet.png'),
               const Spacer(),
               Padding(padding: EdgeInsets.only(right: 30),

@@ -190,7 +190,7 @@ class _ImmHomePageState extends State<ImmHomePage>{
                                           child: Container(
                                               decoration: BoxDecoration(
                                                   image: DecorationImage(
-                                                      image: AssetImage('assets/Ellipse.png'),
+                                                      image: AssetImage('images/imEllipse.png'),
                                                       fit: BoxFit.fill
                                                   )
                                               ),
@@ -262,11 +262,11 @@ class _ImmHomePageState extends State<ImmHomePage>{
                                           child: Container(
                                               decoration: BoxDecoration(
                                                   image: DecorationImage(
-                                                      image: AssetImage('assets/Ellipse.png'),
+                                                      image: AssetImage('images/imEllipse.png'),
                                                       fit: BoxFit.fill
                                                   )
                                               ),
-                                              child: Padding(
+                                              child:Padding(
                                                   padding: const EdgeInsets.only(top:15,bottom:15,left: 2,right: 2),
                                                   child: Text("${(ImmcryptoList[i].cap!*100/totalMarCap).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:TextStyle(
                                                       fontSize: 14,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))

@@ -824,18 +824,18 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                                     ),
                                     //_trackballBehavior,
                                     primaryXAxis: CategoryAxis(
-                                        axisLine: AxisLine(color: Colors.white, width: 0),
-                                        isVisible: true,
-                                        labelRotation: 90,
-                                        interactiveTooltip: const InteractiveTooltip(
-                                            enable: true
-                                        ),
-                                        labelStyle: const TextStyle(
-                                        color: Color(0xffffffff),
-                                  fontSize: 14,
-                                  fontStyle: FontStyle.italic,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                      axisLine: AxisLine(color: Colors.white, width: 0),
+                                      isVisible: true,
+                                      labelRotation: 90,
+                                      interactiveTooltip: const InteractiveTooltip(
+                                          enable: true
+                                      ),
+                                      labelStyle: const TextStyle(
+                                        color: Color(0xff88898A),
+                                        fontSize: 14,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
 
                                     series: <ChartSeries<immLinearSale, String>>[
@@ -847,13 +847,12 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                                         dataLabelSettings: const DataLabelSettings(isVisible: false, borderColor: Color(0xff81B2CA)),
                                         markerSettings: const MarkerSettings(isVisible: false),
                                       )
-
                                     ],
                                     primaryYAxis: NumericAxis(
                                       isVisible: true,
                                       borderColor: Colors.white,
                                       labelStyle: const TextStyle(
-                                        color: Color(0xffffffff),
+                                        color: Color(0xff88898A),
                                         fontSize: 14,
                                         fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.w600,
