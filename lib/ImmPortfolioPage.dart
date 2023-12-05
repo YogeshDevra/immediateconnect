@@ -45,6 +45,7 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
   List<ImmCrypto> ImmcryptoList = [];
   //List<PortfolioCrypto> portfolioList = [];
   bool isloading = false;
+  bool loadingPage = true;
   String differenceRate = '';
   double nameOfDiffRate = 0.0;
   double crypto = 0;
@@ -101,7 +102,7 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
 
   Future<void> callImmCrypto() async {
     setState(() {
-      isloading = true;
+      loadingPage = true;
     });
     var uri = '${ImmApiConfig.ImmApiUrl}/Bitcoin/resources/getBitcoinCryptoListLoser?size=0&currency=USD';
     print(uri);
@@ -138,35 +139,35 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                     });
                   }
                 }});
-              isloading = false;
+              loadingPage = false;
             } else {
               ImmApiConfig.imm_toastMessage(message:'Under Maintenance');
               setState(() {
-                isloading = false;
+                loadingPage = false;
               });
             }
           }
         }else {
           ImmApiConfig.imm_toastMessage(message: 'Under Maintenance');
           setState(() {
-            isloading = false;
+            loadingPage = false;
           });
         }
       } on TimeoutException catch(e) {
         setState(() {
-          isloading = false;
+          loadingPage = false;
         });
         print(e);
       }
       catch (e) {
         setState(() {
-          isloading = false;
+          loadingPage = false;
         });
       }
     } else {
       ImmApiConfig.imm_toastMessage(message: 'No Internet');
       setState(() {
-        isloading = false;
+        loadingPage = false;
       });
     }
     ImmApiConfig.imm_internetConnection();
@@ -497,14 +498,15 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                         ),
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(4),
+                          FilteringTextInputFormatter.allow(RegExp(r"[0-9.]")),
                         ], // O
                         //only numbers can be entered
                         validator: (val) {
                           if (ImmUpdateCoinEditingController!
                               .value.text ==
                               "" ||
-                              int.parse(ImmUpdateCoinEditingController!
+                              double.parse(ImmUpdateCoinEditingController!
                                   .value.text) <=
                                   0) {
                             return "at least 1 coin should be added";
@@ -549,7 +551,7 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
 
   _updateAllSaveCoinsToLocalStorage(ImmPortfolioCrypto bitcoin) async {
     if (ImmUpdateCoinEditingController!.text.isNotEmpty && ImmUpdateCoinEditingController!.text != 0) {
-      int adf = int.parse(ImmUpdateCoinEditingController!.text);
+      double adf = double.parse(ImmUpdateCoinEditingController!.text);
       print(adf);
       Map<String, dynamic> row = {
         ImmConnectDatabase.columnName: bitcoin.name,

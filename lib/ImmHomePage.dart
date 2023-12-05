@@ -4,9 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:immediateconnectapp/ImmApiConfig.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-
 import 'package:flutter/material.dart';
-
 import 'ImmConnectModels/ImmCrypto.dart';
 import 'ImmLocalization/ImmAppLocalizations.dart';
 
@@ -124,9 +122,9 @@ class _ImmHomePageState extends State<ImmHomePage>{
                                   Row(
                                     children: [
                                       Flexible(
-                                      child:Padding(padding: const EdgeInsets.only(left: 20,),
+                                      child:Padding(padding: const EdgeInsets.only(left: 20,top:5),
                                         child:Text(ImmcryptoList[i].fullName!, style: GoogleFonts.openSans(textStyle: TextStyle(
-                                             fontWeight: FontWeight.w500, fontSize: 18, color: Color(0xffFFFFFF))
+                                             fontWeight: FontWeight.w500, fontSize: 16, color: Color(0xffFFFFFF))
                                         ),)
                                         ),),
                                       const SizedBox(width: 110),
@@ -176,16 +174,35 @@ class _ImmHomePageState extends State<ImmHomePage>{
                                 ),
                                 child: Column(
                                     children: [
-                                            Container(
-                                                decoration: const BoxDecoration(
-                                                  borderRadius: BorderRadius.all(Radius.circular(50)),
-                                                  color: Color(0xff42887C),
-                                                ),
-                                                child:Text("${(ImmcryptoList[i].volume!*100/totalVol).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:TextStyle(
-                                                    fontSize: 15,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
-                                                ),)
-                                            ),
-
+                                            // Container(
+                                            //     decoration: const BoxDecoration(
+                                            //       borderRadius: BorderRadius.all(Radius.circular(50)),
+                                            //       color: Color(0xff42887C),
+                                            //     ),
+                                            //     child:Text("${(ImmcryptoList[i].volume!*100/totalVol).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:TextStyle(
+                                            //         fontSize: 15,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
+                                            //     ),)
+                                            // ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: AssetImage('assets/Ellipse.png'),
+                                                      fit: BoxFit.fill
+                                                  )
+                                              ),
+                                              child:Padding(
+                                                padding: const EdgeInsets.only(top:15,bottom:15,left: 2,right: 2),
+                                                child: Text("${(ImmcryptoList[i].volume!*100/totalVol).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:TextStyle(
+                                                    fontSize: 14,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
+                                                ),),
+                                              )
+                                          ),
+                                        ),
+                                      ),
 
                                       const SizedBox(height: 40,),
                                        Padding(padding:EdgeInsets.only(right: 60),
@@ -221,29 +238,48 @@ class _ImmHomePageState extends State<ImmHomePage>{
                                 ),
                                 child: Column(
                                     children: [
-                                      Container(
-                                        child: Stack(
-                                          children: [
-                                            Padding(padding: const EdgeInsets.only(right: 60,top: 20),
-                                        child: Image.asset('images/imEllipse.png'),
+                    //                   Container(
+                    //                     child: Stack(
+                    //                       children: [
+                    //                         Padding(padding: const EdgeInsets.only(right: 60,top: 20),
+                    //                     child: Image.asset('images/imEllipse.png'),
+                    //                   ),
+                    //                         Column(
+                    //                           children: [
+                    //                             Padding(padding: EdgeInsets.only(left:5,top: 37),
+                    //                                 child: Text("${(ImmcryptoList[i].cap!*100/totalMarCap).toStringAsFixed(1)} %",style:GoogleFonts.inter(textStyle:TextStyle(
+                    //                                     fontSize: 15,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
+                    //                                 ),)
+                    //                             ),
+                    //                           ],
+                    //                         )
+                    //                   ])
+                    // ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: AssetImage('assets/Ellipse.png'),
+                                                      fit: BoxFit.fill
+                                                  )
+                                              ),
+                                              child: Padding(
+                                                  padding: const EdgeInsets.only(top:15,bottom:15,left: 2,right: 2),
+                                                  child: Text("${(ImmcryptoList[i].cap!*100/totalMarCap).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:TextStyle(
+                                                      fontSize: 14,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
+                                                  ),)
+                                              )
+                                          ),
+                                        ),
                                       ),
-                                            Column(
-                                              children: [
-                                                Padding(padding: EdgeInsets.only(left:5,top: 37),
-                                                    child: Text("${(ImmcryptoList[i].cap!*100/totalMarCap).toStringAsFixed(1)} %",style:GoogleFonts.inter(textStyle:TextStyle(
-                                                        fontSize: 15,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
-                                                    ),)
-                                                ),
-                                              ],
-                                            )
-                                      ])
-                    ),
-
                                       const SizedBox(height: 40,),
                                       Padding(padding:EdgeInsets.only(right: 30),
                                         child: Text(ImmAppLocalizations.of(context)!.translate("bitai-8")!,style:GoogleFonts.inter(textStyle:TextStyle(
                                           fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xff030303),)
-                                        ),),
+                                        ),maxLines: 1,),
                                       ),
 
                                        Padding(

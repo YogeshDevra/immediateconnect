@@ -318,29 +318,47 @@ class _ImmChartPageState extends State<ImmChartPage> {
                       ),
                       child: Column(
                           children: [
-                            Container(
-                                child:Stack(
-                                  children: [
-                                    Padding(padding:  EdgeInsets.only(right: 60,top: 20),
-                                      child: Image.asset('images/imEllipse.png'),),
-                                    Column(
-                                      children: [
-                                        Padding(padding: EdgeInsets.only(left:10,top: 37),
-                                            child: Text("${(widget.volume!*100/totalVol).toStringAsFixed(1)} %",style:GoogleFonts.inter(textStyle:TextStyle(
-                                                fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
-                                            ),)
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )
-                            ),
-
+                            // Container(
+                            //     child:Stack(
+                            //       children: [
+                            //         Padding(padding:  EdgeInsets.only(right: 60,top: 20),
+                            //           child: Image.asset('images/imEllipse.png'),),
+                            //         Column(
+                            //           children: [
+                            //             Padding(padding: EdgeInsets.only(left:10,top: 37),
+                            //                 child: Text("${(widget.volume!*100/totalVol).toStringAsFixed(1)} %",style:GoogleFonts.inter(textStyle:TextStyle(
+                            //                     fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
+                            //                 ),)
+                            //             ),
+                            //           ],
+                            //         )
+                            //       ],
+                            //     )
+                            // ),
+                            Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage('images/imEllipse.png'),
+                                              fit: BoxFit.fill
+                                          )
+                                      ),
+                                      child:Padding(
+                                          padding: const EdgeInsets.only(top:15,bottom:15,left: 2,right: 2),
+                                          child: Text("${(widget.volume!*100/totalVol).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:const TextStyle(
+                                              fontSize: 14,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
+                                          ),)
+                                      )
+                                  ),
+                                )),
                             const SizedBox(height: 40,),
                              Padding(padding:EdgeInsets.only(right: 60),
                               child: Text(ImmAppLocalizations.of(context)!.translate("bitai-7")!,style:GoogleFonts.inter(textStyle:TextStyle(
                                 fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xff030303)),
-                              ),),
+                              ),maxLines: 1,),
                             ),
                             isloading?CircularProgressIndicator(color:Colors.black)
                            : Padding(
@@ -371,29 +389,48 @@ class _ImmChartPageState extends State<ImmChartPage> {
                       ),
                       child: Column(
                           children: [
-                            Container(
-                                child: Stack(
-                                    children: [
-                                      Padding(padding: const EdgeInsets.only(right: 60,top: 20),
-                                        child: Image.asset('images/imEllipse.png'),
-                                      ),
-                                      Column(
-                                        children: [
-                                          Padding(padding: EdgeInsets.only(left:5,top: 37),
-                                              child: Text("${(widget.cap!*100/totalMarCap).toStringAsFixed(1)} %",style:GoogleFonts.inter(textStyle:TextStyle(
-                                                  fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF)),
-                                              ),)
-                                          ),
-                                        ],
-                                      )
-                                    ])
+                            // Container(
+                            //     child: Stack(
+                            //         children: [
+                            //           Padding(padding: const EdgeInsets.only(right: 60,top: 20),
+                            //             child: Image.asset('images/imEllipse.png'),
+                            //           ),
+                            //           Column(
+                            //             children: [
+                            //               Padding(padding: EdgeInsets.only(left:5,top: 37),
+                            //                   child: Text("${(widget.cap!*100/totalMarCap).toStringAsFixed(1)} %",style:GoogleFonts.inter(textStyle:TextStyle(
+                            //                       fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF)),
+                            //                   ),)
+                            //               ),
+                            //             ],
+                            //           )
+                            //         ])
+                            // ),
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage('images/imEllipse.png'),
+                                            fit: BoxFit.fill
+                                        )
+                                    ),
+                                    child: Padding(
+                                        padding: const EdgeInsets.only(top:15,bottom:15,left: 2,right: 2),
+                                        child: Text("${(widget.cap!*100/totalMarCap).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:const TextStyle(
+                                            fontSize: 14,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF)),
+                                        ),)
+                                    )
+                                ),
+                              )
                             ),
-
                             const SizedBox(height: 40,),
                              Padding(padding:EdgeInsets.only(right: 30),
                               child: Text(ImmAppLocalizations.of(context)!.translate("bitai-8")!,style:GoogleFonts.inter(textStyle:TextStyle(
                                 fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xff030303)),
-                              ),),
+                              ),maxLines: 1,),
                             ),
 
 
