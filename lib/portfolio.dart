@@ -1,23 +1,21 @@
+// ignore_for_file: unnecessary_null_comparison, deprecated_member_use, use_build_context_synchronously, unrelated_type_equality_checks
+
 import 'dart:async';
-import 'dart:core';
 import 'dart:core';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:newproject/api_config.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-import 'package:spline_chart/spline_chart.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'immediateConnect_Database.dart';
 import 'chart.dart';
 import 'indexmodels/CryptoIndex.dart';
 import 'indexmodels/PortfolioCrypto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'dart:convert';
 import 'dart:ui';
 
@@ -43,16 +41,13 @@ class _PortfolioPageState extends State<PortfolioPage> {
   num _size = 0;
   String ? percentage;
   double percent = 0.0;
-
-  
   List<PortfolioCrypto> portfolios = [];
   double totalPortfolioValue = 0.0;
   final ScrollController _scrollController = ScrollController();
   List<CryptoIndex> graphList = [];
   List<CryptoIndex> cryptoList = [];
-  //List<PortfolioCrypto> portfolioList = [];
   bool loading = false;
-  bool loadingPage = false;
+  bool loadingPage = true;
   String bitIndexApi = "";
   String diffRate = '';
   double diffRateName = 0.0;
@@ -87,7 +82,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
     database.queryAllRows().then((notes) {
       for (var note in notes) {
-      //  print(note['name']);
+        //  print(note['name']);
         portfolios.add(PortfolioCrypto.fromMap(note));
         totalPortfolioValue = totalPortfolioValue + note["total_value"];
         totalRate = totalRate + note["rate_during_adding"];
@@ -96,7 +91,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
       portfolioCrypto = portfolios[0];
       if(notes!= null){
         callGraphApi(notes[0]["name"]);
-     //    portfolioCrypto = notes[0] as PortfolioCrypto?;
+        //    portfolioCrypto = notes[0] as PortfolioCrypto?;
         print(notes[0]["name"]);
         graphValue = true;
         setState(() {
@@ -114,72 +109,73 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
   Future<void> callCryptoIndex() async {
     setState(() {
-      loading = true;
+      loadingPage = true;
     });
     var uri = '${api_config.ApiUrl}/Bitcoin/resources/getBitcoinCryptoListLoser?size=0&currency=USD';
     print(uri);
     if (await api_config.internetConnection()) {
       try {
-    var response = await get(Uri.parse(uri)).timeout(const Duration(seconds: 60));
-    print(response);
-    if(response.statusCode == 200) {
-    final data = json.decode(response.body) as Map;
-    print(data);
-    if(mounted) {
-      if (data['error'] == false) {
-        setState(() {
-          cryptoList.addAll(
-              data['data'].map<CryptoIndex>((json) =>
-                  CryptoIndex.fromJson(json)));
-          _size = _size + data['data'].length;
-          for(int i=0;i<cryptoList.length;i++) {
-            if(cryptoList[i].symbol == cryptoName){
-              print(cryptoList[i].perRate);
-              percentage = cryptoList[i].perRate;
-              portfolios.forEach((element) {
-                currentValue += getCurrentRateDiff(element, cryptoList);
-              });
-              print(currentValue);
+        var response = await get(Uri.parse(uri)).timeout(const Duration(seconds: 60));
+        print(response);
+        if(response.statusCode == 200) {
+          final data = json.decode(response.body) as Map;
+          print(data);
+          if(mounted) {
+            if (data['error'] == false) {
               setState(() {
-                percent = (currentValue - totalPortfolioValue) /
-                    currentValue;
-                if(percent.isNaN)
-                  setState(() {
-                    percent = 0;
-                  });
-                print(percent);
-            });
+                cryptoList.addAll(
+                    data['data'].map<CryptoIndex>((json) =>
+                        CryptoIndex.fromJson(json)));
+                _size = _size + data['data'].length;
+                for(int i=0;i<cryptoList.length;i++) {
+                  if(cryptoList[i].symbol == cryptoName){
+                    print(cryptoList[i].perRate);
+                    percentage = cryptoList[i].perRate;
+                    for (var element in portfolios) {
+                      currentValue += getCurrentRateDiff(element, cryptoList);
+                    }
+                    print(currentValue);
+                    setState(() {
+                      percent = (currentValue - totalPortfolioValue) /
+                          currentValue;
+                      if(percent.isNaN) {
+                        setState(() {
+                          percent = 0;
+                        });
+                      }
+                      print(percent);
+                    });
+                  }
+                }});
+              loadingPage = false;
+            } else {
+              api_config.toastMessage(message:'Under Maintenance');
+              setState(() {
+                loadingPage = false;
+              });
+            }
           }
-        }});
-        loading = false;
-      } else {
-        api_config.toastMessage(message:'Under Maintenance');
-        setState(() {
-          loading = false;
-        });
-      }
-    }
-  }else {
-      api_config.toastMessage(message: 'Under Maintenance');
-      setState(() {
-        loading = false;
-      });
-    }
+        }else {
+          api_config.toastMessage(message: 'Under Maintenance');
+          setState(() {
+            loadingPage = false;
+          });
+        }
       } on TimeoutException catch(e) {
         setState(() {
-          loading = false;
+          loadingPage = false;
         });
         print(e);
       }
       catch (e) {
         setState(() {
-          loading = false;
+          loadingPage = false;
         });
       }
     } else {
       api_config.toastMessage(message: 'No Internet');
       setState(() {
-        loading = false;
+        loadingPage = false;
       });
     }
     api_config.internetConnection();
@@ -192,58 +188,58 @@ class _PortfolioPageState extends State<PortfolioPage> {
         loading = true;
         cryptoName = name;
       });
-      print('graph name  : '  + name );
-      print('graph crypto name  : '  + cryptoName );
+      print('graph name  : $name' );
+      print('graph crypto name  : $cryptoName' );
       var uri = '${api_config.ApiUrl}/Bitcoin/resources/getBitcoinCryptoGraph?type=$type&name=$cryptoName&currency=USD';
       if (await api_config.internetConnection()) {
         try {
-      var response = await get(Uri.parse(uri)).timeout(const Duration(seconds: 60));
-      if(response.statusCode == 200) {
-      final data = json.decode(response.body) as Map;
-      print(data);
-      if (mounted) {
-        if (data['error'] == false) {
-          setState(() {
-            graphList = data['data']
-                .map<CryptoIndex>((json) => CryptoIndex.fromJson(json))
-                .toList();
-            double count = 0;
-            diffRate = data['diffRate'];
-            diffRateName = double.parse(data['diffRate']);
-            currencyData = [];
-            for (var element in graphList) {
-              currencyData.add(LinearSales(element.date!, double.parse(element.rate!.toStringAsFixed(2))));
-              cryptoName = element.name!;
-              currentLow = element.low!;
-              currentHigh = element.high!;
-               volume = element.volume;
-                cap = element.cap;
-              rate = double.parse(element.rate!.toStringAsFixed(2));
-              String step2 = element.rate!.toStringAsFixed(2);
-              double step3 = double.parse(step2);
-              coin = step3;
-              count = count + 1;
-              print(rate);
-              print(volume);
+          var response = await get(Uri.parse(uri)).timeout(const Duration(seconds: 60));
+          if(response.statusCode == 200) {
+            final data = json.decode(response.body) as Map;
+            print(data);
+            if (mounted) {
+              if (data['error'] == false) {
+                setState(() {
+                  graphList = data['data']
+                      .map<CryptoIndex>((json) => CryptoIndex.fromJson(json))
+                      .toList();
+                  double count = 0;
+                  diffRate = data['diffRate'];
+                  diffRateName = double.parse(data['diffRate']);
+                  currencyData = [];
+                  for (var element in graphList) {
+                    currencyData.add(LinearSales(element.date!, double.parse(element.rate!.toStringAsFixed(2))));
+                    cryptoName = element.name!;
+                    currentLow = element.low!;
+                    currentHigh = element.high!;
+                    volume = element.volume;
+                    cap = element.cap;
+                    rate = double.parse(element.rate!.toStringAsFixed(2));
+                    String step2 = element.rate!.toStringAsFixed(2);
+                    double step3 = double.parse(step2);
+                    coin = step3;
+                    count = count + 1;
+                    print(rate);
+                    print(volume);
+                  }
+                  loading = false;
+                });
+
+              } else {
+                api_config.toastMessage(message:'Under Maintenance');
+                setState(() {
+                  loading = false;
+                });
+              }
             }
-            loading = false;
-          });
 
-        } else {
-          api_config.toastMessage(message:'Under Maintenance');
-          setState(() {
-            loading = false;
-          });
-        }
-        }
-
-      }
-      else {
-        api_config.toastMessage(message: 'Under Maintenance');
-        setState(() {
-          loading = false;
-        });
-      }
+          }
+          else {
+            api_config.toastMessage(message: 'Under Maintenance');
+            setState(() {
+              loading = false;
+            });
+          }
         } on TimeoutException catch(e) {
           setState(() {
             loading = false;
@@ -263,15 +259,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
       }
       api_config.internetConnection();
       print("cryptoList : ${graphList.length}");
-          }else{
+    }else{
       print("No Record found");
     }
-   callCryptoIndex();
+    callCryptoIndex();
   }
 
   getCurrentRateDiff(PortfolioCrypto items, List<CryptoIndex> cryotoList) {
-    CryptoIndex j =
-    cryptoList.firstWhere((element) => element.name == items.name);
+    CryptoIndex j = cryptoList.firstWhere((element) => element.name == items.name);
 
     double newRateDiff = j.rate! * items.numberOfCoins;
     return newRateDiff;
@@ -316,7 +311,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 50),
-                  child: Text(AppLocalizations.of(context)!.translate("bitai-10")!+" ${portfolioCrypto.name} "+ AppLocalizations.of(context)!.translate("bitai-11")!,
+                  child: Text("${AppLocalizations.of(context)!.translate("bitai-10")!} ${portfolioCrypto.name} ${AppLocalizations.of(context)!.translate("bitai-11")!}",
                     style: const TextStyle(
                         fontSize: 22,
                         color: Color(0xff868990),
@@ -496,11 +491,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
                             enabledBorder: InputBorder.none,
                             disabledBorder: InputBorder.none,
                             labelText: AppLocalizations.of(context)!.translate("bitai-28"),
-                            labelStyle: TextStyle(
+                            labelStyle: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black),
-                            floatingLabelStyle: TextStyle(
+                            floatingLabelStyle: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black),
@@ -514,12 +509,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         ], // O
                         //only numbers can be entered
                         validator: (val) {
-                          if (updateCoinEditingController!
-                              .value.text ==
-                              "" ||
-                              int.parse(updateCoinEditingController!
-                                  .value.text) <=
-                                  0) {
+                          if (updateCoinEditingController!.value.text == "" ||
+                              double.parse(updateCoinEditingController!.value.text) <= 0) {
                             return "at least 1 coin should be added";
                           } else {
                             return null;
@@ -562,7 +553,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
   _updateSaveCoinsToLocalStorage(PortfolioCrypto bitcoin) async {
     if (updateCoinEditingController!.text.isNotEmpty && updateCoinEditingController!.text != 0) {
-      int adf = int.parse(updateCoinEditingController!.text);
+      double adf = double.parse(updateCoinEditingController!.text);
       print(adf);
       Map<String, dynamic> row = {
         immediateConnectDatabase.columnName: bitcoin.name,
@@ -594,117 +585,135 @@ class _PortfolioPageState extends State<PortfolioPage> {
     await showMenu(
         context: context,
         position: const RelativeRect.fromLTRB(400, 80, 0, 0),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-        ),
+        // shape: const RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.all(Radius.circular(15)),
+        // ),
         items: [
           PopupMenuItem<String>(
               child: Column(
                   children: [
                     InkWell(
-                        child:
-                        Container(
-                          height: 178,
-                          width: 168,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              const BorderRadius.all(Radius.circular(12)),
-                              color: Colors.black),
+                      child:
+                      Container(
+                        // height: 178,
+                        // width: 168,
+                        decoration: const BoxDecoration(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(12)),
+                            color: Colors.black),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               InkWell(
                                 onTap:(){
-                                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => ChartPage(portfolioCrypto!.numberOfCoins, portfolioCrypto!.name,rate,percentage,cap,volume,diffRate)));
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => ChartPage(portfolioCrypto!.numberOfCoins, portfolioCrypto!.name,rate,percentage,cap,volume,diffRate)));
                                 },
                                 child: Container(
-                                height: 45,
-                                width: 126,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius:  BorderRadius.all(Radius.circular(12)),
+                                  // height: 45,
+                                  // width: 126,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius:  BorderRadius.all(Radius.circular(12)),
+                                  ),
+                                  child:Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: [
+                                        // const SizedBox(width: 10,),
+                                        Image.asset(
+                                          'assets/icons/Group 508.png',
+                                          width: 33,
+                                          height: 34,
+                                        ),
+
+                                        // const SizedBox(width: 15,),
+                                        Text(AppLocalizations.of(context)!.translate("bitai-22")!,style:GoogleFonts.inter(textStyle:const TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Color(0xff1A202C) )
+                                        ),)
+
+                                      ],
+                                    ),
+                                  ),
+
                                 ),
-                                     child:Row(
-                                       children: [
-                                         SizedBox(width: 10,),
-                                         Image.asset(
-                                           'assets/icons/Group 508.png',
-                                           width: 33,
-                                           height: 34,
-                                         ),
-
-                                         SizedBox(width: 15,),
-                                         Text(AppLocalizations.of(context)!.translate("bitai-22")!,style:GoogleFonts.inter(textStyle:TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Color(0xff1A202C) )
-                                         ),)
-
-                                       ],
-                                     ),
-
-                                 ),
                               ),
-                              SizedBox(height: 7,),
+                              const SizedBox(height: 7,),
                               InkWell(
-                              onTap:(){
-                              showDeletePortfolioCoins(portfolioCrypto!);
-                              },
-                              child:Container(
-                                height: 45,
-                                width: 126,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius:  BorderRadius.all(Radius.circular(12)),
-                                ),
-                                child:Row(
-                                  children: [
-                                    SizedBox(width: 10,),
-                                    Image.asset(
-                                      'assets/icons/Group 508(1).png',
-                                      width: 33,
-                                      height: 34,
+                                onTap:(){
+                                  showDeletePortfolioCoins(portfolioCrypto!);
+                                },
+                                child:Container(
+                                  // height: 45,
+                                  // width: 126,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius:  BorderRadius.all(Radius.circular(12)),
+                                  ),
+                                  child:Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: [
+                                        // const SizedBox(width: 10,),
+                                        Image.asset(
+                                          'assets/icons/Group 508(1).png',
+                                          width: 33,
+                                          height: 34,
+                                        ),
+                                        // const SizedBox(width: 15,),
+                                        Text(AppLocalizations.of(context)!.translate("delete")!,style:GoogleFonts.inter(textStyle:const TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Color(0xff1A202C))
+                                        ),)
+
+                                      ],
                                     ),
-                                    SizedBox(width: 15,),
-                                    Text(AppLocalizations.of(context)!.translate("delete")!,style:GoogleFonts.inter(textStyle:TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Color(0xff1A202C))
-                                    ),)
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 7,),
+                              InkWell(
+                                onTap:(){
+                                  showEditPortfolioCoins(portfolioCrypto!);
+                                },
+                                child:Container(
+                                  // height: 45,
+                                  // width: 126,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius:  BorderRadius.all(Radius.circular(12)),
+                                  ),
+                                  child:Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: [
+                                        // const SizedBox(width: 10,),
+                                        Image.asset(
+                                          'assets/icons/Group 508(2).png',
+                                          width: 33,
+                                          height: 34,
+                                        ),
+                                        // const SizedBox(width: 18,),
+                                        Text(AppLocalizations.of(context)!.translate("edit")!,style:GoogleFonts.inter(textStyle: const TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Color(0xff1A202C))
+                                        ),)
 
-                                  ],
-                                ),
-                              ),
-                              ),
-                              SizedBox(height: 7,),
-    InkWell(
-    onTap:(){
-    showEditPortfolioCoins(portfolioCrypto!);
-    },
-                              child:Container(
-                                height: 45,
-                                width: 126,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius:  BorderRadius.all(Radius.circular(12)),
-                                ),
-                                child:Row(
-                                  children: [
-                                    SizedBox(width: 10,),
-                                    Image.asset(
-                                      'assets/icons/Group 508(2).png',
-                                      width: 33,
-                                      height: 34,
+                                      ],
                                     ),
-                                    SizedBox(width: 18,),
-                                    Text(AppLocalizations.of(context)!.translate("edit")!,style:GoogleFonts.inter(textStyle: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Color(0xff1A202C))
-                                    ),)
+                                  ),
 
-                                  ],
                                 ),
-
-                              ),
-    )
+                              )
 
 
                             ],
                           ),
                         ),
                       ),
+                    ),
 
                   ]
               )
@@ -715,79 +724,82 @@ class _PortfolioPageState extends State<PortfolioPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //body: SingleChildScrollView(
-        body:Column(
+      //body: SingleChildScrollView(
+      body:Column(
         children: [
-          SizedBox(height: 45,),
+          const SizedBox(height: 45,),
           Row(
-            children: [
-              Padding(padding: EdgeInsets.only(left: 135,),
-                child:Text(AppLocalizations.of(context)!.translate("bitai-13")!,style:GoogleFonts.inter(
-                  textStyle: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: Color(0xff030303)
-                )
-                ),),
+              children: [
+                Padding(padding: const EdgeInsets.only(left: 135,),
+                  child:Text(AppLocalizations.of(context)!.translate("bitai-13")!,style:GoogleFonts.inter(
+                      textStyle: const TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: Color(0xff030303)
+                      )
+                  ),),
                 ),
-    SizedBox(width: 90,),
-              totalPortfolioValue >0
-              ?InkWell(
+                const SizedBox(width: 90,),
+                totalPortfolioValue >0
+                    ?InkWell(
                   onTap: () {
                     _showPopupMenu();
                   },
-    child:Image.asset('assets/icons/more_dots.png'),
-              )
-                  :Image.asset('assets/icons/more_dots.png'),
-          ]),
-          loading ? Center(
+                  child:Image.asset('assets/icons/more_dots.png'),
+                )
+                    :Container(),
+              ]),
+          loading ? const Center(
               child: CircularProgressIndicator(color: Colors.black))
               :graphList.isEmpty
-              ? Center(child: Image.asset("assets/No data.png"))
-              : Container(
-            height: 420,
-            child: ListView(
-                  children:<Widget> [
-    Padding(
-    padding: const EdgeInsets.only(left:10,right:10),
-    child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-    Row(
-    children: [
-    FadeInImage.assetNetwork(
-    height: 48, width: 48,
-    placeholder: 'assets/cob.png',
-    image: 'https://assets.coinlayer.com/icons/$cryptoName.png',
-    ),
-    Padding(
-    padding: const EdgeInsets.all(10),
-    child: Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-    Text(cryptoName, style: GoogleFonts.openSans(textStyle: TextStyle(
-         fontWeight: FontWeight.w500, fontSize: 16, color: Color(0xff17181A))
-    ),),
-    Text(diffRateName.toStringAsFixed(2)
-    , style: GoogleFonts.openSans(textStyle:TextStyle(
-           fontWeight: FontWeight.w400, fontSize: 14, color: diffRateName>=0?Colors.green:Colors.red)
-    ),)
-    ],
-    ),
-    ),
-    ],
-    ),
-    Text("\$"+rate.toStringAsFixed(2), style: GoogleFonts.openSans(textStyle: TextStyle(
-         fontWeight: FontWeight.w400, fontSize: 26, color: Color(0xff292D32))
-    ),textAlign: TextAlign.right,),
-    ],
-    ),
-    ),
-    Padding(
-    padding: const EdgeInsets.only(top: 5.0),
-    child: Row(
-    children: <Widget>[
-    Center(
-    child: SizedBox(
+              ? Center(child: Container(
+              height: 420,
+            color: Colors.grey,width: double.infinity,
+              child: Image.asset("assets/No data.png")))
+              : SizedBox(
+              height: 420,
+              child: ListView(
+                children:<Widget> [
+                  Padding(
+                    padding: const EdgeInsets.only(left:10,right:10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: [
+                            FadeInImage.assetNetwork(
+                              height: 48, width: 48,
+                              placeholder: 'assets/cob.png',
+                              image: 'https://assets.coinlayer.com/icons/$cryptoName.png',
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(cryptoName, style: GoogleFonts.openSans(textStyle: const TextStyle(
+                                      fontWeight: FontWeight.w500, fontSize: 16, color: Color(0xff17181A))
+                                  ),),
+                                  Text("${diffRateName.toStringAsFixed(2)}%"
+                                    , style: GoogleFonts.openSans(textStyle:TextStyle(
+                                        fontWeight: FontWeight.w400, fontSize: 14, color: diffRateName>=0?Colors.green:Colors.red)
+                                    ),)
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text("\$${rate.toStringAsFixed(2)}", style: GoogleFonts.openSans(textStyle: const TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 26, color: Color(0xff292D32))
+                        ),textAlign: TextAlign.right,),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5.0),
+                    child: Row(
+                        children: <Widget>[
+                          Center(
+                            child: SizedBox(
                                 width: MediaQuery.of(context).size.width / 1,
                                 height: MediaQuery.of(context).size.height / 3,
                                 child: loading?const Center(child:CircularProgressIndicator()):
@@ -799,7 +811,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     crosshairBehavior:_crosshairBehavior = CrosshairBehavior(
                                       // Enables the crosshair
                                       enable: true,
-                                      lineColor: Color(0xff0000000),
+                                      lineColor: const Color(0xff0000000),
                                       lineWidth: 2,
                                       lineDashArray: <double>[5,5],
                                       activationMode: ActivationMode.singleTap,
@@ -812,7 +824,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                       lineColor: Color(0xff0000000),
                                       lineWidth: 2,
                                       tooltipDisplayMode: TrackballDisplayMode.nearestPoint,
-
                                       shouldAlwaysShow: true,
                                       tooltipAlignment: ChartAlignment.near,
                                       builder: (BuildContext context, TrackballDetails trackballDetails) {
@@ -835,25 +846,23 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     ),
                                     //_trackballBehavior,
                                     primaryXAxis: CategoryAxis(
-                                        axisLine: AxisLine(color: Colors.white, width: 0),
+                                        axisLine: const AxisLine(color: Colors.white, width: 0),
                                         isVisible: true,
-                                        labelRotation: 45,
+                                        labelRotation: 90,
                                         interactiveTooltip: const InteractiveTooltip(
                                             enable: true
                                         )
                                     ),
-
                                     series: <ChartSeries<LinearSales, String>>[
                                       SplineSeries<LinearSales, String>(
                                         dataSource: currencyData,
-                                         xValueMapper:  (LinearSales data, _) => data.date,
-                                         yValueMapper:  (LinearSales data, _) => data.rate,
-                                        color: Color(0xff81B2CA),
+                                        xValueMapper:  (LinearSales data, _) => data.date,
+                                        yValueMapper:  (LinearSales data, _) => data.rate,
+                                        color: const Color(0xff81B2CA),
                                         dataLabelSettings: const DataLabelSettings(isVisible: false, borderColor: Color(0xff81B2CA)),
                                         markerSettings: const MarkerSettings(isVisible: false),
                                       )
-
-                                   ],
+                                    ],
                                     primaryYAxis: NumericAxis(
                                       isVisible: true,
                                       borderColor: Colors.white,
@@ -868,202 +877,202 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
                           )
                         ]
-                      ),
                     ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
                         Padding(
-                        padding: const EdgeInsets.only(left: 10, right: 10),
-    child: Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.all(2),
-        child: SizedBox(
-            width: 50.0,
-            height: 40.0,
-            child: TextButton(
-              style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all<Color>(buttonType == 2 ? const Color(0xff030303) : const Color(0xffffffff),),
-                  backgroundColor: MaterialStateProperty.all<Color>(buttonType == 2? const Color(0xff030303) : const Color(0xffffffff),),
-                  shape: MaterialStateProperty.all<
-                      RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ))),
-              onPressed: () {
-                setState(() {
-                  buttonType = 2;
-                  type = "Week";
-                  callGraphApi(cryptoName);
-                });
-              },
-              child: Text("7D",
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: buttonType == 2
-                        ? const Color(0xffFFFFFF)
-                        : const Color(0xff88898A)),
-                softWrap: false,
-              ),
-            ),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(2),
-        child: SizedBox(
-            width: 50.0, height: 40.0,
-            child: TextButton(
-              style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all<Color>(buttonType == 3 ? const Color(0xff030303) : const Color(0xffffffff),),
-                  backgroundColor: MaterialStateProperty.all<Color>(buttonType == 3 ? const Color(0xff030303) : const Color(0xffffffff),),
-                  shape: MaterialStateProperty.all<
-                      RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ))),
-              onPressed: () {
-                setState(() {
-                  buttonType = 3;
-                  type = "15Day";
-                  callGraphApi(cryptoName);
-                });
-              },
-              child: Text("15D",
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: buttonType == 3
-                        ? const Color(0xffFFFFFF)
-                        : const Color(0xff88898A)),
-                softWrap: false,
-              ),
-            ),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(2),
-        child: SizedBox(
-            width: 50.0, height: 40.0,
-            child: TextButton(
-              style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all<Color>(buttonType == 4 ? const Color(0xff030303) : const Color(0xffffffff),),
-                  backgroundColor: MaterialStateProperty.all<Color>(buttonType == 4 ? const Color(0xff030303) : const Color(0xffffffff),),
-                  shape: MaterialStateProperty.all<
-                      RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ))),
-              onPressed: () {
-                setState(() {
-                  buttonType = 4;
-                  type = "Month";
-                  callGraphApi(cryptoName);
-                });
-              },
-              child: Text("1M",
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: buttonType == 4
-                        ? const Color(0xffFFFFFF)
-                        : const Color(0xff88898A)),
-                softWrap: false,
-              ),
-            ),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(2),
-        child: SizedBox(
-            width: 50.0, height: 40.0,
-            child: TextButton(
-              style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all<Color>(buttonType == 5 ? const Color(0xff030303) : const Color(0xffffffff),),
-                  backgroundColor: MaterialStateProperty.all<Color>(buttonType == 5 ? const Color(0xff030303) : const Color(0xffffffff),),
-                  shape: MaterialStateProperty.all<
-                      RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ))),
-              onPressed: () {
-                setState(() {
-                  buttonType = 5;
-                  type = "2Month";
-                  callGraphApi(cryptoName);
-                });
-              },
-              child: Text("2M",
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: buttonType == 5
-                        ? const Color(0xffFFFFFF)
-                        : const Color(0xff88898A)),
-                softWrap: false,
-              ),
-            ),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(2),
-        child: SizedBox(
-            width: 50.0, height: 40.0,
-            child: TextButton(
-              style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all<Color>(buttonType == 6 ? const Color(0xff030303) : const Color(0xffffffff),),
-                  backgroundColor: MaterialStateProperty.all<Color>(buttonType == 6 ? const Color(0xff030303) : const Color(0xffffffff),),
-                  shape: MaterialStateProperty.all<
-                      RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ))),
-              onPressed: () {
-                setState(() {
-                  buttonType = 6;
-                  type = "Year";
-                  callGraphApi(cryptoName);
-                });
-              },
-              child: Text("1Y",
-                style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: buttonType == 6
-                        ? const Color(0xffFFFFFF)
-                        : const Color(0xff88898A)),
-                softWrap: false,
-              ),
-            ),
-        ),
-      ),
-    ],
-    ),
+                          padding: const EdgeInsets.all(2),
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 40.0,
+                            child: TextButton(
+                              style: ButtonStyle(
+                                  foregroundColor: MaterialStateProperty.all<Color>(buttonType == 2 ? const Color(0xff030303) : const Color(0xffffffff),),
+                                  backgroundColor: MaterialStateProperty.all<Color>(buttonType == 2? const Color(0xff030303) : const Color(0xffffffff),),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ))),
+                              onPressed: () {
+                                setState(() {
+                                  buttonType = 2;
+                                  type = "Week";
+                                  callGraphApi(cryptoName);
+                                });
+                              },
+                              child: Text("7D",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    color: buttonType == 2
+                                        ? const Color(0xffFFFFFF)
+                                        : const Color(0xff88898A)),
+                                softWrap: false,
+                              ),
+                            ),
+                          ),
                         ),
-                  ],
+                        Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: SizedBox(
+                            width: 50.0, height: 40.0,
+                            child: TextButton(
+                              style: ButtonStyle(
+                                  foregroundColor: MaterialStateProperty.all<Color>(buttonType == 3 ? const Color(0xff030303) : const Color(0xffffffff),),
+                                  backgroundColor: MaterialStateProperty.all<Color>(buttonType == 3 ? const Color(0xff030303) : const Color(0xffffffff),),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ))),
+                              onPressed: () {
+                                setState(() {
+                                  buttonType = 3;
+                                  type = "15Day";
+                                  callGraphApi(cryptoName);
+                                });
+                              },
+                              child: Text("15D",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    color: buttonType == 3
+                                        ? const Color(0xffFFFFFF)
+                                        : const Color(0xff88898A)),
+                                softWrap: false,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: SizedBox(
+                            width: 50.0, height: 40.0,
+                            child: TextButton(
+                              style: ButtonStyle(
+                                  foregroundColor: MaterialStateProperty.all<Color>(buttonType == 4 ? const Color(0xff030303) : const Color(0xffffffff),),
+                                  backgroundColor: MaterialStateProperty.all<Color>(buttonType == 4 ? const Color(0xff030303) : const Color(0xffffffff),),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ))),
+                              onPressed: () {
+                                setState(() {
+                                  buttonType = 4;
+                                  type = "Month";
+                                  callGraphApi(cryptoName);
+                                });
+                              },
+                              child: Text("1M",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    color: buttonType == 4
+                                        ? const Color(0xffFFFFFF)
+                                        : const Color(0xff88898A)),
+                                softWrap: false,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: SizedBox(
+                            width: 50.0, height: 40.0,
+                            child: TextButton(
+                              style: ButtonStyle(
+                                  foregroundColor: MaterialStateProperty.all<Color>(buttonType == 5 ? const Color(0xff030303) : const Color(0xffffffff),),
+                                  backgroundColor: MaterialStateProperty.all<Color>(buttonType == 5 ? const Color(0xff030303) : const Color(0xffffffff),),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ))),
+                              onPressed: () {
+                                setState(() {
+                                  buttonType = 5;
+                                  type = "2Month";
+                                  callGraphApi(cryptoName);
+                                });
+                              },
+                              child: Text("2M",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    color: buttonType == 5
+                                        ? const Color(0xffFFFFFF)
+                                        : const Color(0xff88898A)),
+                                softWrap: false,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(2),
+                          child: SizedBox(
+                            width: 50.0, height: 40.0,
+                            child: TextButton(
+                              style: ButtonStyle(
+                                  foregroundColor: MaterialStateProperty.all<Color>(buttonType == 6 ? const Color(0xff030303) : const Color(0xffffffff),),
+                                  backgroundColor: MaterialStateProperty.all<Color>(buttonType == 6 ? const Color(0xff030303) : const Color(0xffffffff),),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ))),
+                              onPressed: () {
+                                setState(() {
+                                  buttonType = 6;
+                                  type = "Year";
+                                  callGraphApi(cryptoName);
+                                });
+                              },
+                              child: Text("1Y",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    color: buttonType == 6
+                                        ? const Color(0xffFFFFFF)
+                                        : const Color(0xff88898A)),
+                                softWrap: false,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
 
 
-            )),
+              )),
 
-          SizedBox(height: 5,),
+          const SizedBox(height: 5,),
           Container(
               height: 90,width: 375,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
-                color: Color(0xff2C383F),
+                color: const Color(0xff2C383F),
               ),
               child:Column(
                 children: [
                   Row(
                     children: [
-                      Padding(padding: EdgeInsets.only(left: 30,top: 20),
+                      Padding(padding: const EdgeInsets.only(left: 30,top: 20),
                         child: Text(AppLocalizations.of(context)!.translate("bitai-13")!,style: GoogleFonts.inter(
-                            textStyle:TextStyle(fontSize: 13,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF) )
+                            textStyle:const TextStyle(fontSize: 13,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF) )
                         ),),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left:70,right:10,top: 20),
                         child: Text("\$${totalPortfolioValue.toStringAsFixed(2)}", style:GoogleFonts.inter(
-                            textStyle:TextStyle(fontSize: 21, fontWeight: FontWeight.w700, color:Color(0xffFFFFFF) )
+                            textStyle:const TextStyle(fontSize: 21, fontWeight: FontWeight.w700, color:Color(0xffFFFFFF) )
                         ),textAlign: TextAlign.end),
                       ),
                     ],
@@ -1073,7 +1082,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: LinearPercentIndicator(
-                        width: MediaQuery.of(context).size.width/1.17,
+                        width: MediaQuery.of(context).size.width/1.20,
                         animation: true,
                         lineHeight: 5,
                         barRadius:const Radius.circular(8),
@@ -1081,9 +1090,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         percent:percent,
                         linearStrokeCap: LinearStrokeCap.roundAll,
                         progressColor: percent<0
-                            ?Color(0xffFF775C)
+                            ?const Color(0xffFF775C)
                             :Colors.green,
-                         //Color(0xffFAB512),
+                        //Color(0xffFAB512),
                       ),
                     ),
                   ),
@@ -1107,84 +1116,76 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       });
                     },
                     child:Container(
-                    decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(24)),
-                    color: Color(0xffF4F6F6)
-                    ),
-                    child:Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            color: const Color(0xffFFFFFF)
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height: 65,width: 65,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(Radius.circular(18)),
-                                          color: Color(0xffF4F6F6)
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(24)),
+                          color: Color(0xffF4F6F6)
+                      ),
+                      child:Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: const Color(0xffFFFFFF)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          height: 65,width: 65,
+                                          decoration: const BoxDecoration(
+                                              borderRadius: BorderRadius.all(Radius.circular(18)),
+                                              color: Color(0xffF4F6F6)
+                                          ),
+                                          child:FadeInImage.assetNetwork(
+                                            height: 20, width: 20,
+                                            placeholder: 'assets/cob.png',
+                                            image: 'https://assets.coinlayer.com/icons/${portfolios[i].name}.png',
+                                          ),
                                         ),
-                                      child:FadeInImage.assetNetwork(
-                                        height: 20, width: 20,
-                                        placeholder: 'assets/cob.png',
-                                        image: 'https://assets.coinlayer.com/icons/${portfolios[i].name}.png',
-                                      ),
-                                      ),
-
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(portfolios[i].name, style:GoogleFonts.openSans(textStyle: TextStyle(
-                                                 fontWeight: FontWeight.w500, fontSize: 16, color: Color(0xff17181A))
-                                            ),),
-                                            Text(diffRateName.toStringAsFixed(2)
-                                              , style: GoogleFonts.openSans(textStyle:TextStyle(
-                                                  fontWeight: FontWeight.w400, fontSize: 14, color: diffRateName>=0?Colors.green:Colors.red)
-                                              ),)
-                                          ],
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(portfolios[i].name, style:GoogleFonts.openSans(textStyle: const TextStyle(
+                                                  fontWeight: FontWeight.w500, fontSize: 16, color: Color(0xff17181A))
+                                              ),),
+                                              Text(diffRateName.toStringAsFixed(2)
+                                                , style: GoogleFonts.openSans(textStyle:TextStyle(
+                                                    fontWeight: FontWeight.w400, fontSize: 14, color: diffRateName>=0?Colors.green:Colors.red)
+                                                ),)
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      // SizedBox(width: 105),
-                                      // Text("${portfolios[i].totalValue.toStringAsFixed(2)} ", style:GoogleFonts.inter(textStyle:TextStyle(
-                                      //      fontWeight: FontWeight.w600, fontSize: 16, color: Color(0xff1A202C)
-                                     // )
-                     // )
-                        //,),
-
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(AppLocalizations.of(context)!.translate("bitai-16")!+" ${portfolios[i].numberOfCoins.toStringAsFixed(1)}", style: const TextStyle(
-                                    fontFamily: 'Open Sans', fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xff17181A)
-                                ),),
-                              ),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(AppLocalizations.of(context)!.translate("bitai-17")!+" ${portfolios[i].totalValue.toStringAsFixed(2)}", style: const TextStyle(
-                                    fontFamily: 'Open Sans', fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xff17181A)
-                                ),),
-                              ),
-                            ],
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text("${AppLocalizations.of(context)!.translate("bitai-16")!} ${portfolios[i].numberOfCoins.toStringAsFixed(1)}", style: const TextStyle(
+                                      fontFamily: 'Open Sans', fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xff17181A)
+                                  ),),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text("${AppLocalizations.of(context)!.translate("bitai-17")!} ${portfolios[i].totalValue.toStringAsFixed(2)}", style: const TextStyle(
+                                      fontFamily: 'Open Sans', fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xff17181A)
+                                  ),),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),),
+                      ),),
                   );
                 }
             ),
@@ -1192,21 +1193,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
 
 
 
-    ],),
-  );
+        ],),
+    );
 
   }}
 class LinearSales {
   final String date;
   final double rate;
-
   LinearSales(this.date, this.rate);
-}
-
-class chartData {
-
-  final double date;
-  final double rate;
-
-  chartData(this.date, this.rate);
 }

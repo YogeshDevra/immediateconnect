@@ -129,7 +129,7 @@ class _ChartPageState extends State<ChartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Color(0xffDEEBE8) ,
+      backgroundColor:const Color(0xffDEEBE8) ,
       appBar: AppBar(
         backgroundColor: const Color(0xffFFFFFF),
         elevation: 0,
@@ -144,7 +144,7 @@ class _ChartPageState extends State<ChartPage> {
             Navigator.pushNamedAndRemoveUntil(context, '/NavigationPage', (r) => false);
           },
         ),
-        title:  Text(AppLocalizations.of(context)!.translate("bitai-21")!,style:GoogleFonts.inter(textStyle:TextStyle(
+        title:  Text(AppLocalizations.of(context)!.translate("bitai-21")!,style:GoogleFonts.inter(textStyle:const TextStyle(
           fontSize: 32,fontWeight: FontWeight.w700,color: Color(0xff2C383F)),
         ),),
       ),
@@ -155,7 +155,7 @@ class _ChartPageState extends State<ChartPage> {
     Image.asset('assets/coins_image.png'),
 
     const SizedBox(height: 40,),
-              loading ? Center(
+              loading ? const Center(
                   child: CircularProgressIndicator(color: Colors.black))
     :Container(
     width: MediaQuery.of(context).size.width,
@@ -166,8 +166,8 @@ class _ChartPageState extends State<ChartPage> {
     ),
     child: Column(
         children: [
-     Padding(padding: EdgeInsets.only(right: 160,top: 10),
-    child: Text(AppLocalizations.of(context)!.translate("bitai-1")!,style:GoogleFonts.inter(textStyle:TextStyle(
+     Padding(padding: const EdgeInsets.only(right: 160,top: 10),
+    child: Text(AppLocalizations.of(context)!.translate("bitai-1")!,style:GoogleFonts.inter(textStyle:const TextStyle(
     fontSize: 16,fontWeight: FontWeight.w700,color: Color(0xff2C383F)),
     ),),
     ),
@@ -189,12 +189,12 @@ class _ChartPageState extends State<ChartPage> {
                 ),
               ),
               Padding(padding: const EdgeInsets.only(left: 40,top: 20),
-                    child: Text("\$${totalCoins.toStringAsFixed(2)}", style: GoogleFonts.inter(textStyle:TextStyle(
+                    child: Text("\$${totalCoins.toStringAsFixed(2)}", style: GoogleFonts.inter(textStyle:const TextStyle(
                         fontWeight: FontWeight.w600, fontSize: 26, color: Color(0xff17171A)),
                     ),),
               ),
-              Padding(padding: EdgeInsets.only(left: 2,top: 25),
-              child:Text(widget.name, style: GoogleFonts.inter(textStyle:TextStyle(
+              Padding(padding: const EdgeInsets.only(left: 2,top: 25),
+              child:Text(widget.name, style: GoogleFonts.inter(textStyle:const TextStyle(
                    fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xff17181A)),
               ),),
               ),
@@ -202,12 +202,12 @@ class _ChartPageState extends State<ChartPage> {
           ),
           Row(
             children: [
-              Padding(padding: EdgeInsets.only(left: 25,top: 10),
-              child:Text("${widget.cryptoCoin}", style: GoogleFonts.inter(textStyle:TextStyle(
+              Padding(padding: const EdgeInsets.only(left: 25,top: 10),
+              child:Text("${widget.cryptoCoin}", style: GoogleFonts.inter(textStyle:const TextStyle(
                    fontWeight: FontWeight.w500, fontSize: 20, color: Color(0xff37474F))
               ),),
               ),
-              SizedBox(width: 100,),
+              const SizedBox(width: 90,),
               Container(
                 height: 51,width: 142,
                 decoration: const BoxDecoration(
@@ -216,27 +216,24 @@ class _ChartPageState extends State<ChartPage> {
                 ),
                 child:Row(
                   children: [
-                    Padding(padding: EdgeInsets.only(left: 35),
+                    Padding(padding: const EdgeInsets.only(left: 35),
                     child:FadeInImage.assetNetwork(
                       height: 34, width: 34,
                       placeholder: 'assets/cob.png',
                       image: 'https://assets.coinlayer.com/icons/${widget.name}.png',
                     ),
                     ),
-                    SizedBox(width: 5,),
-                    Text(widget.name, style:GoogleFonts.inter(textStyle:TextStyle(
+                    const SizedBox(width: 5,),
+                    Text(widget.name, style:GoogleFonts.inter(textStyle:const TextStyle(
                          fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xff17181A))
                     ),),
                   ],
                 )
               ),
-
             ],
           )
         ],
       )
-
-
     ),
     ),
       const SizedBox(height: 25,),
@@ -270,7 +267,7 @@ class _ChartPageState extends State<ChartPage> {
 
 
 
-              SizedBox(height: 20,),
+              const SizedBox(height: 20,),
               Padding(
                 padding: const EdgeInsets.only(left:30,right:10),
                 child: Row(
@@ -290,14 +287,14 @@ class _ChartPageState extends State<ChartPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(widget.name, style: GoogleFonts.openSans(textStyle:TextStyle(
+                              Text(widget.name, style: GoogleFonts.openSans(textStyle:const TextStyle(
                                    fontWeight: FontWeight.w500, fontSize: 16, color: Color(0xff17181A))
                               ),),
                               double.parse(widget.differRate!) >=0 ?
-                              Text("${double.parse(widget.differRate!).toStringAsFixed(2)}", style: GoogleFonts.inter(textStyle:TextStyle(
+                              Text("${double.parse(widget.differRate!).toStringAsFixed(2)}", style: GoogleFonts.inter(textStyle:const TextStyle(
                                    fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xff23C562))
                               ),):
-                              Text("${double.parse(widget.differRate!).toStringAsFixed(2)}", style: GoogleFonts.inter(textStyle:TextStyle(
+                              Text("${double.parse(widget.differRate!).toStringAsFixed(2)}", style: GoogleFonts.inter(textStyle:const TextStyle(
                                    fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xffEA3869)),
                               ),)
                             ],
@@ -305,8 +302,8 @@ class _ChartPageState extends State<ChartPage> {
                         ),
                       ],
                     ),
-                    Padding(padding: EdgeInsets.only(right: 25),
-                    child:Text("\$"+widget.rate!.toStringAsFixed(2), style: GoogleFonts.openSans(textStyle: TextStyle(
+                    Padding(padding: const EdgeInsets.only(right: 25),
+                    child:Text("\$"+widget.rate!.toStringAsFixed(2), style: GoogleFonts.openSans(textStyle: const TextStyle(
                          fontWeight: FontWeight.w400, fontSize: 26, color: Color(0xff292D32))
                     ),textAlign: TextAlign.right,),
                     )
@@ -315,7 +312,7 @@ class _ChartPageState extends State<ChartPage> {
               ),
               Row(
                 children: [
-                  Padding(padding: EdgeInsets.only(left: 27,top: 20),
+                  Padding(padding: const EdgeInsets.only(left: 27,top: 20),
                     child:Container(
                       height: 181,width: 155,
                       decoration: const BoxDecoration(
@@ -324,31 +321,32 @@ class _ChartPageState extends State<ChartPage> {
                       ),
                       child: Column(
                           children: [
-                            Container(
-                                child:Stack(
-                                  children: [
-                                    Padding(padding:  EdgeInsets.only(right: 60,top: 20),
-                                      child: Image.asset('assets/Ellipse.png'),),
-                                    Column(
-                                      children: [
-                                        Padding(padding: EdgeInsets.only(left:10,top: 37),
-                                            child: Text("${(widget.volume!*100/totalVolume).toStringAsFixed(1)} %",style:GoogleFonts.inter(textStyle:TextStyle(
-                                                fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
-                                            ),)
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )
-                            ),
-
+                          Padding(
+                          padding: const EdgeInsets.all(10),
+                            child: Align(
+                              alignment: Alignment.topLeft,
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage('assets/Ellipse.png'),
+                                          fit: BoxFit.fill
+                                      )
+                                  ),
+                                  child:Padding(
+                                      padding: const EdgeInsets.only(top:15,bottom:15,left: 2,right: 2),
+                                      child: Text("${(widget.volume!*100/totalVolume).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:const TextStyle(
+                                          fontSize: 14,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
+                                      ),)
+                                  )
+                              ),
+                            )),
                             const SizedBox(height: 40,),
-                             Padding(padding:EdgeInsets.only(right: 60),
-                              child: Text(AppLocalizations.of(context)!.translate("bitai-7")!,style:GoogleFonts.inter(textStyle:TextStyle(
+                             Padding(padding:const EdgeInsets.only(right: 60),
+                              child: Text(AppLocalizations.of(context)!.translate("bitai-7")!,style:GoogleFonts.inter(textStyle:const TextStyle(
                                 fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xff030303)),
-                              ),),
+                              ),maxLines: 1,),
                             ),
-                            loading?CircularProgressIndicator(color:Colors.black)
+                            loading?const CircularProgressIndicator(color:Colors.black)
                            : Padding(
                               padding: const EdgeInsets.all(10),
                               child: ClipRRect(
@@ -377,33 +375,35 @@ class _ChartPageState extends State<ChartPage> {
                       ),
                       child: Column(
                           children: [
-                            Container(
-                                child: Stack(
-                                    children: [
-                                      Padding(padding: const EdgeInsets.only(right: 60,top: 20),
-                                        child: Image.asset('assets/Ellipse.png'),
-                                      ),
-                                      Column(
-                                        children: [
-                                          Padding(padding: EdgeInsets.only(left:5,top: 37),
-                                              child: Text("${(widget.cap!*100/totalMarketCap).toStringAsFixed(1)} %",style:GoogleFonts.inter(textStyle:TextStyle(
-                                                  fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF)),
-                                              ),)
-                                          ),
-                                        ],
-                                      )
-                                    ])
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage('assets/Ellipse.png'),
+                                            fit: BoxFit.fill
+                                        )
+                                    ),
+                                    child: Padding(
+                                        padding: const EdgeInsets.only(top:15,bottom:15,left: 2,right: 2),
+                                        child: Text("${(widget.cap!*100/totalMarketCap).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:const TextStyle(
+                                            fontSize: 14,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF)),
+                                        ),)
+                                    )
+                                ),
+                              ),
                             ),
-
                             const SizedBox(height: 40,),
-                             Padding(padding:EdgeInsets.only(right: 30),
-                              child: Text(AppLocalizations.of(context)!.translate("bitai-8")!,style:GoogleFonts.inter(textStyle:TextStyle(
+                             Padding(padding:const EdgeInsets.only(right: 30),
+                              child: Text(AppLocalizations.of(context)!.translate("bitai-8")!,style:GoogleFonts.inter(textStyle:const TextStyle(
                                 fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xff030303)),
-                              ),),
+                              ),maxLines: 1,),
                             ),
 
 
-                           loading?CircularProgressIndicator(color:Colors.black)
+                           loading?const CircularProgressIndicator(color:Colors.black)
                             :Padding(
                               padding: const EdgeInsets.all(10),
                               child: LinearPercentIndicator(
@@ -411,7 +411,7 @@ class _ChartPageState extends State<ChartPage> {
                                 animation: true,
                                 lineHeight: 5,
                                 animationDuration: 2500,
-                                barRadius:Radius.circular(8),
+                                barRadius:const Radius.circular(8),
                                 percent: widget.cap!/totalMarketCap,
                                 linearStrokeCap: LinearStrokeCap.roundAll,
                                 progressColor: const Color(0xff10A40D),
@@ -423,7 +423,7 @@ class _ChartPageState extends State<ChartPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
         ],)
         ])
         ])

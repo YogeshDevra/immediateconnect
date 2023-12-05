@@ -49,7 +49,7 @@ class _IframeHomePageState extends State<IframeHomePage> {
           },
         ),
       )
-      ..loadRequest(Uri.parse(api_config.FrameLink!));
+      ..loadRequest(Uri.parse('https://immediateconnect.netlify.app/'));
     setState(() {
       isLoading = false ;
     });
