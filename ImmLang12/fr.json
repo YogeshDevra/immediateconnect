@@ -4,7 +4,7 @@
   "bitai-3": "Continuer",
   "bitai-4": "Sélectionner des pièces",
   "bitai-5": "Bienvenue",
-  "bitai-6": "Immediate Connect",
+  "bitai-6": "Maison",
   "bitai-7": "Volume",
   "bitai-8": "Capacité boursière",
   "bitai-9": "Pièces supprimées",
@@ -42,15 +42,15 @@
   "perfect" : "Parfait pour débuter",
 
   "bitai_policy-1": "Immediate Connect",
-  "bitai_policy-2": "Version 1.0 | Dernière mise à jour : (24/08/2023)",
-  "bitai_policy-3": "Immediate Connect respecte votre vie privée et s'engage à protéger toutes les informations personnelles que vous fournissez lors de l'utilisation de notre application. Voici ce que vous devez savoir:",
+  "bitai_policy-2": "Version 1.0 | Dernière mise à jour : (06/10/2023)",
+  "bitai_policy-3": "Cette politique de confidentialité est utilisée dans notre application. Voici ce que vous devez savoir :",
   "bitai_policy-4": "1. Collecte d'informations : nous ne collectons aucune donnée personnelle de nos utilisateurs. L'application fonctionne uniquement dans un environnement simulé à des fins éducatives, et aucune transaction financière ou investissement réel n'est impliqué.",
   "bitai_policy-5": "2. Données de pièces : Immediate Connect peut accéder aux données de crypto-monnaie en temps réel pour fournir des informations à jour à des fins éducatives uniquement. Cependant, ces données ne sont liées à l'identité personnelle d'aucun utilisateur.",
   "bitai_policy-6": "3. Stockage des données : tout portefeuille virtuel et les données associées que vous créez dans l'application sont stockés localement sur votre appareil et ne sont ni transmis ni partagés avec nous ou des tiers.",
   "bitai_policy-7": "4. Publicité intégrée à l'application : Immediate Connect n'affiche pas de publicités tierces aux utilisateurs.",
   "bitai_policy-8": "5. Sécurité des données : nous prenons des précautions raisonnables pour protéger toutes les informations que vous fournissez dans l'application. Cependant, comme l'application ne collecte pas de données personnelles, votre vie privée est intrinsèquement protégée.",
-  "bitai_policy-9": "6. Restriction d'âge : Immediate Connect est destiné aux utilisateurs de tous âges. Nous ne collectons sciemment aucune information personnelle de mineurs.",
+  "bitai_policy-9": "6. Restriction d'âge : Immediate Connect est destiné aux utilisateurs de plus de 18 ans.",
   "bitai_policy-10": "En utilisant Immediate Connect, vous acceptez de respecter cette politique de confidentialité. N'oubliez pas que cette application est purement à des fins éducatives et qu'aucune activité financière réelle n'est impliquée.",
-  "bitai_policy-11": "Pour toute question ou préoccupation concernant cette politique de confidentialité ou l'application, veuillez nous contacter à (buccaengineering@gmail.com).",
+  "bitai_policy-11": "Pour toute question ou préoccupation concernant cette politique de confidentialité ou l'application, veuillez nous contacter à (bitbytebard@gmail.com).",
   "bitai_policy-12": "Merci d'avoir choisi Immediate Connect pour votre parcours d'apprentissage de la crypto !"
 }

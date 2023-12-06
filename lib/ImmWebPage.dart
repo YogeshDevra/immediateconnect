@@ -53,23 +53,20 @@ class _ImmWebPageState extends State<ImmWebPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xffFFFFFF),
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(100),
-          child: AppBar(
+        appBar: AppBar(
             backgroundColor: const Color(0xffFFFFFF),
             elevation: 0,
-            automaticallyImplyLeading: false,
+            // automaticallyImplyLeading: false,
             leading: InkWell(
               onTap:(){
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => ImmNavigationPage()));
               },
-              child: Icon(Icons.dashboard,),
+              child: Icon(Icons.dashboard),
             ),
             title: Text(ImmAppLocalizations.of(context)!.translate("bitai-6")!,
                 style:TextStyle(fontSize: 25,fontWeight: FontWeight.w400)),
             centerTitle: true,
           ),
-        ),
         body: RefreshIndicator(
             onRefresh: () async {
               await Future.delayed(const Duration(seconds: 3));

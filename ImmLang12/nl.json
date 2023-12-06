@@ -4,7 +4,7 @@
   "bitai-3": "Doorgaan",
   "bitai-4": "Selecteer munten",
   "bitai-5": "Welkom",
-  "bitai-6": "Immediate Connect",
+  "bitai-6": "Thuis",
   "bitai-7": "Volume",
   "bitai-8": "Marktkapitalisatie",
   "bitai-9": "Verwijderde munten",
@@ -42,15 +42,15 @@
   "perfect" : "Perfect om te beginnen",
 
   "bitai_policy-1" : "Immediate Connect",
-  "bitai_policy-2" : "Versie 1.0 | Laatst bijgewerkt: (24/08/2023)",
-  "bitai_policy-3" : "Immediate Connect respecteert uw privacy en zet zich in voor de bescherming van alle persoonlijke informatie die u verstrekt tijdens het gebruik van onze app. Dit is wat u moet weten:",
+  "bitai_policy-2" : "Versie 1.0 | Laatst bijgewerkt: (06/10/2023)",
+  "bitai_policy-3" : "Dit privacybeleid wordt gebruikt in onze app. Dit is wat u moet weten:",
   "bitai_policy-4" : "1. Informatieverzameling: we verzamelen geen persoonlijke gegevens van onze gebruikers. De app werkt uitsluitend in een gesimuleerde omgeving voor educatieve doeleinden en er zijn geen echte financiële transacties of investeringen bij betrokken.",
   "bitai_policy-5" : "2. Muntgegevens: Immediate Connect heeft mogelijk toegang tot real-time cryptocurrency-gegevens om up-to-date informatie te verstrekken, uitsluitend voor educatieve doeleinden. Deze gegevens zijn echter niet gekoppeld aan de persoonlijke identiteit van een gebruiker.",
   "bitai_policy-6" : "3. Gegevensopslag: alle virtuele portfolio's en bijbehorende gegevens die u in de app maakt, worden lokaal op uw apparaat opgeslagen en worden niet verzonden of gedeeld met ons of derden.",
   "bitai_policy-7" : "4. In-app-advertenties: Immediate Connect geeft geen advertenties van derden weer aan gebruikers.",
   "bitai_policy-8" : "5. Gegevensbeveiliging: we nemen redelijke voorzorgsmaatregelen om alle informatie die u in de app verstrekt te beschermen. Aangezien de app echter geen persoonlijke gegevens verzamelt, wordt uw privacy inherent beschermd.",
-  "bitai_policy-9" : "6. Leeftijdsbeperking: Immediate Connect is bedoeld voor gebruikers van alle leeftijden. We verzamelen niet bewust persoonlijke informatie van minderjarigen.",
+  "bitai_policy-9" : "6. Leeftijdsbeperking: Immediate Connect is bedoeld voor gebruikers van 18 jaar en ouder.",
   "bitai_policy-10" : "Door Immediate Connect te gebruiken, stemt u ermee in zich aan dit privacybeleid te houden. Onthoud dat deze app puur voor educatieve doeleinden is en dat er geen echte financiële activiteiten bij betrokken zijn.",
-  "bitai_policy-11" : "Voor vragen of opmerkingen over dit privacybeleid of de app kunt u contact met ons opnemen via (buccaengineering@gmail.com).",
+  "bitai_policy-11" : "Voor vragen of opmerkingen over dit privacybeleid of de app kunt u contact met ons opnemen via (bitbytebard@gmail.com).",
   "bitai_policy-12" : "Bedankt voor het kiezen van Immediate Connect voor uw crypto-leertraject!"
 }

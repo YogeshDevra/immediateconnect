@@ -717,19 +717,25 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                   ),),
                 ),
                 SizedBox(width: 90,),
-                totalPortfolio >0
+                totalPortfolio > 0
                     ?InkWell(
                   onTap: () {
                     displayPopupMenu();
                   },
                   child:Image.asset('images/onlyIcons/im_more_dots.png'),
-                )
-                    :Image.asset('images/onlyIcons/im_more_dots.png'),
+                ) :Container(),
               ]),
           isloading ? Center(
               child: CircularProgressIndicator(color: Colors.black))
               :portGraphList.isEmpty
-              ? Center(child: Image.asset("images/imNoData.png"))
+              ? Center(
+                  child: Container(
+                      height: 420,
+                      width: double.infinity,
+                      color: Colors.grey,
+                      child: Image.asset("images/imNoData.png")
+                  )
+                )
               : Container(
               height: 420,
               child: ListView(
@@ -1039,6 +1045,7 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
               )),
 
           SizedBox(height: 5,),
+          if(totalPortfolio > 0)
           Container(
               height: 90,width: 375,
               decoration: BoxDecoration(
