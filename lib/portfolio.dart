@@ -23,12 +23,8 @@ import 'package:flutter/services.dart';
 
 import 'localization/app_localizations.dart';
 
-
-
-
 class PortfolioPage extends StatefulWidget {
   const PortfolioPage({super.key});
-
 
   @override
   State<PortfolioPage> createState() => _PortfolioPageState();
@@ -46,7 +42,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
   final ScrollController _scrollController = ScrollController();
   List<CryptoIndex> graphList = [];
   List<CryptoIndex> cryptoList = [];
-  bool loading = false;
+  bool loading = true;
   bool loadingPage = true;
   String bitIndexApi = "";
   String diffRate = '';
@@ -74,12 +70,22 @@ class _PortfolioPageState extends State<PortfolioPage> {
   double? cap = 0.0;
   double? volume = 0.0;
   PortfolioCrypto? portfolioCrypto;
+  final LinearGradient _linearGradient = LinearGradient(
+    colors: <Color>[
+      Color(0xff81B2CA),
+      Color(0xff37474F),
+      Color(0xff37474F),
+    ],
+    stops: <double>[10, 5.6, 1.3],
+    // Setting alignment for the series gradient
+    begin: Alignment.bottomLeft,
+    end: Alignment.topRight,
+  );
 
 
   @override
   void initState(){
     updateCoinEditingController = TextEditingController();
-
     database.queryAllRows().then((notes) {
       for (var note in notes) {
         //  print(note['name']);
@@ -96,18 +102,18 @@ class _PortfolioPageState extends State<PortfolioPage> {
         graphValue = true;
         setState(() {
           cryptoName = notes[0]["name"];
-
         });
       }else{
         graphValue = false;
       }
       setState(() {});
     });
-    super.initState();
     callCryptoIndex();
+    super.initState();
   }
 
   Future<void> callCryptoIndex() async {
+    print('percetage starting');
     setState(() {
       loadingPage = true;
     });
@@ -123,27 +129,37 @@ class _PortfolioPageState extends State<PortfolioPage> {
           if(mounted) {
             if (data['error'] == false) {
               setState(() {
-                cryptoList.addAll(
-                    data['data'].map<CryptoIndex>((json) =>
-                        CryptoIndex.fromJson(json)));
+                cryptoList.addAll(data['data'].map<CryptoIndex>((json) => CryptoIndex.fromJson(json)));
                 _size = _size + data['data'].length;
+                // print(cryptoList.length);
                 for(int i=0;i<cryptoList.length;i++) {
+                  // print('cryptoList[i].symbol');
+                  // print(cryptoList[i].symbol);
+                  // print(cryptoName);
                   if(cryptoList[i].symbol == cryptoName){
-                    print(cryptoList[i].perRate);
+                    // print(cryptoList[i].perRate);
                     percentage = cryptoList[i].perRate;
+                    // print('portfolios.length' + portfolios.length.toString());
                     for (var element in portfolios) {
-                      currentValue += getCurrentRateDiff(element, cryptoList);
+                      if(cryptoList[i].symbol == element.name) {
+                        currentValue += cryptoList[i].rate! * element.numberOfCoins;
+                        // print("currentValue in");
+                        // print(currentValue);
+                      }
+                      // currentValue += getCurrentRateDiff(element, cryptoList);
+                      // print("currentValue out");
+                      // print(currentValue);
                     }
-                    print(currentValue);
+                    // print(currentValue);
                     setState(() {
-                      percent = (currentValue - totalPortfolioValue) /
-                          currentValue;
+                      percent = (currentValue - totalPortfolioValue) / currentValue;
                       if(percent.isNaN) {
                         setState(() {
                           percent = 0;
                         });
                       }
-                      print(percent);
+                      // print('percent');
+                      // print(double.parse(percent.toStringAsFixed(1)));
                     });
                   }
                 }});
@@ -232,7 +248,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 });
               }
             }
-
           }
           else {
             api_config.toastMessage(message: 'Under Maintenance');
@@ -259,10 +274,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
       }
       api_config.internetConnection();
       print("cryptoList : ${graphList.length}");
+      callCryptoIndex();
     }else{
       print("No Record found");
     }
-    callCryptoIndex();
+
   }
 
   getCurrentRateDiff(PortfolioCrypto items, List<CryptoIndex> cryotoList) {
@@ -737,7 +753,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   ),),
                 ),
                 const SizedBox(width: 90,),
-                totalPortfolioValue >0
+                totalPortfolioValue > 0
                     ?InkWell(
                   onTap: () {
                     _showPopupMenu();
@@ -846,12 +862,15 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                     ),
                                     //_trackballBehavior,
                                     primaryXAxis: CategoryAxis(
+                                        //Hide the axis line of x-axis
                                         axisLine: const AxisLine(color: Colors.white, width: 0),
                                         isVisible: true,
                                         labelRotation: 90,
                                         interactiveTooltip: const InteractiveTooltip(
                                             enable: true
-                                        )
+                                        ),
+                                        //Hide the gridlines of x-axis
+                                        majorGridLines: MajorGridLines(width: 0),
                                     ),
                                     series: <ChartSeries<LinearSales, String>>[
                                       SplineSeries<LinearSales, String>(
@@ -872,6 +891,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                         fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.w600,
                                       ),
+                                      //Hide the gridlines of x-axis
+                                      majorGridLines: MajorGridLines(width: 1,dashArray: <double>[5,5]),
                                     ))
                             ),
 
@@ -1087,9 +1108,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         lineHeight: 5,
                         barRadius:const Radius.circular(8),
                         animationDuration: 2500,
-                        percent:percent,
+                        percent:double.parse(percent.toStringAsFixed(1)) > 1 || double.parse(percent.toStringAsFixed(1)) < 0?double.parse(percent.toStringAsFixed(0)).abs()/1:double.parse(percent.toStringAsFixed(1)).abs(),
                         linearStrokeCap: LinearStrokeCap.roundAll,
-                        progressColor: percent<0
+                        progressColor: double.parse(percent.toStringAsFixed(1)) < 0
                             ?const Color(0xffFF775C)
                             :Colors.green,
                         //Color(0xffFAB512),
@@ -1111,7 +1132,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         selectedIndex = i;
                         cryptoName = portfolios[i].name;
                         portfolioCrypto = portfolios[i];
-
                         callGraphApi(portfolios[i].name);
                       });
                     },
@@ -1158,9 +1178,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                                               Text(portfolios[i].name, style:GoogleFonts.openSans(textStyle: const TextStyle(
                                                   fontWeight: FontWeight.w500, fontSize: 16, color: Color(0xff17181A))
                                               ),),
-                                              Text(diffRateName.toStringAsFixed(2)
+                                              Text(portfolios[i].perRate
                                                 , style: GoogleFonts.openSans(textStyle:TextStyle(
-                                                    fontWeight: FontWeight.w400, fontSize: 14, color: diffRateName>=0?Colors.green:Colors.red)
+                                                    fontWeight: FontWeight.w400, fontSize: 14, color: portfolios[i].perRate.startsWith('-', 0)?Color(0xffFF775C):Colors.green)
                                                 ),)
                                             ],
                                           ),
@@ -1190,13 +1210,10 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 }
             ),
           ),
-
-
-
         ],),
     );
-
-  }}
+  }
+}
 class LinearSales {
   final String date;
   final double rate;

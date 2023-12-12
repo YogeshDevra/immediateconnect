@@ -49,7 +49,7 @@ class _IframeHomePageState extends State<IframeHomePage> {
           },
         ),
       )
-      ..loadRequest(Uri.parse('https://immediateconnect.netlify.app/'));
+      ..loadRequest(Uri.parse(api_config.FrameLink!));
     setState(() {
       isLoading = false ;
     });
@@ -60,22 +60,19 @@ class _IframeHomePageState extends State<IframeHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color(0xffFFFFFF),
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(100),
-          child: AppBar(
-            backgroundColor: const Color(0xffFFFFFF),
-            elevation: 0,
-            automaticallyImplyLeading: false,
-            leading: InkWell(
-              onTap:(){
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => NavigationPage()));
-              },
-              child: Icon(Icons.dashboard,size: 40,),
-            ),
-            title: Text(AppLocalizations.of(context)!.translate("bitai-6")!,style: GoogleFonts.openSans(textStyle:
-            TextStyle(fontSize: 25),fontWeight: FontWeight.w400),),
-            centerTitle: true,
+        appBar: AppBar(
+          backgroundColor: const Color(0xffFFFFFF),
+          elevation: 0,
+          // automaticallyImplyLeading: false,
+          leading: InkWell(
+            onTap:(){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => NavigationPage()));
+            },
+            child: Icon(Icons.dashboard_customize_sharp,size: 25,),
           ),
+          title: Text(AppLocalizations.of(context)!.translate("bitai-6")!,style: GoogleFonts.openSans(textStyle:
+          TextStyle(fontSize: 25),fontWeight: FontWeight.w400),),
+          centerTitle: true,
         ),
         body: RefreshIndicator(
             onRefresh: () async {

@@ -171,16 +171,21 @@ class _ChartPageState extends State<ChartPage> {
     fontSize: 16,fontWeight: FontWeight.w700,color: Color(0xff2C383F)),
     ),),
     ),
-    Padding(padding: const EdgeInsets.only(left: 2,top: 20),
+    Padding(
+      padding: const EdgeInsets.only(left: 30, right:30,top: 10, bottom:10),
     child: Container(
-    height: 132,width: 327,
+    // height: 132,width: 327,
     decoration: BoxDecoration(
     borderRadius: const BorderRadius.all(Radius.circular(24)),
     border: Border.all(color: const Color(0xffE6E6E6)),
     ),
     child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(padding: const EdgeInsets.only(left:20,right: 20,top: 20),
                 child: Align(
@@ -188,46 +193,39 @@ class _ChartPageState extends State<ChartPage> {
                   child: Image.asset('assets/Monero.png'),
                 ),
               ),
-              Padding(padding: const EdgeInsets.only(left: 40,top: 20),
-                    child: Text("\$${totalCoins.toStringAsFixed(2)}", style: GoogleFonts.inter(textStyle:const TextStyle(
-                        fontWeight: FontWeight.w600, fontSize: 26, color: Color(0xff17171A)),
-                    ),),
-              ),
-              Padding(padding: const EdgeInsets.only(left: 2,top: 25),
-              child:Text(widget.name, style: GoogleFonts.inter(textStyle:const TextStyle(
-                   fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xff17181A)),
+              Text("\$${totalCoins.toStringAsFixed(2)} ${widget.name}", style: GoogleFonts.inter(textStyle:const TextStyle(
+                  fontWeight: FontWeight.w600, fontSize: 26, color: Color(0xff17171A)),
               ),),
-              ),
             ],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(padding: const EdgeInsets.only(left: 25,top: 10),
-              child:Text("${widget.cryptoCoin}", style: GoogleFonts.inter(textStyle:const TextStyle(
+              Text("${widget.cryptoCoin}", style: GoogleFonts.inter(textStyle:const TextStyle(
                    fontWeight: FontWeight.w500, fontSize: 20, color: Color(0xff37474F))
               ),),
-              ),
-              const SizedBox(width: 90,),
               Container(
-                height: 51,width: 142,
+                // height: 51,width: 142,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                   color: Color(0xffEBEDED),
                 ),
-                child:Row(
-                  children: [
-                    Padding(padding: const EdgeInsets.only(left: 35),
-                    child:FadeInImage.assetNetwork(
-                      height: 34, width: 34,
-                      placeholder: 'assets/cob.png',
-                      image: 'https://assets.coinlayer.com/icons/${widget.name}.png',
-                    ),
-                    ),
-                    const SizedBox(width: 5,),
-                    Text(widget.name, style:GoogleFonts.inter(textStyle:const TextStyle(
-                         fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xff17181A))
-                    ),),
-                  ],
+                child:Padding(
+                  padding: const EdgeInsets.only(left:20,right:20, top:5, bottom:5),
+                  child: Row(
+                    children: [
+                      FadeInImage.assetNetwork(
+                        height: 34, width: 34,
+                        placeholder: 'assets/cob.png',
+                        image: 'https://assets.coinlayer.com/icons/${widget.name}.png',
+                      ),
+                      // const SizedBox(width: 5,),
+                      Text(widget.name, style:GoogleFonts.inter(textStyle:const TextStyle(
+                           fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xff17181A))
+                      ),),
+                    ],
+                  ),
                 )
               ),
             ],
@@ -290,23 +288,20 @@ class _ChartPageState extends State<ChartPage> {
                               Text(widget.name, style: GoogleFonts.openSans(textStyle:const TextStyle(
                                    fontWeight: FontWeight.w500, fontSize: 16, color: Color(0xff17181A))
                               ),),
-                              double.parse(widget.differRate!) >=0 ?
-                              Text("${double.parse(widget.differRate!).toStringAsFixed(2)}", style: GoogleFonts.inter(textStyle:const TextStyle(
-                                   fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xff23C562))
-                              ),):
-                              Text("${double.parse(widget.differRate!).toStringAsFixed(2)}", style: GoogleFonts.inter(textStyle:const TextStyle(
-                                   fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xffEA3869)),
+                              Text(double.parse(widget.differRate!).toStringAsFixed(2), style: GoogleFonts.inter(textStyle:TextStyle(
+                                   fontWeight: FontWeight.w400, fontSize: 14, color: double.parse(widget.differRate!) >=0? const Color(0xff23C562):const Color(0xffEA3869))
                               ),)
                             ],
                           ),
                         ),
                       ],
                     ),
-                    Padding(padding: const EdgeInsets.only(right: 25),
-                    child:Text("\$"+widget.rate!.toStringAsFixed(2), style: GoogleFonts.openSans(textStyle: const TextStyle(
+                    Padding(
+                        padding: const EdgeInsets.only(right: 25),
+                    child:Text("\$${widget.rate!.toStringAsFixed(2)}",
+                        style: GoogleFonts.openSans(textStyle: const TextStyle(
                          fontWeight: FontWeight.w400, fontSize: 26, color: Color(0xff292D32))
-                    ),textAlign: TextAlign.right,),
-                    )
+                    ),textAlign: TextAlign.right))
                   ],
                 ),
               ),
@@ -326,7 +321,7 @@ class _ChartPageState extends State<ChartPage> {
                             child: Align(
                               alignment: Alignment.topLeft,
                               child: Container(
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       image: DecorationImage(
                                           image: AssetImage('assets/Ellipse.png'),
                                           fit: BoxFit.fill
@@ -380,7 +375,7 @@ class _ChartPageState extends State<ChartPage> {
                               child: Align(
                                 alignment: Alignment.topLeft,
                                 child: Container(
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         image: DecorationImage(
                                             image: AssetImage('assets/Ellipse.png'),
                                             fit: BoxFit.fill

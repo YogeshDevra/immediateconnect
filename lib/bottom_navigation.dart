@@ -1,14 +1,10 @@
-import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_version_plus/new_version_plus.dart';
 import 'package:newproject/MorePage.dart';
-import 'package:newproject/api_config.dart';
 import 'package:newproject/homepage.dart';
 import 'package:newproject/portfolio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'Iframe.dart';
 import 'coins.dart';
 
@@ -60,68 +56,40 @@ class _NavigationPageState extends State<NavigationPage> {
         child: _widgetOptions.elementAt(_selectedIndex),
         bucket: bucket,
       ),
+      // bottomNavigationBar: _bottomNav,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) =>IframeHomePage()));
-          },
+        },
         shape: const CircleBorder(),
         backgroundColor: const Color(0xffFFC727),
         child: Image.asset('assets/icons/plus.png'),
       ),
+      // floatingActionButton: _fab,
       bottomNavigationBar: BottomAppBar(
         clipBehavior: Clip.antiAlias,
         shape: const CircularNotchedRectangle(),
         notchMargin: 15,
-
         padding: const EdgeInsets.all(10),
-        child: Container(
-          height: 84,
-          //color: const Color(0xffFFFFFF),
-          child: Row(
-            children: [
-              const Spacer(),
-              _buildNavItem(0, 'assets/icons/Group 515.png'),
-              const Spacer(),
-              _buildNavItem(1, 'assets/icons/Component 3.png'),
-              const SizedBox(width: 85,),
-              const Spacer(),
-              _buildNavItem(2, 'assets/icons/wallet.png'),
-              const Spacer(),
-              _buildNavItem(3, 'assets/icons/user_icon.png'),
-              const Spacer(),
-            ],
-          ),
+        child: Row(
+          children: [
+            const Spacer(),
+            _buildNavItem(0, 'assets/icons/Group 515.png'),
+            const Spacer(),
+            _buildNavItem(1, 'assets/icons/Component 3.png'),
+            const SizedBox(width: 85,),
+            const Spacer(),
+            _buildNavItem(2, 'assets/icons/wallet.png'),
+            const Spacer(),
+            _buildNavItem(3, 'assets/icons/user_icon.png'),
+            const Spacer(),
+          ],
         ),
       ),
 
     );
   }
-
-  /*Widget get bottomNavigationBar1{
-    return Scaffold(
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 84,
-          child: Row(
-            children: [
-              // const Spacer(),
-              _buildNavItem(0, 'assets/icons/Group 515.png'),
-              const Spacer(),
-              _buildNavItem(1, 'assets/icons/Component 3.png'),
-              const Spacer(),
-              _buildNavItem(2, 'assets/icons/wallet.png'),
-              const Spacer(),
-              _buildNavItem(3, 'assets/icons/user_icon.png'),
-              // const Spacer(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }*/
-
-
 
   final List _widgetOptions = [
     const HomePage(
@@ -137,7 +105,6 @@ class _NavigationPageState extends State<NavigationPage> {
       key: PageStorageKey('morePageId'),
     ),
   ];
-
 
   void _onItemTapped(int index) {
     setState(() {
@@ -158,5 +125,4 @@ class _NavigationPageState extends State<NavigationPage> {
       ),
     );
   }
-
 }

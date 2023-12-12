@@ -90,206 +90,192 @@ class _HomePageState extends State<HomePage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:Column(
-        children: [
-          AppBar(
-            centerTitle: true,
-            title:Text(AppLocalizations.of(context)!.translate("dashboard")!,
-              style:GoogleFonts.inter(textStyle: TextStyle(
-              fontSize: 16,fontWeight: FontWeight.w700,color: Color(0xff030303),)
-            ),),
-          ),
-          const SizedBox(height: 40),
-          loading ? Center(
-              child: CircularProgressIndicator(color: Colors.black))
-              :cryptoList.isEmpty
-              ? Center(child: Image.asset("assets/No data.png"))
-              : Container(
-              height: MediaQuery.of(context).size.height/1.5,
-              width: MediaQuery.of(context).size.width/0.4,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount:cryptoList.length,
-                  itemBuilder: (BuildContext context,int i) {
-                    return Column(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(left: 25,right: 15,top: 5,bottom: 5),
-                          child:Container(
-                            height: 185,width: 327,
-                            decoration:BoxDecoration(
-                                image:DecorationImage(
-                                  image: AssetImage('assets/Group 489.png'),
+      appBar: AppBar(
+        centerTitle: true,
+        title:Text(AppLocalizations.of(context)!.translate("dashboard")!,
+          style:GoogleFonts.inter(textStyle: const TextStyle(
+            fontSize: 16,fontWeight: FontWeight.w700,color: Color(0xff030303),)
+          ),),
+      ),
+      body:loading ? const Center(
+          child: CircularProgressIndicator(color: Colors.black))
+          :cryptoList.isEmpty
+          ? Center(child: Container(height:double.infinity,child: Image.asset("assets/No data.png")))
+          : Container(
+          height: MediaQuery.of(context).size.height/1.5,
+          width: MediaQuery.of(context).size.width/0.4,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount:cryptoList.length,
+              itemBuilder: (BuildContext context,int i) {
+                return Column(
+                  children: [
+                    Padding(padding: const EdgeInsets.only(left: 25,right: 15,top: 5,bottom: 5),
+                      child:Container(
+                        height: 185,width: 327,
+                        decoration:const BoxDecoration(
+                            image:DecorationImage(
+                              image: AssetImage('assets/Group 489.png'),
 
-                                )
-                            ),
-                            child:Column (
+                            )
+                        ),
+                        child:Column (
+                          children: [
+                            Row(
                               children: [
-                                Row(
-                                  children: [
-                                    Flexible(
-                                      child:Padding(padding: const EdgeInsets.only(left: 20,top:5),
-                                          child:Text(cryptoList[i].fullName!, style: GoogleFonts.openSans(textStyle: TextStyle(
-                                              fontWeight: FontWeight.w500, fontSize: 16, color: Color(0xffFFFFFF))
-                                          ),)
-                                      ),),
-                                    const SizedBox(width: 110),
-                                    Padding(padding: const EdgeInsets.only(top: 20,right: 20),
-                                      child: FadeInImage.assetNetwork(
-                                        height: 48,width: 48,
-                                        placeholder: 'assets/cob.png',
-                                        image: cryptoList[i].icon!,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Padding(padding: const EdgeInsets.only(left: 20,),
-                                    child:Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text("\$${cryptoList[i].rate!.toStringAsFixed(2)}", style:GoogleFonts.openSans(textStyle:TextStyle(
-                                          fontWeight: FontWeight.w700, fontSize: 26, color: Color(0xffFFFFFF))
-                                      ),),
-                                    )
-                                ),
-                                Padding(padding: EdgeInsets.only(left: 20,top: 30),
-                                  child:Align(alignment: Alignment.centerLeft,
-                                      child:double.parse(cryptoList[i].differRate!) >=0 ?
-                                      Text("${double.parse(cryptoList[i].differRate!).toStringAsFixed(1)}%", style:GoogleFonts.openSans(textStyle:TextStyle(
-                                          fontWeight: FontWeight.w700, fontSize: 14, color: Color(0xff24FF79))
-                                      ),):
-                                      Text("${double.parse(cryptoList[i].differRate!).toStringAsFixed(1)}%", style: GoogleFonts.openSans(textStyle:TextStyle(
-                                          fontWeight: FontWeight.w700, fontSize: 14, color: Color(0xffEA3869))
+                                Flexible(
+                                  child:Padding(padding: const EdgeInsets.only(left: 20,top:5),
+                                      child:Text(cryptoList[i].fullName!, style: GoogleFonts.openSans(textStyle: const TextStyle(
+                                          fontWeight: FontWeight.w500, fontSize: 16, color: Color(0xffFFFFFF))
                                       ),)
+                                  ),),
+                                const SizedBox(width: 110),
+                                Padding(padding: const EdgeInsets.only(top: 20,right: 20),
+                                  child: FadeInImage.assetNetwork(
+                                    height: 48,width: 48,
+                                    placeholder: 'assets/cob.png',
+                                    image: cryptoList[i].icon!,
                                   ),
                                 ),
                               ],
                             ),
-
-
-                          ),
-
-                        ),
-                        Row(
-                          children: [
-                            Padding(padding: EdgeInsets.only(left: 27,top: 70),
-                              child:Container(
-                                height: 181,width: 155,
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(24),),
-                                  color: Color(0xffD9E7E5),
-                                ),
-                                child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Container(
-                                              decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: AssetImage('assets/Ellipse.png'),
-                                                      fit: BoxFit.fill
-                                                  )
-                                              ),
-                                              child:Padding(
-                                                padding: const EdgeInsets.only(top:15,bottom:15,left: 2,right: 2),
-                                                child: Text("${(cryptoList[i].volume!*100/totalVolume).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:TextStyle(
-                                                    fontSize: 14,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
-                                                ),),
-                                              )
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 40,),
-                                      Padding(padding:EdgeInsets.only(right: 60),
-                                        child: Text(AppLocalizations.of(context)!.translate("bitai-7")!,
-                                          style:GoogleFonts.inter(textStyle:TextStyle(
-                                          fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xff030303),)
-                                        ),maxLines: 1,),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(8),
-                                          child: LinearPercentIndicator(
-                                            width: MediaQuery.of(context).size.width/3.10,
-                                            animation: true,
-                                            lineHeight: 5,
-                                            barRadius:const Radius.circular(8),
-                                            animationDuration: 2500,
-                                            percent: cryptoList[i].volume!/totalVolume,
-                                            linearStrokeCap: LinearStrokeCap.roundAll,
-                                            progressColor: const Color(0xffEA3869),
-                                          ),
-                                        ),
-                                      ),
-                                    ]
-                                ),
-                              ),),
-                            Padding(padding: const EdgeInsets.only(left: 20,right: 20,top: 70),
-                              child: Container(
-                                height: 181,width: 155,
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(24),),
-                                  color: Color(0xffE6E2E6),
-                                ),
-                                child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: Align(
-                                          alignment: Alignment.topLeft,
-                                          child: Container(
-                                              decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                      image: AssetImage('assets/Ellipse.png'),
-                                                      fit: BoxFit.fill
-                                                  )
-                                              ),
-                                              child: Padding(
-                                                  padding: const EdgeInsets.only(top:15,bottom:15,left: 2,right: 2),
-                                                  child: Text("${(cryptoList[i].cap!*100/totalMarketCap).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:TextStyle(
-                                                      fontSize: 14,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
-                                                  ),)
-                                              )
-                                          ),
-                                        ),
-                                      ),
-
-                                      const SizedBox(height: 40,),
-                                      Padding(padding:EdgeInsets.only(right: 30),
-                                        child: Text(AppLocalizations.of(context)!.translate("bitai-8")!,
-                                          style:GoogleFonts.inter(textStyle:TextStyle(
-                                          fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xff030303),)
-                                        ),maxLines: 1,),
-                                      ),
-
-                                      Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: LinearPercentIndicator(
-                                          width: MediaQuery.of(context).size.width/3.10,
-                                          animation: true,
-                                          lineHeight: 5,
-                                          animationDuration: 2500,
-                                          barRadius:Radius.circular(8),
-                                          percent: cryptoList[i].cap!/totalMarketCap,
-                                          linearStrokeCap: LinearStrokeCap.roundAll,
-                                          progressColor: const Color(0xff10A40D),
-                                        ),
-                                      ),
-                                    ]
-                                ),
+                            Padding(padding: const EdgeInsets.only(left: 20,),
+                                child:Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text("\$${cryptoList[i].rate!.toStringAsFixed(2)}", style:GoogleFonts.openSans(textStyle:const TextStyle(
+                                      fontWeight: FontWeight.w700, fontSize: 26, color: Color(0xffFFFFFF))
+                                  ),),
+                                )
+                            ),
+                            Padding(padding: const EdgeInsets.only(left: 20,top: 30),
+                              child:Align(alignment: Alignment.centerLeft,
+                                  child:Text("${double.parse(cryptoList[i].differRate!).toStringAsFixed(1)}%", style:GoogleFonts.openSans(textStyle:TextStyle(
+                                      fontWeight: FontWeight.w700, fontSize: 14, color: double.parse(cryptoList[i].differRate!) >=0?const Color(0xff24FF79):const Color(0xffEA3869))
+                                  ),)
                               ),
-                            )
+                            ),
                           ],
                         ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Padding(padding: const EdgeInsets.only(left: 27,top: 70),
+                          child:Container(
+                            height: 181,width: 155,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(24),),
+                              color: Color(0xffD9E7E5),
+                            ),
+                            child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Container(
+                                          decoration: const BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage('assets/Ellipse.png'),
+                                                  fit: BoxFit.fill
+                                              )
+                                          ),
+                                          child:Padding(
+                                            padding: const EdgeInsets.only(top:15,bottom:15,left: 2,right: 2),
+                                            child: Text("${(cryptoList[i].volume!*100/totalVolume).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:const TextStyle(
+                                                fontSize: 14,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
+                                            ),),
+                                          )
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 40,),
+                                  Padding(padding:const EdgeInsets.only(right: 60),
+                                    child: Text(AppLocalizations.of(context)!.translate("bitai-7")!,
+                                      style:GoogleFonts.inter(textStyle:const TextStyle(
+                                      fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xff030303),)
+                                    ),maxLines: 1,),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: LinearPercentIndicator(
+                                        width: MediaQuery.of(context).size.width/3.10,
+                                        animation: true,
+                                        lineHeight: 5,
+                                        barRadius:const Radius.circular(8),
+                                        animationDuration: 2500,
+                                        percent: cryptoList[i].volume!/totalVolume,
+                                        linearStrokeCap: LinearStrokeCap.roundAll,
+                                        progressColor: const Color(0xffEA3869),
+                                      ),
+                                    ),
+                                  ),
+                                ]
+                            ),
+                          ),),
+                        Padding(padding: const EdgeInsets.only(left: 20,right: 20,top: 70),
+                          child: Container(
+                            height: 181,width: 155,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(24),),
+                              color: Color(0xffE6E2E6),
+                            ),
+                            child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Container(
+                                          decoration: const BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage('assets/Ellipse.png'),
+                                                  fit: BoxFit.fill
+                                              )
+                                          ),
+                                          child: Padding(
+                                              padding: const EdgeInsets.only(top:15,bottom:15,left: 2,right: 2),
+                                              child: Text("${(cryptoList[i].cap!*100/totalMarketCap).toStringAsFixed(1)}%",style:GoogleFonts.inter(textStyle:const TextStyle(
+                                                  fontSize: 14,fontWeight: FontWeight.w700,color: Color(0xffFFFFFF))
+                                              ),)
+                                          )
+                                      ),
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 40,),
+                                  Padding(padding:const EdgeInsets.only(right: 30),
+                                    child: Text(AppLocalizations.of(context)!.translate("bitai-8")!,
+                                      style:GoogleFonts.inter(textStyle:const TextStyle(
+                                      fontSize: 17,fontWeight: FontWeight.w700,color: Color(0xff030303),)
+                                    ),maxLines: 1,),
+                                  ),
+
+                                  Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: LinearPercentIndicator(
+                                      width: MediaQuery.of(context).size.width/3.10,
+                                      animation: true,
+                                      lineHeight: 5,
+                                      animationDuration: 2500,
+                                      barRadius:const Radius.circular(8),
+                                      percent: cryptoList[i].cap!/totalMarketCap,
+                                      linearStrokeCap: LinearStrokeCap.roundAll,
+                                      progressColor: const Color(0xff10A40D),
+                                    ),
+                                  ),
+                                ]
+                            ),
+                          ),
+                        )
                       ],
-                    );
-                  }
-              )
-          ),
-
-
-        ],
+                    ),
+                  ],
+                );
+              }
+          )
       ),
 
 

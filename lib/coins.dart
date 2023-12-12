@@ -224,10 +224,10 @@ class _CoinsPageState extends State<CoinsPage>{
                                  color: Color(0xffEBEDED),
                                ),
                              ),
-                               Padding(padding: const EdgeInsets.only(left: 100,top: 10),
+                               Padding(padding: const EdgeInsets.only(left: 102,top: 10),
                                child: Container(
-                                 height: 28,
-                                 width: 28,
+                                 height: 25,
+                                 width: 25,
                                  decoration: BoxDecoration(
                                    borderRadius: BorderRadius.circular(25),
                                    color: const Color(0xffFFC727)

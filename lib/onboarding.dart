@@ -36,7 +36,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             const SizedBox(height: 80),
             Padding(padding: EdgeInsets.only(left: 24),
               child:Text(AppLocalizations.of(context)!.translate("bitai-6")!,textAlign: TextAlign.center,style: TextStyle(
-                  fontSize: 50,fontWeight: FontWeight.w400,color: Color(0xff000000)
+                  fontSize: 50,fontWeight: FontWeight.w400,color: Color(0xff000000),fontFamily: 'Fontdiner Swanky'
               ),),
             ),
             const SizedBox(height: 80),
@@ -45,7 +45,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ],
         ),
-
       ),
 
     );
