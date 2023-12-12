@@ -165,16 +165,21 @@ class _ImmChartPageState extends State<ImmChartPage> {
     fontSize: 16,fontWeight: FontWeight.w700,color: Color(0xff2C383F)),
     ),),
     ),
-    Padding(padding: const EdgeInsets.only(left: 2,top: 20),
+    Padding(
+      padding: const EdgeInsets.only(left: 30, right:30,top: 10, bottom:10),
     child: Container(
-    height: 132,width: 327,
+    // height: 132,width: 327,
     decoration: BoxDecoration(
     borderRadius: const BorderRadius.all(Radius.circular(24)),
     border: Border.all(color: const Color(0xffE6E6E6)),
     ),
     child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(padding: const EdgeInsets.only(left:20,right: 20,top: 20),
                 child: Align(
@@ -182,11 +187,9 @@ class _ImmChartPageState extends State<ImmChartPage> {
                   child: Image.asset('images/imMonero.png'),
                 ),
               ),
-              Padding(padding: const EdgeInsets.only(left: 40,top: 20),
-                    child: Text("\$${totalCoin.toStringAsFixed(2)}", style: GoogleFonts.inter(textStyle:TextStyle(
-                        fontWeight: FontWeight.w600, fontSize: 26, color: Color(0xff17171A)),
-                    ),),
-              ),
+              Text("\$${totalCoin.toStringAsFixed(2)}", style: GoogleFonts.inter(textStyle:TextStyle(
+                  fontWeight: FontWeight.w600, fontSize: 26, color: Color(0xff17171A)),
+              ),),
               Padding(padding: EdgeInsets.only(left: 2,top: 25),
               child:Text(widget.name, style: GoogleFonts.inter(textStyle:TextStyle(
                    fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xff17181A)),
@@ -195,29 +198,29 @@ class _ImmChartPageState extends State<ImmChartPage> {
             ],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(padding: EdgeInsets.only(left: 25,top: 10),
               child:Text("${widget.cryptoCoin}", style: GoogleFonts.inter(textStyle:TextStyle(
                    fontWeight: FontWeight.w500, fontSize: 20, color: Color(0xff37474F))
               ),),
               ),
-              SizedBox(width: 100,),
+              // SizedBox(width: 100,),
               Container(
-                height: 51,width: 142,
+                // height: 51,width: 142,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                   color: Color(0xffEBEDED),
                 ),
                 child:Row(
                   children: [
-                    Padding(padding: EdgeInsets.only(left: 35),
-                    child:FadeInImage.assetNetwork(
+                    FadeInImage.assetNetwork(
                       height: 34, width: 34,
                       placeholder: 'images/tempCob.png',
                       image: 'https://assets.coinlayer.com/icons/${widget.name}.png',
                     ),
-                    ),
-                    SizedBox(width: 5,),
+                    // SizedBox(width: 5,),
                     Text(widget.name, style:GoogleFonts.inter(textStyle:TextStyle(
                          fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xff17181A))
                     ),),
@@ -287,12 +290,8 @@ class _ImmChartPageState extends State<ImmChartPage> {
                               Text(widget.name, style: GoogleFonts.openSans(textStyle:TextStyle(
                                    fontWeight: FontWeight.w500, fontSize: 16, color: Color(0xff17181A))
                               ),),
-                              double.parse(widget.differRate!) >=0 ?
                               Text("${double.parse(widget.differRate!).toStringAsFixed(2)}", style: GoogleFonts.inter(textStyle:TextStyle(
-                                   fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xff23C562))
-                              ),):
-                              Text("${double.parse(widget.differRate!).toStringAsFixed(2)}", style: GoogleFonts.inter(textStyle:TextStyle(
-                                   fontWeight: FontWeight.w400, fontSize: 14, color: Color(0xffEA3869)),
+                                   fontWeight: FontWeight.w400, fontSize: 14, color: double.parse(widget.differRate!) >=0 ?Color(0xff23C562):Color(0xffEA3869))
                               ),)
                             ],
                           ),

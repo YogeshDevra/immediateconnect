@@ -33,8 +33,8 @@ class _ImmOnboardPageState extends State<ImmOnboardPage> {
             ),
             const SizedBox(height: 80),
             Padding(padding: EdgeInsets.only(left: 24),
-              child:Text(ImmAppLocalizations.of(context)!.translate("bitai-6")!,textAlign: TextAlign.center,style: TextStyle(
-                  fontSize: 50,fontWeight: FontWeight.w400,color: Color(0xff000000)
+              child:Text(ImmAppLocalizations.of(context)!.translate("bitai_policy-1-6")!,textAlign: TextAlign.center,style: TextStyle(
+                  fontSize: 50,fontWeight: FontWeight.w400,color: Color(0xff000000),fontFamily: 'Fontdiner Swanky'
               ),),
             ),
             const SizedBox(height: 80),

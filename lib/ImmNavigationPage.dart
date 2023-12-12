@@ -79,23 +79,19 @@ class _ImmNavigationPageState extends State<ImmNavigationPage> {
         shape: const CircularNotchedRectangle(),
         notchMargin: 15,
         padding: const EdgeInsets.all(10),
-        child: Container(
-          height: 84,
-          //color: const Color(0xffFFFFFF),
-          child: Row(
-            children: [
-              Padding(padding: EdgeInsets.only(left: 30),
-              child: buildNavItem(0, 'images/onlyIcons/imGroup_515.png'),),
-              const Spacer(),
-              buildNavItem(1, 'images/onlyIcons/imComponent 3.png'),
-              const SizedBox(width: 85,),
-              // const Spacer(),
-              buildNavItem(2, 'images/onlyIcons/im_wallet.png'),
-              const Spacer(),
-              Padding(padding: EdgeInsets.only(right: 30),
-              child:buildNavItem(3, 'images/onlyIcons/im_user_icon.png'),),
-            ],
-          ),
+        child: Row(
+          children: [
+            const Spacer(),
+            buildNavItem(0, 'images/onlyIcons/imGroup_515.png'),
+            const Spacer(),
+            buildNavItem(1, 'images/onlyIcons/imComponent 3.png'),
+            const SizedBox(width: 85,),
+            // const Spacer(),
+            buildNavItem(2, 'images/onlyIcons/im_wallet.png'),
+            const Spacer(),
+            buildNavItem(3, 'images/onlyIcons/im_user_icon.png'),
+            const Spacer(),
+          ],
         ),
       ),
 

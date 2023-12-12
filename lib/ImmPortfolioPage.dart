@@ -19,9 +19,6 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/services.dart';
 
-
-
-
 class ImmPortfolioPage extends StatefulWidget {
   const ImmPortfolioPage({super.key});
 
@@ -37,14 +34,13 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
   String ? actualPercentage;
   double Percentage = 0.0;
 
-
   List<ImmPortfolioCrypto> portfolio = [];
   double totalPortfolio = 0.0;
   final ScrollController _scrollControler = ScrollController();
   List<ImmCrypto> portGraphList = [];
   List<ImmCrypto> ImmcryptoList = [];
   //List<PortfolioCrypto> portfolioList = [];
-  bool isloading = false;
+  bool isloading = true;
   bool loadingPage = true;
   String differenceRate = '';
   double nameOfDiffRate = 0.0;
@@ -96,11 +92,12 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
       }
       setState(() {});
     });
-    super.initState();
     callImmCrypto();
+    super.initState();
   }
 
   Future<void> callImmCrypto() async {
+    print('percetage starting');
     setState(() {
       loadingPage = true;
     });
@@ -125,7 +122,10 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                     print(ImmcryptoList[i].perRate);
                     actualPercentage = ImmcryptoList[i].perRate;
                     portfolio.forEach((element) {
-                      curValue += getCurrentDiffRate(element, ImmcryptoList);
+                      if(ImmcryptoList[i].symbol == element.name) {
+                        curValue += ImmcryptoList[i].rate! * element.numberOfCoins;
+                      }
+                      // curValue += getCurrentDiffRate(element, ImmcryptoList);
                     });
                     print(curValue);
                     setState(() {
@@ -251,10 +251,11 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
       }
       ImmApiConfig.imm_internetConnection();
       print("ImmcryptoList : ${portGraphList.length}");
+      callImmCrypto();
     }else{
       print("No Record found");
     }
-    callImmCrypto();
+
   }
 
   getCurrentDiffRate(ImmPortfolioCrypto items, List<ImmCrypto> cryotoList) {
@@ -423,7 +424,6 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
             ),
             body: SingleChildScrollView(
               child: Column(
-                // mainAxisSize: MainAxisSize.max,
                 children: [
                   Container(
                     decoration: BoxDecoration(
@@ -863,6 +863,8 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                                         fontStyle: FontStyle.italic,
                                         fontWeight: FontWeight.w600,
                                       ),
+                                      //Hide the gridlines of x-axis
+                                      majorGridLines: MajorGridLines(width: 1,dashArray: <double>[5,5]),
                                     ))
                             ),
 
@@ -1079,9 +1081,9 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                         lineHeight: 5,
                         barRadius:const Radius.circular(8),
                         animationDuration: 2500,
-                        percent:Percentage,
+                        percent:double.parse(Percentage.toStringAsFixed(1)) > 1 || double.parse(Percentage.toStringAsFixed(1)) < 0?double.parse(Percentage.toStringAsFixed(0)).abs()/1:double.parse(Percentage.toStringAsFixed(1)).abs(),
                         linearStrokeCap: LinearStrokeCap.roundAll,
-                        progressColor: Percentage<0
+                        progressColor: double.parse(Percentage.toStringAsFixed(1)) < 0
                             ?Color(0xffFF775C)
                             :Colors.green,
                         //Color(0xffFAB512),
@@ -1151,9 +1153,9 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                                               Text(portfolio[i].name, style:GoogleFonts.openSans(textStyle: TextStyle(
                                                   fontWeight: FontWeight.w500, fontSize: 16, color: Color(0xff17181A))
                                               ),),
-                                              Text(nameOfDiffRate.toStringAsFixed(2)
+                                              Text(portfolio[i].perRate
                                                 , style: GoogleFonts.openSans(textStyle:TextStyle(
-                                                    fontWeight: FontWeight.w400, fontSize: 14, color: nameOfDiffRate>=0?Colors.green:Colors.red)
+                                                    fontWeight: FontWeight.w400, fontSize: 14, color: portfolio[i].perRate.startsWith('-', 0)?Color(0xffFF775C):Colors.green)
                                                 ),)
                                             ],
                                           ),
