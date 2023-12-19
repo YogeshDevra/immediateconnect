@@ -15,7 +15,7 @@ class ImmWebPage extends StatefulWidget {
 
 class _ImmWebPageState extends State<ImmWebPage> {
   late WebViewController controller;
-  bool isLoading = true ;
+  bool isLoading = false ;
 
   @override
   void initState() {

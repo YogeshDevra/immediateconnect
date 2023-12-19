@@ -78,7 +78,7 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
         coinsValue = coinsValue + note["coins_quantity"];
       }
       portfolioCoin = portfolio[0];
-      if(notes!= null){
+      if(notes.isNotEmpty){
         callingGraphApi(notes[0]["name"]);
         //    portfolioCrypto = notes[0] as PortfolioCrypto?;
         print(notes[0]["name"]);
