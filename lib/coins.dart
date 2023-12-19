@@ -218,24 +218,20 @@ class _CoinsPageState extends State<CoinsPage>{
                              child: Stack(
                              children: [
                                Container(
-                               height: 51,width: 142,
+                               height: 51,
                                decoration: const BoxDecoration(
                                  borderRadius: BorderRadius.all(Radius.circular(12)),
                                  color: Color(0xffEBEDED),
                                ),
                              ),
-                               Padding(padding: const EdgeInsets.only(left: 102,top: 10),
-                               child: Container(
-                                 height: 25,
-                                 width: 25,
-                                 decoration: BoxDecoration(
-                                   borderRadius: BorderRadius.circular(25),
-                                   color: const Color(0xffFFC727)
-                                 ),
-                               ),),
+
                                Padding(padding: const EdgeInsets.only(left: 10,right: 10),
                                child: DropdownButtonHideUnderline(
                                  child: DropdownButton<CryptoIndex>(
+                                   icon:const Icon(
+                                     Icons.arrow_drop_down_circle,
+                                     color: Color(0xffFFC727),
+                                   ),
                                    menuMaxHeight: MediaQuery.of(context).size.height/2,
                                borderRadius: BorderRadius.circular(25),
                                dropdownColor: const Color(0xffffffff),
@@ -367,7 +363,8 @@ class _CoinsPageState extends State<CoinsPage>{
                                           Padding(padding: const EdgeInsets.only(right: 10,top: 8),
                                               child:
                                               Container(
-                                                  height: 25,width: 280,
+                                                  height: 25,
+                                                  width: MediaQuery.of(context).size.width/1.5,
                                                   decoration: BoxDecoration(
                                                       borderRadius: BorderRadius.circular(15),
                                                      // color: Color(0xffFFC727)

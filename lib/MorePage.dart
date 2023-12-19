@@ -101,7 +101,7 @@ class _MorePageState extends State<MorePage>{
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(AppLocalizations.of(context)!.translate("bitai_policy-1")!,
-                                          style: const TextStyle(color:Color(0xff000000),fontFamily: 'Poppins', fontSize: 16, fontWeight: FontWeight.w600)),
+                                          style: const TextStyle(color:Color(0xff000000), fontSize: 16, fontWeight: FontWeight.w600)),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),

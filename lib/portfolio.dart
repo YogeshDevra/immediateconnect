@@ -42,8 +42,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
   final ScrollController _scrollController = ScrollController();
   List<CryptoIndex> graphList = [];
   List<CryptoIndex> cryptoList = [];
-  bool loading = true;
-  bool loadingPage = true;
+  bool loading = false;
+  bool loadingPage = false;
   String bitIndexApi = "";
   String diffRate = '';
   double diffRateName = 0.0;
@@ -94,8 +94,11 @@ class _PortfolioPageState extends State<PortfolioPage> {
         totalRate = totalRate + note["rate_during_adding"];
         totalCoins = totalCoins + note["coins_quantity"];
       }
-      portfolioCrypto = portfolios[0];
-      if(notes!= null){
+      if(portfolios.isNotEmpty) {
+        portfolioCrypto = portfolios[0];
+      }
+      print(notes);
+      if(notes.isNotEmpty){
         callGraphApi(notes[0]["name"]);
         //    portfolioCrypto = notes[0] as PortfolioCrypto?;
         print(notes[0]["name"]);
@@ -108,7 +111,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
       }
       setState(() {});
     });
-    callCryptoIndex();
     super.initState();
   }
 
@@ -116,41 +118,34 @@ class _PortfolioPageState extends State<PortfolioPage> {
     print('percetage starting');
     setState(() {
       loadingPage = true;
+      currentValue = 0.0;
     });
     var uri = '${api_config.ApiUrl}/Bitcoin/resources/getBitcoinCryptoListLoser?size=0&currency=USD';
     print(uri);
     if (await api_config.internetConnection()) {
       try {
-        var response = await get(Uri.parse(uri)).timeout(const Duration(seconds: 60));
-        print(response);
+        var response = await get(Uri.parse(uri));
+
         if(response.statusCode == 200) {
           final data = json.decode(response.body) as Map;
-          print(data);
+
           if(mounted) {
             if (data['error'] == false) {
               setState(() {
                 cryptoList.addAll(data['data'].map<CryptoIndex>((json) => CryptoIndex.fromJson(json)));
                 _size = _size + data['data'].length;
-                // print(cryptoList.length);
                 for(int i=0;i<cryptoList.length;i++) {
-                  // print('cryptoList[i].symbol');
-                  // print(cryptoList[i].symbol);
-                  // print(cryptoName);
-                  if(cryptoList[i].symbol == cryptoName){
-                    // print(cryptoList[i].perRate);
-                    percentage = cryptoList[i].perRate;
-                    // print('portfolios.length' + portfolios.length.toString());
-                    for (var element in portfolios) {
-                      if(cryptoList[i].symbol == element.name) {
-                        currentValue += cryptoList[i].rate! * element.numberOfCoins;
-                        // print("currentValue in");
-                        // print(currentValue);
-                      }
-                      // currentValue += getCurrentRateDiff(element, cryptoList);
-                      // print("currentValue out");
-                      // print(currentValue);
-                    }
-                    // print(currentValue);
+                if(cryptoList[i].symbol == cryptoName) {
+                  // print(cryptoList[i].perRate);
+                  percentage = cryptoList[i].perRate;
+                }}
+              });
+              print('here${portfolios.length}');
+                    portfolios.forEach((element) {
+                        print(getCurrentRateDiff(element, cryptoList));
+                        currentValue += getCurrentRateDiff(element, cryptoList);
+                    });
+                    print(currentValue);
                     setState(() {
                       percent = (currentValue - totalPortfolioValue) / currentValue;
                       if(percent.isNaN) {
@@ -158,12 +153,13 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           percent = 0;
                         });
                       }
-                      // print('percent');
+
                       // print(double.parse(percent.toStringAsFixed(1)));
                     });
-                  }
-                }});
-              loadingPage = false;
+
+                loadingPage = false;
+
+
             } else {
               api_config.toastMessage(message:'Under Maintenance');
               setState(() {
@@ -204,15 +200,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
         loading = true;
         cryptoName = name;
       });
-      print('graph name  : $name' );
-      print('graph crypto name  : $cryptoName' );
+
       var uri = '${api_config.ApiUrl}/Bitcoin/resources/getBitcoinCryptoGraph?type=$type&name=$cryptoName&currency=USD';
       if (await api_config.internetConnection()) {
         try {
           var response = await get(Uri.parse(uri)).timeout(const Duration(seconds: 60));
           if(response.statusCode == 200) {
             final data = json.decode(response.body) as Map;
-            print(data);
+
             if (mounted) {
               if (data['error'] == false) {
                 setState(() {
@@ -235,8 +230,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                     double step3 = double.parse(step2);
                     coin = step3;
                     count = count + 1;
-                    print(rate);
-                    print(volume);
+
                   }
                   loading = false;
                 });
@@ -282,9 +276,12 @@ class _PortfolioPageState extends State<PortfolioPage> {
   }
 
   getCurrentRateDiff(PortfolioCrypto items, List<CryptoIndex> cryotoList) {
-    CryptoIndex j = cryptoList.firstWhere((element) => element.name == items.name);
+    print(items.name);
+    print('count');
+    CryptoIndex j = cryptoList.firstWhere((element) => element.symbol == items.name);
 
     double newRateDiff = j.rate! * items.numberOfCoins;
+    print(newRateDiff);
     return newRateDiff;
   }
 
@@ -1108,7 +1105,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         lineHeight: 5,
                         barRadius:const Radius.circular(8),
                         animationDuration: 2500,
-                        percent:double.parse(percent.toStringAsFixed(1)) > 1 || double.parse(percent.toStringAsFixed(1)) < 0?double.parse(percent.toStringAsFixed(0)).abs()/1:double.parse(percent.toStringAsFixed(1)).abs(),
+                        percent:    double.parse(percent
+                            .toStringAsFixed(2)
+                            .replaceAll("-", '')) ,
                         linearStrokeCap: LinearStrokeCap.roundAll,
                         progressColor: double.parse(percent.toStringAsFixed(1)) < 0
                             ?const Color(0xffFF775C)
@@ -1212,6 +1211,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
           ),
         ],),
     );
+
   }
 }
 class LinearSales {
