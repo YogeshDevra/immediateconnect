@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "943040138789",
+    "project_id": "immediate-connect-95034",
+    "storage_bucket": "immediate-connect-95034.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943040138789:android:4d67e5a523f535ac9e79cc",
+        "android_client_info": {
+          "package_name": "com.scode.immediateconnectapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVZCu-8cWN97lJMpnAtBYOLFTP2N8z1rQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
