@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'ImmLocalization/ImmAppLocalizations.dart';
+import 'ImmWebPage.dart';
 
 class ImmOnboardPage extends StatefulWidget {
   const ImmOnboardPage ({super.key});
@@ -16,7 +17,7 @@ class _ImmOnboardPageState extends State<ImmOnboardPage> {
   }
   Future<void> OnbordingScreen() async {
     Future.delayed(const Duration(milliseconds: 2000)).then((_) {
-      Navigator.of(context).pushReplacementNamed('/NavigationPage');
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) =>ImmWebPage()));
     });
   }
 

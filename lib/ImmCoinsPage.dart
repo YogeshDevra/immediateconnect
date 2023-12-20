@@ -317,7 +317,19 @@ class _ImmCoinsPageState extends State<ImmCoinsPage>{
                           alignment: Alignment.topRight,
                           child: InkWell(
                             onTap: () {
-                              _addAllSaveCoinsToLocalStorage(selectCrypto!);
+                              if(selectCrypto != null) {
+                                _addAllSaveCoinsToLocalStorage(selectCrypto!);
+                              }else if(selectCrypto == null) {
+                                Fluttertoast.showToast(
+                                    msg: ImmAppLocalizations.of(context)!.translate('bitai-37')!,
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIosWeb: 3,
+                                    backgroundColor: Colors.red,
+                                    textColor: const Color(0xffffffff),
+                                    fontSize: 16.0);
+                              }
+
                             },
                             child:Container(
                               // height: 30,width: 116,
