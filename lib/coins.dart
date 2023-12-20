@@ -224,7 +224,6 @@ class _CoinsPageState extends State<CoinsPage>{
                                  color: Color(0xffEBEDED),
                                ),
                              ),
-
                                Padding(padding: const EdgeInsets.only(left: 10,right: 10),
                                child: DropdownButtonHideUnderline(
                                  child: DropdownButton<CryptoIndex>(
@@ -236,9 +235,12 @@ class _CoinsPageState extends State<CoinsPage>{
                                borderRadius: BorderRadius.circular(25),
                                dropdownColor: const Color(0xffffffff),
                                style: const TextStyle(),
-                                   hint:const Text('Select Crypto'),
+                                   hint: const Text('Select Crypto'),
                                    value: selectedCrypto,
                                    alignment: Alignment.centerLeft,
+                                   // validator: (input) {
+                                   //   if (input.isEmpty) return 'Please fill up the text fields';
+                                   // },
                                    onChanged: (newValue) {
                                      setState(() {
                                        selectedCrypto = newValue!;
@@ -283,7 +285,19 @@ class _CoinsPageState extends State<CoinsPage>{
                     alignment: Alignment.topRight,
                     child: InkWell(
                       onTap: () {
-                        _addSaveCoinsToLocalStorage(selectedCrypto!);
+                        print(selectedCrypto);
+                        if(selectedCrypto != null) {
+                          _addSaveCoinsToLocalStorage(selectedCrypto!);
+                        }else if(selectedCrypto == null) {
+                          Fluttertoast.showToast(
+                              msg: "Please Select Crypto",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.BOTTOM,
+                              timeInSecForIosWeb: 3,
+                              backgroundColor: Colors.red,
+                              textColor: const Color(0xffffffff),
+                              fontSize: 16.0);
+                        }
                       },
                     child:Container(
                     // height: 30,width: 116,
