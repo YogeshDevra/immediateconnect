@@ -40,8 +40,8 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
   List<ImmCrypto> portGraphList = [];
   List<ImmCrypto> ImmcryptoList = [];
   //List<PortfolioCrypto> portfolioList = [];
-  bool isloading = true;
-  bool loadingPage = true;
+  bool isloading = false;
+  bool loadingPage = false;
   String differenceRate = '';
   double nameOfDiffRate = 0.0;
   double crypto = 0;
@@ -78,6 +78,10 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
         coinsValue = coinsValue + note["coins_quantity"];
       }
       portfolioCoin = portfolio[0];
+      if(portfolio.isNotEmpty) {
+        portfolioCoin = portfolio[0];
+      }
+      print(notes);
       if(notes.isNotEmpty){
         callingGraphApi(notes[0]["name"]);
         //    portfolioCrypto = notes[0] as PortfolioCrypto?;
@@ -92,7 +96,7 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
       }
       setState(() {});
     });
-    callImmCrypto();
+    // callImmCrypto();
     super.initState();
   }
 
@@ -100,16 +104,18 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
     print('percetage starting');
     setState(() {
       loadingPage = true;
+      curValue = 0.0;
     });
     var uri = '${ImmApiConfig.ImmApiUrl}/Bitcoin/resources/getBitcoinCryptoListLoser?size=0&currency=USD';
     print(uri);
     if (await ImmApiConfig.imm_internetConnection()) {
       try {
-        var response = await get(Uri.parse(uri)).timeout(const Duration(seconds: 60));
-        print(response);
+        var response = await get(Uri.parse(uri));
+            // .timeout(const Duration(seconds: 60));
+        // print(response);
         if(response.statusCode == 200) {
           final data = json.decode(response.body) as Map;
-          print(data);
+          // print(data);
           if(mounted) {
             if (data['error'] == false) {
               setState(() {
@@ -119,26 +125,24 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                 size = size + data['data'].length;
                 for(int i=0;i<ImmcryptoList.length;i++) {
                   if(ImmcryptoList[i].symbol == coinName){
-                    print(ImmcryptoList[i].perRate);
+                    // print(ImmcryptoList[i].perRate);
                     actualPercentage = ImmcryptoList[i].perRate;
-                    portfolio.forEach((element) {
-                      if(ImmcryptoList[i].symbol == element.name) {
-                        curValue += ImmcryptoList[i].rate! * element.numberOfCoins;
-                      }
-                      // curValue += getCurrentDiffRate(element, ImmcryptoList);
-                    });
-                    print(curValue);
-                    setState(() {
-                      Percentage = (curValue - totalPortfolio) /
-                          curValue;
-                      if(Percentage.isNaN)
-                        setState(() {
-                          Percentage = 0;
-                        });
-                      print(Percentage);
-                    });
-                  }
-                }});
+                  }}
+              });
+              portfolio.forEach((element) {
+                print(getCurrentDiffRate(element, ImmcryptoList));
+                curValue += getCurrentDiffRate(element, ImmcryptoList);
+              });
+              print(curValue);
+              setState(() {
+                Percentage = (curValue - totalPortfolio) /
+                    curValue;
+                if(Percentage.isNaN)
+                  setState(() {
+                    Percentage = 0;
+                  });
+                print(Percentage);
+              });
               loadingPage = false;
             } else {
               ImmApiConfig.imm_toastMessage(message:'Under Maintenance');
@@ -180,15 +184,15 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
         isloading = true;
         coinName = name;
       });
-      print('graph name  : '  + name );
-      print('graph crypto name  : '  + coinName );
+      // print('graph name  : '  + name );
+      // print('graph crypto name  : '  + coinName );
       var uri = '${ImmApiConfig.ImmApiUrl}/Bitcoin/resources/getBitcoinCryptoGraph?type=$imType&name=$coinName&currency=USD';
       if (await ImmApiConfig.imm_internetConnection()) {
         try {
           var response = await get(Uri.parse(uri)).timeout(const Duration(seconds: 60));
           if(response.statusCode == 200) {
             final data = json.decode(response.body) as Map;
-            print(data);
+            // print(data);
             if (mounted) {
               if (data['error'] == false) {
                 setState(() {
@@ -211,8 +215,8 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                     double step3 = double.parse(step2);
                     crypto = step3;
                     count = count + 1;
-                    print(rate);
-                    print(volume);
+                    // print(rate);
+                    // print(volume);
                   }
                   isloading = false;
                 });
@@ -259,9 +263,7 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
   }
 
   getCurrentDiffRate(ImmPortfolioCrypto items, List<ImmCrypto> cryotoList) {
-    ImmCrypto j =
-    ImmcryptoList.firstWhere((element) => element.name == items.name);
-
+    ImmCrypto j = ImmcryptoList.firstWhere((element) => element.symbol == items.name);
     double newRateDiff = j.rate! * items.numberOfCoins;
     return newRateDiff;
   }
@@ -1081,7 +1083,8 @@ class _ImmPortfolioPageState extends State<ImmPortfolioPage> {
                         lineHeight: 5,
                         barRadius:const Radius.circular(8),
                         animationDuration: 2500,
-                        percent:double.parse(Percentage.toStringAsFixed(1)) > 1 || double.parse(Percentage.toStringAsFixed(1)) < 0?double.parse(Percentage.toStringAsFixed(0)).abs()/1:double.parse(Percentage.toStringAsFixed(1)).abs(),
+                        percent:    double.parse(Percentage.toStringAsFixed(2).replaceAll("-", '')),
+                        // percent:double.parse(Percentage.toStringAsFixed(1)) > 1 || double.parse(Percentage.toStringAsFixed(1)) < 0?double.parse(Percentage.toStringAsFixed(0)).abs()/1:double.parse(Percentage.toStringAsFixed(1)).abs(),
                         linearStrokeCap: LinearStrokeCap.roundAll,
                         progressColor: double.parse(Percentage.toStringAsFixed(1)) < 0
                             ?Color(0xffFF775C)

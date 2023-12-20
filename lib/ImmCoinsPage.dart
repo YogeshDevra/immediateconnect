@@ -233,24 +233,29 @@ class _ImmCoinsPageState extends State<ImmCoinsPage>{
                                       child: Stack(
                                           children: [
                                             Container(
-                                              height: 51,width: 142,
+                                              height: 51,
+                                              // width: 142,
                                               decoration: const BoxDecoration(
                                                 borderRadius: BorderRadius.all(Radius.circular(12)),
                                                 color: Color(0xffEBEDED),
                                               ),
                                             ),
-                                            Padding(padding: EdgeInsets.only(left: 102,top: 10),
-                                              child: Container(
-                                                height: 25,
-                                                width: 25,
-                                                decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(25),
-                                                    color: Color(0xffFFC727)
-                                                ),
-                                              ),),
+                                            // Padding(padding: EdgeInsets.only(left: 102,top: 10),
+                                            //   child: Container(
+                                            //     height: 25,
+                                            //     width: 25,
+                                            //     decoration: BoxDecoration(
+                                            //         borderRadius: BorderRadius.circular(25),
+                                            //         color: Color(0xffFFC727)
+                                            //     ),
+                                            //   ),),
                                             Padding(padding: const EdgeInsets.only(left: 10,right: 10),
                                               child: DropdownButtonHideUnderline(
                                                   child: DropdownButton<ImmCrypto>(
+                                                    icon:const Icon(
+                                                      Icons.arrow_drop_down_circle,
+                                                      color: Color(0xffFFC727),
+                                                    ),
                                                     menuMaxHeight: MediaQuery.of(context).size.height/2,
                                                     borderRadius: BorderRadius.circular(25),
                                                     dropdownColor: const Color(0xffffffff),
@@ -391,7 +396,8 @@ class _ImmCoinsPageState extends State<ImmCoinsPage>{
                                                   SizedBox(width: 25,),
                                                   Padding(padding: EdgeInsets.only(right: 10,top: 8),
                                                     child: Container(
-                                                        height: 25,width: 280,
+                                                        height: 25,
+                                                        width: MediaQuery.of(context).size.width/1.5,
                                                         decoration: BoxDecoration(
                                                           borderRadius: BorderRadius.circular(15),
                                                           // color: Color(0xffFFC727)

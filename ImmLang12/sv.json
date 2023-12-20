@@ -42,7 +42,7 @@
   "perfect" : "Perfekt för start",
 
   "bitai_policy-1" : "Immediate Connect",
-  "bitai_policy-2" : "Version 1.0 | Senast uppdaterad: (2023-12-13)",
+  "bitai_policy-2" : "Version 1.0 | Senast uppdaterad: (2023-12-20)",
   "bitai_policy-3" : "Denna integritetspolicy används i vår app. Här är vad du behöver veta:",
   "bitai_policy-4" : "1. Informationsinsamling: Vi samlar inte in några personuppgifter från våra användare. Appen fungerar enbart i en simulerad miljö för utbildningsändamål, och inga verkliga finansiella transaktioner eller investeringar är inblandade.",
   "bitai_policy-5" : "2. Myntdata: Immediate Connect kan komma åt kryptovalutadata i realtid för att tillhandahålla uppdaterad information endast för utbildningsändamål. Denna data är dock inte kopplad till någon användares personliga identitet.",
@@ -51,6 +51,6 @@
   "bitai_policy-8" : "5. Datasäkerhet: Vi vidtar rimliga försiktighetsåtgärder för att skydda all information som du tillhandahåller i appen. Men eftersom appen inte samlar in personuppgifter är din integritet i sig skyddad.",
   "bitai_policy-9" : "6. Åldersbegränsning: Immediate Connect är avsett för användare över 18 år.",
   "bitai_policy-10" : "Genom att använda Immediate Connect samtycker du till att följa denna integritetspolicy. Kom ihåg att den här appen är enbart avsedd för utbildningsändamål och inga verkliga ekonomiska aktiviteter är inblandade.",
-  "bitai_policy-11" : "För alla frågor eller funderingar om denna integritetspolicy eller appen, vänligen kontakta oss på (bitbytebard@gmail.com).",
+  "bitai_policy-11" : "För alla frågor eller funderingar om denna integritetspolicy eller appen, vänligen kontakta oss på (softcoderstechservices@gmail.com).",
   "bitai_policy-12" : "Tack för att du valde Immediate Connect för din kryptoinlärningsresa!"
 }
