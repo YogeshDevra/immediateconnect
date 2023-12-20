@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'ImmApiConfig.dart';
-import 'ImmHomePage.dart';
+import 'ImmStaticApiConfig.dart';
+import 'ImmHomeScreen.dart';
 import 'ImmLocalization/ImmAppLanguage.dart';
 import 'ImmLocalization/ImmAppLocalizations.dart';
-import 'ImmNavigationPage.dart';
-import 'ImmOnboardPage.dart';
+import 'ImmNavigationScreen.dart';
+import 'ImmOnboardScreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,8 +69,8 @@ class _MyAppState extends State<MyApp> {
                     Locale('sv', '')
                   ],
                   routes: <String, WidgetBuilder>{
-                    '/onboarding': (BuildContext context) => ImmOnboardPage(),
-                    '/HomePage': (BuildContext context) => ImmHomePage(),
+                    '/onboarding': (BuildContext context) => ImmOnboardScreen(),
+                    '/HomePage': (BuildContext context) => ImmHomeScreen(),
                     '/NavigationPage': (BuildContext context) => ImmNavigationPage(),
                   },
                   home: MyHomePage()
@@ -96,10 +96,10 @@ class _MyHomePageState extends State<MyHomePage> {
         minimumFetchInterval: Duration.zero,
       ));
       await remoteConfig.fetchAndActivate();
-      ImmApiConfig.ImmApiUrl = remoteConfig.getString('ApiUrl_ImmediateConnect_Android').trim();
-      ImmApiConfig.ImmPreventIframe=remoteConfig.getString('PreventIframe_ImmediateConnect_Android').trim();
-      ImmApiConfig.ImmFrameLink = remoteConfig.getString('Iframe_ImmediateConnect_Android').trim();
-      print(ImmApiConfig.ImmApiUrl);
+      ImmStaticApiConfig.ImmApiUrl = remoteConfig.getString('ApiUrl_ImmediateConnect_Android').trim();
+      ImmStaticApiConfig.ImmPreventIframe=remoteConfig.getString('PreventIframe_ImmediateConnect_Android').trim();
+      ImmStaticApiConfig.ImmFrameLink = remoteConfig.getString('Iframe_ImmediateConnect_Android').trim();
+      print(ImmStaticApiConfig.ImmApiUrl);
       setState(() {});
     } catch (exception) {
       print('Unable to fetch remote config. Cached or default values will be used');
