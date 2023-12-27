@@ -27,9 +27,7 @@ class _ImmNavigationPageState extends State<ImmNavigationPage> {
   void initState() {
     super.initState();
     final newVersion = NewVersionPlus(
-        androidId: 'com.bbyb.immediateconnectapp',
-        iOSId: 'com.bbyb.immediateconnectapp',
-        iOSAppStoreCountry: 'GB'
+        androidId: 'com.scode.immediateconnectapp',
     );
     Timer(const Duration(milliseconds: 800),() {
       versionUpdate(newVersion);
