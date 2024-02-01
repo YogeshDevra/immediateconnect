@@ -1,6 +1,6 @@
-# immediateconnectapp
+# immediate_connect
 
-Immediate Connect Flutter project.
+A new Flutter project.
 
 ## Getting Started
 

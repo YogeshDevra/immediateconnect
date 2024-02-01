@@ -1,5 +1,3 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,54 +23,62 @@ class AppLanguage extends ChangeNotifier {
     if (type == Locale("ar")) {
       _appLocale = Locale("ar");
       await prefs.setString('language_code', 'ar');
+      await prefs.setString('language_name', 'arabic');
       await prefs.setString('countryCode', '');
     } else if (type == Locale("de")) {
       _appLocale = Locale("de");
       await prefs.setString('language_code', 'de');
+      await prefs.setString('language_name', 'German');
       await prefs.setString('countryCode', '');
     } else if (type == Locale("es")) {
       _appLocale = Locale("es");
       await prefs.setString('language_code', 'es');
+      await prefs.setString('language_name', 'Spanish');
       await prefs.setString('countryCode', '');
     } else if (type == Locale("fi")) {
       _appLocale = Locale("fi");
       await prefs.setString('language_code', 'fi');
+      await prefs.setString('language_name', 'Finnish');
       await prefs.setString('countryCode', '');
     } else if (type == Locale("fr")) {
       _appLocale = Locale("fr");
       await prefs.setString('language_code', 'fr');
+      await prefs.setString('language_name', 'French');
       await prefs.setString('countryCode', '');
     } else if (type == Locale("it")) {
       _appLocale = Locale("it");
       await prefs.setString('language_code', 'it');
+      await prefs.setString('language_name', 'italian');
       await prefs.setString('countryCode', '');
     } else if (type == Locale("nl")) {
       _appLocale = Locale("nl");
       await prefs.setString('language_code', 'nl');
+      await prefs.setString('language_name', 'Dutch');
       await prefs.setString('countryCode', '');
     } else if (type == Locale("nb")) {
       _appLocale = Locale("nb");
       await prefs.setString('language_code', 'nb');
+      await prefs.setString('language_name', 'Norwegian');
       await prefs.setString('countryCode', '');
-    } else if (type == Locale("it")) {
-      _appLocale = Locale("it");
-      await prefs.setString('language_code', 'it');
-      await prefs.setString('countryCode', 'IT');
-    } else if (type == Locale("pt")) {
+    }  else if (type == Locale("pt")) {
       _appLocale = Locale("pt");
       await prefs.setString('language_code', 'pt');
+      await prefs.setString('language_name', 'Portuguese');
       await prefs.setString('countryCode', '');
     } else if (type == Locale("ru")) {
       _appLocale = Locale("ru");
       await prefs.setString('language_code', 'ru');
+      await prefs.setString('language_name', 'Russian');
       await prefs.setString('countryCode', '');
     } else if (type == Locale("sv")) {
       _appLocale = Locale("sv");
       await prefs.setString('language_code', 'sv');
+      await prefs.setString('language_name', 'Swedish');
       await prefs.setString('countryCode', '');
     } else {
       _appLocale = Locale("en");
       await prefs.setString('language_code', 'en');
+      await prefs.setString('language_name', 'English');
       await prefs.setString('countryCode', '');
     }
     notifyListeners();
