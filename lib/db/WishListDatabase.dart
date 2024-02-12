@@ -6,21 +6,23 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
-class DatabaseHelper {
-
-  static final _databaseName = "MyDatabase.db";
+class WishListDatabase {
+  static final _databaseName = "newlist.db";
   static final _databaseVersion = 1;
-  static final table = 'my_table';
-  static final columnId = '_id';
+  static final table = 'wist_table';
+
   static final columnName = 'name';
-  static final columnRateDuringAdding = 'rate_during_adding';
-  static final columnCoinsQuantity = 'coins_quantity';
-  static final columnTotalValue = 'total_value';
-  static final columnDateTime = 'date_time';
+  static final columnFullName = 'fullName';
+  static final columnIcon = 'icon';
+  static final columnRate = 'rate';
+  static final columnSymbol = 'symbol';
+  static final columnDiffRate = 'diffRate';
+
 
   // make this a singleton class
-  DatabaseHelper._privateConstructor();
-  static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
+  WishListDatabase._privateConstructor();
+  static final WishListDatabase instancee =
+  WishListDatabase._privateConstructor();
 
   // only have a single app-wide reference to the database
   static Database? _database;
@@ -36,20 +38,19 @@ class DatabaseHelper {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, _databaseName);
     return await openDatabase(path,
-        version: _databaseVersion,
-        onCreate: _onCreate);
+        version: _databaseVersion, onCreate: _onCreate);
   }
 
   // SQL code to create the database table
   Future _onCreate(Database db, int version) async {
-
     String query = '''
           CREATE TABLE $table (
-            $columnId INTEGER PRIMARY KEY,
-            $columnName TEXT NOT NULL,
-            $columnRateDuringAdding DOUBLE ,
-            $columnCoinsQuantity DOUBLE ,
-            $columnTotalValue DOUBLE 
+             $columnName TEXT NOT NULL,
+             $columnFullName TEXT ,
+             $columnIcon TEXT ,
+             $columnRate DOUBLE ,
+             $columnSymbol TEXT ,
+             $columnDiffRate DOUBLE  
           )
           ''';
     await db.execute(query);
@@ -61,36 +62,38 @@ class DatabaseHelper {
   // and the value is the column value. The return value is the id of the
   // inserted row.
   Future<int> insert(Map<String, dynamic> row) async {
-    Database db = await instance.database;
+    Database db = await instancee.database;
     return await db.insert(table, row);
   }
 
   // All of the rows are returned as a list of maps, where each map is
   // a key-value list of columns.
   Future<List<Map<String, dynamic>>> queryAllRows() async {
-    Database db = await instance.database;
+    Database db = await instancee.database;
     return await db.query(table);
   }
 
   // All of the methods (insert, query, update, delete) can also be done using
   // raw SQL commands. This method uses a raw query to give the row count.
   Future<int?> queryRowCount() async {
-    Database db = await instance.database;
-    return Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM $table'));
+    Database db = await instancee.database;
+    return Sqflite.firstIntValue(
+        await db.rawQuery('SELECT COUNT(*) FROM $table'));
   }
 
   // We are assuming here that the id column in the map is set. The other
   // column values will be used to update the row.
   Future<int> update(Map<String, dynamic> row) async {
-    Database db = await instance.database;
+    Database db = await instancee.database;
     String id = row[columnName];
-    return await db.update(table, row, where: '$columnName = ?', whereArgs: [id]);
+    return await db
+        .update(table, row, where: '$columnName = ?', whereArgs: [id]);
   }
 
   // Deletes the row specified by the id. The number of affected rows is
   // returned. This should be 1 as long as the row exists.
   Future<int> delete(String id) async {
-    Database db = await instance.database;
+    Database db = await instancee.database;
     return await db.delete(table, where: '$columnName = ?', whereArgs: [id]);
   }
 }

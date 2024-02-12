@@ -4,14 +4,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:new_version_plus/new_version_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'IframeHomePage.dart';
 import 'ImmediateConnectAnalytics.dart';
 import 'coinsPage.dart';
@@ -122,7 +120,7 @@ class _PortfolioPageState extends State<PortfolioPage>
   }
 
   fetchRemoteValue() async {
-    final RemoteConfig remoteConfig = await RemoteConfig.instance;
+    final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
 
     try {
       // Using default duration to force fetching from remote server.

@@ -30,17 +30,17 @@ class Cryptodata {
   });
   factory Cryptodata.fromJson(Map<String, dynamic> json) {
     return Cryptodata(
-        bitcoinId: json["bitcoinId"],
-        fullName: json["fullName"],
-        icon: json["icon"],
-        symbol: json["symbol"],
-        rate: json["rate"],
-        trend: json["trend"],
+      bitcoinId: json["bitcoinId"],
+      fullName: json["fullName"],
+      icon: json["icon"],
+      symbol: json["symbol"],
+      rate: json["rate"],
+      trend: json["trend"],
       open: json["open"],
       close: json["close"],
       volume: json["volume"],
-        diffRate: json["diffRate"],
-        high: json["high"],
+      diffRate: json["diffRate"],
+      high: json["high"],
       low: json["low"]
     );
   }

@@ -42,7 +42,7 @@ class _TopCoinsPageState extends State<TopCoinsPage> {
   }
 
   fetchRemoteValue() async {
-    final RemoteConfig remoteConfig = await RemoteConfig.instance;
+    final FirebaseRemoteConfig remoteConfig = await FirebaseRemoteConfig.instance;
 
     try {
       // Using default duration to force fetching from remote server.

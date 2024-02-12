@@ -5,11 +5,10 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:immediateconnectapp/portfoliopage.dart';
-import 'package:immediateconnectapp/topcoin.dart';
-import 'package:immediateconnectapp/trendsPage.dart';
+import 'package:immediate_connect/portfoliopage.dart';
+import 'package:immediate_connect/topcoin.dart';
+import 'package:immediate_connect/trendsPage.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
 import 'ImmediateConnectAnalytics.dart';
 import 'coinsPage.dart';
 import 'dashboard_home.dart';
