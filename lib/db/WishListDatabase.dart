@@ -1,7 +1,6 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe, depend_on_referenced_packages
 
 import 'dart:io';
-
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -11,11 +10,10 @@ class WishListDatabase {
   static final _databaseVersion = 1;
   static final table = 'wist_table';
 
-  static final columnName = 'name';
+  static final columnSymbol = 'symbol';
   static final columnFullName = 'fullName';
   static final columnIcon = 'icon';
   static final columnRate = 'rate';
-  static final columnSymbol = 'symbol';
   static final columnDiffRate = 'diffRate';
 
 
@@ -45,12 +43,11 @@ class WishListDatabase {
   Future _onCreate(Database db, int version) async {
     String query = '''
           CREATE TABLE $table (
-             $columnName TEXT NOT NULL,
+             $columnSymbol TEXT NOT NULL,
              $columnFullName TEXT ,
              $columnIcon TEXT ,
              $columnRate DOUBLE ,
-             $columnSymbol TEXT ,
-             $columnDiffRate DOUBLE  
+             $columnDiffRate TEXT  
           )
           ''';
     await db.execute(query);
@@ -85,15 +82,15 @@ class WishListDatabase {
   // column values will be used to update the row.
   Future<int> update(Map<String, dynamic> row) async {
     Database db = await instancee.database;
-    String id = row[columnName];
+    String id = row[columnSymbol];
     return await db
-        .update(table, row, where: '$columnName = ?', whereArgs: [id]);
+        .update(table, row, where: '$columnSymbol = ?', whereArgs: [id]);
   }
 
   // Deletes the row specified by the id. The number of affected rows is
   // returned. This should be 1 as long as the row exists.
   Future<int> delete(String id) async {
     Database db = await instancee.database;
-    return await db.delete(table, where: '$columnName = ?', whereArgs: [id]);
+    return await db.delete(table, where: '$columnSymbol = ?', whereArgs: [id]);
   }
 }

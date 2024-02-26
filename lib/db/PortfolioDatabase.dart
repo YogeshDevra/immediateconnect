@@ -6,21 +6,24 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
-class DatabaseHelper {
+class PortfolioDatabase {
 
   static final _databaseName = "MyDatabase.db";
   static final _databaseVersion = 1;
   static final table = 'my_table';
   static final columnId = '_id';
   static final columnName = 'name';
+  static final columnFullName = 'fullName';
+  static final columnIcon = 'icon';
   static final columnRateDuringAdding = 'rate_during_adding';
   static final columnCoinsQuantity = 'coins_quantity';
   static final columnTotalValue = 'total_value';
+  static final columnDiffRate = 'diffRate';
   static final columnDateTime = 'date_time';
 
   // make this a singleton class
-  DatabaseHelper._privateConstructor();
-  static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
+  PortfolioDatabase._privateConstructor();
+  static final PortfolioDatabase instance = PortfolioDatabase._privateConstructor();
 
   // only have a single app-wide reference to the database
   static Database? _database;
@@ -47,9 +50,12 @@ class DatabaseHelper {
           CREATE TABLE $table (
             $columnId INTEGER PRIMARY KEY,
             $columnName TEXT NOT NULL,
+            $columnFullName TEXT ,
+            $columnIcon TEXT ,
             $columnRateDuringAdding DOUBLE ,
             $columnCoinsQuantity DOUBLE ,
-            $columnTotalValue DOUBLE 
+            $columnTotalValue DOUBLE , 
+            $columnDiffRate TEXT
           )
           ''';
     await db.execute(query);

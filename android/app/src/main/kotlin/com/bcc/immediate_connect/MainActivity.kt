@@ -1,4 +1,4 @@
-package com.bcc.immediate_connect
+package com.jdt.quantumaiapp
 
 import io.flutter.embedding.android.FlutterActivity
 

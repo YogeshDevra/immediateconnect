@@ -1,10 +1,11 @@
-class Cryptodata {
+class CryptoData {
   final int? bitcoinId;
   final String? fullName;
   final String? icon;
   final String? symbol;
   final double? rate;
   final String? trend;
+  final String? date;
   double? close;
   double? open;
   double? volume;
@@ -12,15 +13,17 @@ class Cryptodata {
   double? high;
   double? low;
 
+
   // All dogs start out at 10, because they're good dogs.
 
-  Cryptodata({
+  CryptoData({
     this.bitcoinId,
     this.fullName,
     this.icon,
     this.symbol,
     this.rate,
     this.trend,
+    this.date,
     this.close,
     this.open,
     this.volume,
@@ -28,14 +31,15 @@ class Cryptodata {
     this.high,
     this.low
   });
-  factory Cryptodata.fromJson(Map<String, dynamic> json) {
-    return Cryptodata(
+  factory CryptoData.fromJson(Map<String, dynamic> json) {
+    return CryptoData(
       bitcoinId: json["bitcoinId"],
       fullName: json["fullName"],
       icon: json["icon"],
       symbol: json["symbol"],
       rate: json["rate"],
       trend: json["trend"],
+      date: json["date"],
       open: json["open"],
       close: json["close"],
       volume: json["volume"],

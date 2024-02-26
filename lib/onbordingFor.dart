@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quantumaiapp/localization/app_localization.dart';
 
 
 import 'HomePage.dart';
@@ -26,8 +27,8 @@ class _OnBordingForState extends State<OnBordingFor>{
               Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(40),
-                child:const Text('Welcome to Crypto',
-                  style: TextStyle(fontSize: 36.52,fontWeight: FontWeight.w300,
+                child:Text(AppLocalizations.of(context)!.translate('home_6')!,
+                  style: const TextStyle(fontSize: 36.52,fontWeight: FontWeight.w300,
                       color: Color(0xffFFFFFF),fontFamily: 'Gilroy'),textAlign: TextAlign.center,),
               ),
               TextButton(
@@ -40,10 +41,10 @@ class _OnBordingForState extends State<OnBordingFor>{
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HomePage()));
                 },
-                child: const Padding(
-                  padding: EdgeInsets.only(top:5,bottom:5,left:20,right:20),
-                  child: Text('Let’s Get Started',
-                    style: TextStyle(fontFamily: 'Poppins', fontSize: 25.11,
+                child: Padding(
+                  padding: const EdgeInsets.only(top:5,bottom:5,left:20,right:20),
+                  child: Text(AppLocalizations.of(context)!.translate('home_7')!,
+                    style: const TextStyle(fontFamily: 'Gilroy', fontSize: 25.11,
                         fontWeight: FontWeight.w600, color: Color(0xffffffff)),
                   ),
                 ),

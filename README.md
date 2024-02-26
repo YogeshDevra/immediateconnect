@@ -1,4 +1,4 @@
-# immediate_connect
+# quantumaiapp
 
 A new Flutter project.
 
